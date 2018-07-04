@@ -13,6 +13,9 @@ public class HomeActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
 
+
+
+        /* 페인트보드 잠시 접어두기.
         //페인트보드 내부에서 윈도우 사이즈를 구하기 위해 displayMetrics를 전달//
         DisplayMetrics dm = new DisplayMetrics();
         getWindowManager().getDefaultDisplay().getMetrics(dm);
@@ -20,7 +23,7 @@ public class HomeActivity extends AppCompatActivity {
 
         PaintBoard paintBoard = (PaintBoard)findViewById(R.id.PaintBoard);
         paintBoard.init(dm); //펜 스타일,굵기,색상 default로 초기화
-
+        */
 
     }
 
