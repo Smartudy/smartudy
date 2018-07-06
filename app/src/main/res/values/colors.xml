@@ -3,4 +3,11 @@
     <color name="colorPrimary">#3F51B5</color>
     <color name="colorPrimaryDark">#303F9F</color>
     <color name="colorAccent">#FF4081</color>
+
+    <!-- HomeActivity -->
+    <color name="colorTitle">#2b2828</color>
+    <color name="colorMain">#3e8cff</color>
+    <color name="colorWhite">#ffffff</color>
+    <color name="colorSub">#35c141</color>
+    <color name="Home_Text_Color">#3f3c3d</color>
 </resources>
