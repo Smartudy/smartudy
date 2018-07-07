@@ -3,7 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_marginTop="@dimen/home_content_top_margin"
+    android:layout_marginTop="38dp"
     android:orientation="vertical"
     app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
@@ -22,6 +22,7 @@
                 android:id="@+id/ImageButton0"
                 android:layout_width="@dimen/home_content_image_width"
                 android:layout_height="@dimen/home_content_image_height"
+                android:background="@color/colorWhite"
                 android:src="@drawable/one" />
 
             <TextView
@@ -31,7 +32,7 @@
                 android:layout_alignLeft="@id/ImageButton0"
                 android:layout_alignRight="@id/ImageButton0"
                 android:layout_alignTop="@id/ImageButton0"
-                android:paddingBottom="@dimen/home_content_image_padding_bottom"
+                android:paddingBottom="8dp"
                 android:gravity="bottom|center_horizontal"
                 android:textSize="@dimen/home_text_size"
                 android:textColor="@color/Home_Text_Color"
@@ -50,6 +51,7 @@
                 android:id="@+id/ImageButton1"
                 android:layout_width="@dimen/home_content_image_width"
                 android:layout_height="@dimen/home_content_image_height"
+                android:background="@color/colorWhite"
                 android:src="@drawable/two" />
             <TextView
                 android:layout_width="@dimen/home_content_image_width"
@@ -58,11 +60,11 @@
                 android:layout_alignLeft="@id/ImageButton1"
                 android:layout_alignRight="@id/ImageButton1"
                 android:layout_alignTop="@id/ImageButton1"
-                android:paddingBottom="@dimen/home_content_image_padding_bottom"
+                android:paddingBottom="8dp"
                 android:gravity="bottom|center_horizontal"
                 android:textSize="@dimen/home_text_size"
                 android:textColor="@color/Home_Text_Color"
-                android:fontFamily="@font/nanumsquareb"
+                android:fontFamily="@string/main_font"
                 android:text="사회"/>
 
         </RelativeLayout>
@@ -77,6 +79,7 @@
                 android:id="@+id/ImageButton2"
                 android:layout_width="@dimen/home_content_image_width"
                 android:layout_height="@dimen/home_content_image_height"
+                android:background="@color/colorWhite"
                 android:src="@drawable/three" />
             <TextView
                 android:layout_width="@dimen/home_content_image_width"
@@ -85,11 +88,11 @@
                 android:layout_alignLeft="@id/ImageButton2"
                 android:layout_alignRight="@id/ImageButton2"
                 android:layout_alignTop="@id/ImageButton2"
-                android:paddingBottom="@dimen/home_content_image_padding_bottom"
+                android:paddingBottom="8dp"
                 android:gravity="bottom|center_horizontal"
                 android:textSize="@dimen/home_text_size"
                 android:textColor="@color/Home_Text_Color"
-                android:fontFamily="@font/nanumsquareb"
+                android:fontFamily="@string/main_font"
                 android:text="교육"/>
 
         </RelativeLayout>
@@ -112,6 +115,7 @@
                 android:id="@+id/ImageButton3"
                 android:layout_width="@dimen/home_content_image_width"
                 android:layout_height="@dimen/home_content_image_height"
+                android:background="@color/colorWhite"
                 android:src="@drawable/four" />
             <TextView
                 android:layout_width="@dimen/home_content_image_width"
@@ -120,11 +124,11 @@
                 android:layout_alignLeft="@id/ImageButton3"
                 android:layout_alignRight="@id/ImageButton3"
                 android:layout_alignTop="@id/ImageButton3"
-                android:paddingBottom="@dimen/home_content_image_padding_bottom"
+                android:paddingBottom="8dp"
                 android:gravity="bottom|center_horizontal"
                 android:textSize="@dimen/home_text_size"
                 android:textColor="@color/Home_Text_Color"
-                android:fontFamily="@font/nanumsquareb"
+                android:fontFamily="@string/main_font"
                 android:text="공학"/>
         </RelativeLayout>
 
@@ -139,6 +143,7 @@
                 android:id="@+id/ImageButton4"
                 android:layout_width="@dimen/home_content_image_width"
                 android:layout_height="@dimen/home_content_image_height"
+                android:background="@color/colorWhite"
                 android:src="@drawable/five" />
             <TextView
                 android:layout_width="@dimen/home_content_image_width"
@@ -147,7 +152,7 @@
                 android:layout_alignLeft="@id/ImageButton4"
                 android:layout_alignRight="@id/ImageButton4"
                 android:layout_alignTop="@id/ImageButton4"
-                android:paddingBottom="@dimen/home_content_image_padding_bottom"
+                android:paddingBottom="8dp"
                 android:gravity="bottom|center_horizontal"
                 android:textSize="@dimen/home_text_size"
                 android:textColor="@color/Home_Text_Color"
@@ -166,6 +171,7 @@
                 android:id="@+id/ImageButton5"
                 android:layout_width="@dimen/home_content_image_width"
                 android:layout_height="@dimen/home_content_image_height"
+                android:background="@color/colorWhite"
                 android:src="@drawable/six" />
             <TextView
                 android:layout_width="@dimen/home_content_image_width"
@@ -174,7 +180,7 @@
                 android:layout_alignLeft="@id/ImageButton5"
                 android:layout_alignRight="@id/ImageButton5"
                 android:layout_alignTop="@id/ImageButton5"
-                android:paddingBottom="@dimen/home_content_image_padding_bottom"
+                android:paddingBottom="8dp"
                 android:gravity="bottom|center_horizontal"
                 android:textSize="@dimen/home_text_size"
                 android:textColor="@color/Home_Text_Color"
@@ -200,6 +206,7 @@
                 android:id="@+id/ImageButton6"
                 android:layout_width="@dimen/home_content_image_width"
                 android:layout_height="@dimen/home_content_image_height"
+                android:background="@color/colorWhite"
                 android:src="@drawable/seven" />
             <TextView
                 android:layout_width="@dimen/home_content_image_width"
@@ -208,7 +215,7 @@
                 android:layout_alignLeft="@id/ImageButton6"
                 android:layout_alignRight="@id/ImageButton6"
                 android:layout_alignTop="@id/ImageButton6"
-                android:paddingBottom="@dimen/home_content_image_padding_bottom"
+                android:paddingBottom="8dp"
                 android:gravity="bottom|center_horizontal"
                 android:textSize="@dimen/home_text_size"
                 android:textColor="@color/Home_Text_Color"
@@ -227,6 +234,7 @@
                 android:id="@+id/ImageButton7"
                 android:layout_width="@dimen/home_content_image_width"
                 android:layout_height="@dimen/home_content_image_height"
+                android:background="@color/colorWhite"
                 android:src="@drawable/seven" />
             <TextView
                 android:layout_width="@dimen/home_content_image_width"
@@ -235,7 +243,7 @@
                 android:layout_alignLeft="@id/ImageButton7"
                 android:layout_alignRight="@id/ImageButton7"
                 android:layout_alignTop="@id/ImageButton7"
-                android:paddingBottom="@dimen/home_content_image_padding_bottom"
+                android:paddingBottom="8dp"
                 android:gravity="bottom|center_horizontal"
                 android:textSize="@dimen/home_text_size"
                 android:textColor="@color/Home_Text_Color"
@@ -254,6 +262,7 @@
                 android:id="@+id/ImageButton8"
                 android:layout_width="@dimen/home_content_image_width"
                 android:layout_height="@dimen/home_content_image_height"
+                android:background="@color/colorWhite"
                 android:src="@drawable/three" />
             <TextView
                 android:layout_width="@dimen/home_content_image_width"
@@ -262,7 +271,7 @@
                 android:layout_alignLeft="@id/ImageButton8"
                 android:layout_alignRight="@id/ImageButton8"
                 android:layout_alignTop="@id/ImageButton8"
-                android:paddingBottom="@dimen/home_content_image_padding_bottom"
+                android:paddingBottom="8dp"
                 android:gravity="bottom|center_horizontal"
                 android:textSize="@dimen/home_text_size"
                 android:textColor="@color/Home_Text_Color"

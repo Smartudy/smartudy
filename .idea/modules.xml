@@ -3,9 +3,7 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
-      <module fileurl="file://C:\Users\cheba\StudioProjects\smartudy\app\app.iml" filepath="C:\Users\cheba\StudioProjects\smartudy\app\app.iml" />
       <module fileurl="file://$PROJECT_DIR$/smartudy.iml" filepath="$PROJECT_DIR$/smartudy.iml" />
-      <module fileurl="file://C:\Users\cheba\StudioProjects\smartudy\smartudy.iml" filepath="C:\Users\cheba\StudioProjects\smartudy\smartudy.iml" />
     </modules>
   </component>
 </project>

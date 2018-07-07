@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <!-- 자주 바뀔 가능성이 있는 사이즈나, 여러곳에서 공통적으로 사용되는 사이즈는 여기에 정의하자. -->
     <dimen name="padding_small">16dp</dimen>
 
     <!-- HomeActivity -->
     <dimen name="home_text_size">14sp</dimen>
-    <dimen name="toolbar_text_size">18sp</dimen>
     <dimen name="fab_margin">16dp</dimen>
     <dimen name="toolbar_margin">16dp</dimen>
     <dimen name="toolbar_title_margin_right">182dp</dimen>
-    <dimen name="home_content_top_margin">38dp</dimen>
     <dimen name="home_content_image_width">110dp</dimen>
     <dimen name="home_content_image_height">117dp</dimen>
-    <dimen name="home_content_image_padding_bottom">8dp</dimen>
+    <dimen name="home_drawer_width">302dp</dimen>
+
 </resources>

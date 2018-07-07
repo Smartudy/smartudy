@@ -1,0 +1,182 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="@dimen/home_drawer_width"
+    android:layout_height="match_parent"
+    android:layout_gravity="left"
+    android:background="@color/colorWhite"
+    android:padding="20sp"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="54dp"
+        android:layout_marginBottom="22dp"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@string/sub_font"
+            android:text="PROPOLIS"
+            android:textColor="@color/colorBlack"
+            android:textSize="26sp" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginBottom="80dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@string/main_font"
+            android:letterSpacing="0.31"
+            android:text="보유코인"
+            android:textColor="@android:color/black"
+            android:textSize="12sp" />
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="코인 충전"
+            android:fontFamily="@string/main_font"
+            android:textColor="@android:color/white"
+            android:textSize="13sp"
+            android:backgroundTint="@color/colorMain"/>
+    </LinearLayout>
+    <!-- 상단부 PROPOLIS -->
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginBottom="8dp">
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_weight="1">
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="9dp"
+                android:text="질문"
+                android:textSize="13sp"
+                android:textColor="@android:color/black"
+                android:fontFamily="@string/main_font"
+                android:gravity="center"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="4"
+                android:textSize="20sp"
+                android:textColor="@color/colorMain"
+                android:fontFamily="@string/sub_font"
+                android:gravity="center"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_weight="1">
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="9dp"
+                android:text="답변"
+                android:textSize="13sp"
+                android:textColor="@android:color/black"
+                android:fontFamily="@string/main_font"
+                android:gravity="center"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="12"
+                android:textSize="20sp"
+                android:textColor="@color/colorSub"
+                android:fontFamily="@string/sub_font"
+                android:gravity="center"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_weight="1">
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="9dp"
+                android:text="찜"
+                android:textSize="13sp"
+                android:textColor="@android:color/black"
+                android:fontFamily="@string/main_font"
+                android:gravity="center"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="4"
+                android:textSize="20sp"
+                android:textColor="#5d5d5d"
+                android:fontFamily="@string/sub_font"
+                android:gravity="center"/>
+        </LinearLayout>
+
+    </LinearLayout>
+    <!-- 중간부 질문,답변,찜 -->
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingTop="32dp"
+        android:paddingLeft="24dp"
+        android:backgroundTint="#f2f3f5"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="1:1 문의"
+            android:textSize="16sp"
+            android:textColor="@android:color/black"
+            android:fontFamily="@string/main_font"
+            android:layout_marginBottom="24dp"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="공지사항 / 이벤트"
+            android:textSize="16sp"
+            android:textColor="@android:color/black"
+            android:fontFamily="@string/main_font"
+            android:layout_marginBottom="24dp"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="자주 묻는 질문"
+            android:textSize="16sp"
+            android:textColor="@android:color/black"
+            android:fontFamily="@string/main_font"
+            android:layout_marginBottom="24dp"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="이용 약관"
+            android:textSize="16sp"
+            android:textColor="@android:color/black"
+            android:fontFamily="@string/main_font"
+            android:layout_marginBottom="24dp"/>
+
+    </LinearLayout>
+</LinearLayout>

@@ -16,23 +16,15 @@
         android:letterSpacing="0.02"
         android:text="@string/home_title"
         android:textColor="@color/colorTitle"
-        android:textSize="@dimen/toolbar_text_size" />
+        android:textSize="18sp" />
 
     <ImageView
         android:id="@+id/toolbar_bell"
         android:layout_width="24dp"
         android:layout_height="24dp"
         android:layout_marginRight="@dimen/toolbar_margin"
-        android:layout_toLeftOf="@+id/toolbar_menu"
-        android:src="@drawable/bell" />
-
-    <ImageView
-        android:id="@+id/toolbar_menu"
-        android:layout_width="24dp"
-        android:layout_height="24dp"
-        android:layout_marginRight="@dimen/toolbar_margin"
         android:layout_alignParentRight="true"
-        android:src="@drawable/menu" />
+        android:src="@drawable/bell" />
 
 
 </RelativeLayout>

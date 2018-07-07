@@ -1,4 +1,9 @@
 <resources>
     <string name="app_name">smartudy</string>
     <string name="home_title">Category</string>
+    <string name="main_font">"@font/"nanumsquareb</string>
+    <string name="sub_font">"@font/"nanumsquareeb</string>
+    <string name="sub_r_font">"@font/"nanumsquarer</string>
+    <string name="open_drawer">Open Drawer </string>
+    <string name="close_drawer">Close Drawer </string>
 </resources>
