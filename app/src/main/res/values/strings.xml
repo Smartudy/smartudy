@@ -6,4 +6,6 @@
     <string name="sub_r_font">"@font/"nanumsquarer</string>
     <string name="open_drawer">Open Drawer </string>
     <string name="close_drawer">Close Drawer </string>
+    <string name="title_activity_question_list">QuestionListActivity</string>
+
 </resources>

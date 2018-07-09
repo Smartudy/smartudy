@@ -12,4 +12,7 @@
     <color name="colorWhite">#ffffff</color>
     <color name="colorBlack">#000000</color>
     <color name="Home_Text_Color">#3f3c3d</color>
+
+    <!-- QuestionListActivity -->
+    <color name="colorBackGround">#f9f9f9</color>
 </resources>

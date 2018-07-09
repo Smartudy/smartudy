@@ -8,4 +8,14 @@
         <item name="colorAccent">@color/colorMain</item>
     </style>
 
+    <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
+
+    <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
+    
+    <style name="ToolbarStyle" parent="@style/ThemeOverlay.AppCompat.ActionBar">
+        <item name="android:background">@color/colorBackGround</item>
+        <item name="colorControlNormal">#000000</item>
+        <item name="android:fontFamily">@font/nanumsquareb</item>
+    </style>
+
 </resources>

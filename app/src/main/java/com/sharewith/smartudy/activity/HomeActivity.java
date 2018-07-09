@@ -105,8 +105,8 @@ public class HomeActivity extends AppCompatActivity {
                 public void onClick(View v) {
                     Snackbar.make(v, categories[idx], Snackbar.LENGTH_LONG).setAction("Action", null).show();
                     // TODO : 선택 시 각 과목에 맞는 질문목록창으로 넘어가야한다. 재플린3번화면 xml 구성 후 다시 작업예정
-                    // Intent intent = new Intent(getApplicationContext(), QuestionScrollList.Class)
-                    // startActivity(intent);
+                    Intent intent = new Intent(getApplicationContext(), QuestionListActivity.class);
+                    startActivity(intent);
                 }
             });
         }
