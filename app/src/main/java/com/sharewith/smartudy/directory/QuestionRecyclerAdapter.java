@@ -19,7 +19,7 @@ public class QuestionRecyclerAdapter extends RecyclerView.Adapter<QuestionRecycl
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-
+    //asdf
     }
 
     @Override
