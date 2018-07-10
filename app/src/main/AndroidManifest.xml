@@ -19,12 +19,13 @@
         <activity
             android:name="com.sharewith.smartudy.activity.QuestionListActivity"
             android:label="@string/title_activity_question_list"
-            android:theme="@style/AppTheme"
-            android:parentActivityName="com.sharewith.smartudy.activity.HomeActivity">
+            android:parentActivityName="com.sharewith.smartudy.activity.HomeActivity"
+            android:theme="@style/AppTheme">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.sharewith.smartudy.activity.HomeActivity" />
         </activity>
+        <activity android:name="com.sharewith.smartudy.activity.LoginActivity"></activity>
     </application>
 
 </manifest>

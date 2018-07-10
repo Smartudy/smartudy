@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:backgroundTint="@color/colorBackGround">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_marginTop="18dp"
+        android:layout_marginBottom="59dp">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="Login"
+            android:textSize="18sp"
+            android:textColor="@color/colorTitle"
+            android:fontFamily="@string/main_font"/>
+    </LinearLayout>
+
+    <EditText
+        android:layout_width="@dimen/login_input_width"
+        android:layout_height="@dimen/login_input_height"
+        android:background="@drawable/input_border"
+        android:layout_gravity="center"
+        android:hint="Phone number"
+        android:fontFamily="@string/main_font"
+        android:textSize="14sp"
+        android:padding="@dimen/login_input_padding"
+        android:layout_marginBottom="@dimen/login_margin_bottom"/>
+
+    <EditText
+        android:layout_width="@dimen/login_input_width"
+        android:layout_height="@dimen/login_input_height"
+        android:background="@drawable/input_border"
+        android:layout_gravity="center"
+        android:hint="Password"
+        android:fontFamily="@string/main_font"
+        android:textSize="14sp"
+        android:padding="@dimen/login_input_padding"
+        android:layout_marginBottom="32dp"/>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <Button
+            android:id="@+id/loginbtn"
+            android:layout_width="@dimen/login_input_width"
+            android:layout_height="@dimen/login_input_height"
+            android:background="@drawable/login_round_button"
+            android:backgroundTint="@color/colorMain"
+            android:layout_centerHorizontal="true"
+            android:textSize="16sp"
+            android:fontFamily="@string/main_font"
+            android:text="Login"
+            android:textColor="@color/colorWhite"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingTop="12dp"
+            android:textColor="@color/colorTitle"
+            android:textSize="13sp"
+            android:text="회원가입"
+            android:layout_alignLeft="@id/loginbtn"
+            android:layout_below="@id/loginbtn"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingTop="12dp"
+            android:textColor="@color/colorTitle"
+            android:textSize="13sp"
+            android:layout_gravity="right"
+            android:text="비밀번호 찾기"
+            android:layout_alignRight="@id/loginbtn"
+            android:layout_below="@id/loginbtn"/>
+    </RelativeLayout>
+
+    <LinearLayout
+        android:layout_width="@dimen/login_input_width"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="60dp"
+        android:orientation="vertical">
+
+        <Button
+            android:id="@+id/facebookbtn"
+            android:layout_width="@dimen/login_input_width"
+            android:layout_height="@dimen/login_input_height"
+
+            android:background="@drawable/facebook"
+            android:layout_gravity="center"
+            android:textSize="16sp"
+            android:fontFamily="@string/main_font"
+            android:text="페이스북으로 로그인"
+            android:textColor="@color/colorWhite"/>
+
+        <Button
+            android:id="@+id/naverbtn"
+            android:layout_width="@dimen/login_input_width"
+            android:layout_height="@dimen/login_input_height"
+            android:layout_marginTop="11dp"
+            android:background="@drawable/naver"
+            android:layout_gravity="center"
+            android:textSize="16sp"
+            android:fontFamily="@string/main_font"
+            android:text="네이버로 로그인"
+            android:textColor="@color/colorWhite"/>
+        <Button
+            android:id="@+id/kakaobtn"
+            android:layout_width="@dimen/login_input_width"
+            android:layout_height="@dimen/login_input_height"
+            android:layout_marginTop="11dp"
+            android:background="@drawable/kakao"
+            android:layout_gravity="center"
+            android:textSize="16sp"
+            android:fontFamily="@string/main_font"
+            android:text="카카오로 로그인"
+            android:textColor="#381a1b"/>
+    </LinearLayout>
+</LinearLayout>

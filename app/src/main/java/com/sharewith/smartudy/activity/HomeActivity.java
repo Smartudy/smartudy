@@ -51,10 +51,10 @@ public class HomeActivity extends AppCompatActivity {
         actionBar.setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM); //액션바를 커스터마이징 하기 위해
         actionBar.setCustomView(R.layout.toolbar_home);
         actionBar.setElevation(0); //z축 깊이 0으로 설정 하여 그림자 없애기.
-
+//        actionBar.setDisplayShowHomeEnabled(false);
+//        actionBar.setDisplayShowTitleEnabled(false);
 
         mDrawerLayout.addDrawerListener(mDrawerToggle);
-        actionBar.setHomeAsUpIndicator(R.drawable.menu); //뒤로가 버튼의 이미지를 R.drawable.menu로 설정
 
         /* 페인트보드 잠시 접어두기.
         //페인트보드 내부에서 윈도우 사이즈를 구하기 위해 displayMetrics를 전달//
@@ -102,7 +102,8 @@ public class HomeActivity extends AppCompatActivity {
                 public void onClick(View v) {
                     Snackbar.make(v, categories[idx], Snackbar.LENGTH_LONG).setAction("Action", null).show();
                     // TODO : 선택 시 각 과목에 맞는 질문목록창으로 넘어가야한다. 재플린3번화면 xml 구성 후 다시 작업예정
-                    Intent intent = new Intent(getApplicationContext(), QuestionListActivity.class);
+                    //Intent intent = new Intent(getApplicationContext(), QuestionListActivity.class);
+                    Intent intent = new Intent(getApplicationContext(),LoginActivity.class);
                     startActivity(intent);
                 }
             });

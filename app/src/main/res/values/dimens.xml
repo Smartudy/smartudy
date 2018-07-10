@@ -12,4 +12,10 @@
     <dimen name="home_content_image_height">117dp</dimen>
     <dimen name="home_drawer_width">302dp</dimen>
 
+    <!--LoginActivity-->
+    <dimen name="login_input_width">328dp</dimen>
+    <dimen name="login_margin_bottom">12dp</dimen>
+    <dimen name="login_input_height">44dp</dimen>
+    <dimen name="login_input_padding">14dp</dimen>
+    <dimen name="login_radius">6dp</dimen>
 </resources>
