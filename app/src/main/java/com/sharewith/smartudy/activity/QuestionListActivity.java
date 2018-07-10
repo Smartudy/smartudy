@@ -50,13 +50,13 @@ public class QuestionListActivity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()){
-            case R.id.menu_filter_setting:
-                Toast.makeText(this, "filter", Toast.LENGTH_SHORT).show();
-                break;
-            default:
-                break;
-        }
+//        switch (item.getItemId()){
+//            case R.id.menu_filter_setting:
+//                Toast.makeText(this, "filter", Toast.LENGTH_SHORT).show();
+//                break;
+//            default:
+//                break;
+//        }
         return true;
     }
 

@@ -17,27 +17,23 @@ import android.widget.ImageButton;
 
 import com.sharewith.smartudy.directory.PaintBoard;
         import com.sharewith.smartudy.smartudy.R;
+import com.sharewith.smartudy.utils.EndDrawerToggle;
 
 public class HomeActivity extends AppCompatActivity {
 
     private DrawerLayout mDrawerLayout;
-    private ActionBarDrawerToggle mDrawerToggle;
+    private EndDrawerToggle mDrawerToggle;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         setContentView(R.layout.activity_home);
         Toolbar toolbar = (Toolbar)findViewById(R.id.toolbar);
         mDrawerLayout= (DrawerLayout)findViewById(R.id.home_drawer);
 
-        setSupportActionBar(toolbar);
-        ActionBar actionBar = getSupportActionBar();
-        actionBar.setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM); //액션바를 커스터마이징 하기 위해
-        actionBar.setCustomView(R.layout.toolbar_home);
-        actionBar.setElevation(0); //z축 깊이 0으로 설정 하여 그림자 없애기.
-
-        mDrawerToggle = new ActionBarDrawerToggle(this,mDrawerLayout,toolbar,R.string.open_drawer,R.string.close_drawer){
+        mDrawerToggle = new EndDrawerToggle(this,mDrawerLayout,toolbar,R.string.open_drawer,R.string.close_drawer){
 
             @Override //드로어가 열렸을때
             public void onDrawerOpened(View drawerView) {
@@ -50,12 +46,15 @@ public class HomeActivity extends AppCompatActivity {
             }
         };//액션바 드로우 토글 구현 -> 액션바에 있는 돼지바 클릭시 네비게이션 드로어 나타남.
 
-        mDrawerLayout.addDrawerListener(mDrawerToggle);
+        setSupportActionBar(toolbar);
+        ActionBar actionBar = getSupportActionBar();
+        actionBar.setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM); //액션바를 커스터마이징 하기 위해
+        actionBar.setCustomView(R.layout.toolbar_home);
+        actionBar.setElevation(0); //z축 깊이 0으로 설정 하여 그림자 없애기.
 
-        actionBar.setHomeButtonEnabled(true); //툴바에 홈버튼을 표시하겠다.
-        actionBar.setHomeAsUpIndicator(R.drawable.menu); //홈버튼의 이미지를 R.drawable.menu로 설정
-        actionBar.setDisplayHomeAsUpEnabled(true); //홈버튼을 업버튼으로 설정 -> 홈버튼 클릭시 드로어 열림/닫힘 가능.
-        //이렇게 세줄이 있어야 툴바에 돼지바가 표시된다.
+
+        mDrawerLayout.addDrawerListener(mDrawerToggle);
+        actionBar.setHomeAsUpIndicator(R.drawable.menu); //뒤로가 버튼의 이미지를 R.drawable.menu로 설정
 
         /* 페인트보드 잠시 접어두기.
         //페인트보드 내부에서 윈도우 사이즈를 구하기 위해 displayMetrics를 전달//
@@ -75,16 +74,14 @@ public class HomeActivity extends AppCompatActivity {
         mDrawerToggle.syncState();
     }
 
-    @Override
-    public void onConfigurationChanged(Configuration newConfig) {
-        super.onConfigurationChanged(newConfig);
-        mDrawerToggle.onConfigurationChanged(newConfig);
-    }
+//    @Override
+//    public void onConfigurationChanged(Configuration newConfig) {
+//        super.onConfigurationChanged(newConfig);
+//        mDrawerToggle.onConfigurationChanged(newConfig);
+//    }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        if(mDrawerToggle.onOptionsItemSelected(item))
-            return true;
         //여기에 액션바 메뉴 클릭 대한 이벤트를 처리하면 된다.
 
         return super.onOptionsItemSelected(item);

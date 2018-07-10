@@ -9,12 +9,7 @@
         app:showAsAction="always">
 
     </item>-->
-    <item
-        android:id="@+id/menu_filter_setting"
-        android:title="menu_filter_setting"
-        android:icon="@mipmap/rectangle_3"
-        app:showAsAction="always">
-    </item>
+
 
 
 
