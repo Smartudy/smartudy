@@ -1,10 +1,14 @@
 package com.sharewith.smartudy.activity;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.DefaultItemAnimator;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -14,25 +18,33 @@ import android.widget.AutoCompleteTextView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.sharewith.smartudy.directory.QuestionRecyclerAdapter;
 import com.sharewith.smartudy.smartudy.R;
+import com.sharewith.smartudy.utils.Question;
 
 import org.w3c.dom.Text;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class QuestionListActivity extends AppCompatActivity {
 
     private static String[] suggestions = new String[]{"abcdefg","bcdefgh","cdefghi","defghij","efghijk"};
-
+    private RecyclerView recyclerView;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_question_list);
+
+        Intent intent = getIntent();
+        String categoryName = intent.getStringExtra("categoryName");
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true); // 뒤로가기 버튼 활성화
         getSupportActionBar().setDisplayShowHomeEnabled(true);
-        getSupportActionBar().setTitle("Engineering"); // 받는 인텐트의 내용에 따라 이제 달라지도록해야!
+        getSupportActionBar().setTitle(categoryName); // 받는 인텐트의 내용에 따라 이제 달라지도록해야!
 
 
         // 자동완성 검색 창 관련 속성 설정
@@ -40,6 +52,20 @@ public class QuestionListActivity extends AppCompatActivity {
 
         // 플로팅버튼(하단 더하기버튼)의 리스너 등록
         setFloatingActionBtnClickListener();
+
+        recyclerView=(RecyclerView)findViewById(R.id.recyclerView);
+        List<Question> questionList = new ArrayList<Question>();
+        collectQuestionDataFromDB(categoryName, questionList); // DB에서 해당 과목의 모든 질문을 받아온다.(일단은 임의 데이터)
+        recyclerView.setAdapter(new QuestionRecyclerAdapter(questionList, R.layout.question_row_layout));
+        recyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
+        recyclerView.setItemAnimator(new DefaultItemAnimator());
+    }
+
+    public void collectQuestionDataFromDB(String categoryName, List<Question> list){
+        for(int i=0;i<10;i++){
+            Question question=new Question("title", "content");
+            list.add(question);
+        }
     }
 
     @Override
@@ -47,25 +73,25 @@ public class QuestionListActivity extends AppCompatActivity {
         getMenuInflater().inflate(R.menu.menu_quesiont_list, menu);
         return super.onCreateOptionsMenu(menu);
     }
-
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-//        switch (item.getItemId()){
-//            case R.id.menu_filter_setting:
-//                Toast.makeText(this, "filter", Toast.LENGTH_SHORT).show();
-//                break;
-//            default:
-//                break;
-//        }
-        return true;
-    }
 
+        switch (item.getItemId()){
+            //case android.R.id.home:
+
+            case R.id.menu_filter_setting:
+                Toast.makeText(this, "filter", Toast.LENGTH_SHORT).show();
+                break;
+            default:
+                break;
+        }
+        return super.onOptionsItemSelected(item);
+    }
     @Override
     public boolean onSupportNavigateUp() {
         onBackPressed();
         return true;
     }
-
     public void setAutoCompleteTextViewAttrs(){
         AutoCompleteTextView actv = (AutoCompleteTextView)findViewById(R.id.autoCompleteTextView);
         ArrayAdapter<String>adapter = new ArrayAdapter<String>(this, android.R.layout.simple_dropdown_item_1line, suggestions);

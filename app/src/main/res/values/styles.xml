@@ -20,6 +20,13 @@
         <item name="android:fontFamily">@font/nanumsquareb</item>
     </style>
 
+    <!-- 여기 왜?? -->
+    <style name="ToolbarStyle" parent="@style/ThemeOverlay.AppCompat.ActionBar">
+        <item name="android:background">@color/colorBackGround</item>
+        <item name="colorControlNormal">#000000</item>
+        <item name="android:fontFamily">@font/nanumsquareb</item>
+    </style>
+
 
 
 </resources>

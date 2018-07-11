@@ -93,17 +93,18 @@ public class HomeActivity extends AppCompatActivity {
     }
 
     public void setCategoryClickListener(){
-        final String[] categories = {"인문", "사회", "교육", "공학", "자연", "의학", "예체능", "8번째과목(미정)", "9번째과목(미정)"};
+        final String[] categories = {"Humanities", "Sociology", "Education", "Engineering", "Natural science", "Medical science", "Art&Physical studies", "8번째과목(미정)", "9번째과목(미정)"};
         for(int i=0;i<9;i++){
             final int idx = i;
             ImageButton btn = (ImageButton)findViewById(getResources().getIdentifier("ImageButton"+Integer.toString(i),"id",getPackageName()));
             btn.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Snackbar.make(v, categories[idx], Snackbar.LENGTH_LONG).setAction("Action", null).show();
+                    // Snackbar.make(v, categories[idx], Snackbar.LENGTH_LONG).setAction("Action", null).show();
                     // TODO : 선택 시 각 과목에 맞는 질문목록창으로 넘어가야한다. 재플린3번화면 xml 구성 후 다시 작업예정
-                    //Intent intent = new Intent(getApplicationContext(), QuestionListActivity.class);
-                    Intent intent = new Intent(getApplicationContext(),LoginActivity.class);
+                    Intent intent = new Intent(getApplicationContext(), QuestionListActivity.class);
+                    //Intent intent = new Intent(getApplicationContext(),LoginActivity.class);
+                    intent.putExtra("categoryName", categories[idx]);
                     startActivity(intent);
                 }
             });
