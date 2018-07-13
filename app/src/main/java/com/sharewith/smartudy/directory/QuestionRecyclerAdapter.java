@@ -40,6 +40,10 @@ public class QuestionRecyclerAdapter extends RecyclerView.Adapter<QuestionRecycl
         Question question = questionList.get(position);
         viewHolder.q_title.setText(question.getQ_title());
         viewHolder.q_content.setText(question.getQ_content());
+        viewHolder.q_hashtag.setText(question.getQ_hashtag());
+        viewHolder.q_price.setText(Integer.toString(question.getQ_price()));
+        // TODO: 실제로 남은 시간 계산해서 넣어야함
+        viewHolder.q_remaining_time.setText("4h 23m");
     }
 
     @Override
@@ -48,13 +52,15 @@ public class QuestionRecyclerAdapter extends RecyclerView.Adapter<QuestionRecycl
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder{
-        public TextView q_title;
-        public TextView q_content;
+        public TextView q_title, q_content, q_hashtag, q_price, q_remaining_time;
         public ViewHolder(View itemView){
             super(itemView);
 
             q_title=(TextView)itemView.findViewById(R.id.textview_question_title);
             q_content=(TextView)itemView.findViewById(R.id.textview_question_content);
+            q_hashtag=(TextView)itemView.findViewById(R.id.textview_question_hashtag);
+            q_price=(TextView)itemView.findViewById(R.id.textview_question_price);
+            q_remaining_time=(TextView)itemView.findViewById(R.id.textview_question_remaining_time);
         }
     }
 }

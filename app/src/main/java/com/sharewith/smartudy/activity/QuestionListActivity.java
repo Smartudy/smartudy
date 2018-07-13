@@ -25,6 +25,7 @@ import com.sharewith.smartudy.utils.Question;
 import org.w3c.dom.Text;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 public class QuestionListActivity extends AppCompatActivity {
@@ -63,7 +64,13 @@ public class QuestionListActivity extends AppCompatActivity {
 
     public void collectQuestionDataFromDB(String categoryName, List<Question> list){
         for(int i=0;i<10;i++){
-            Question question=new Question("title", "content");
+            Question question=new Question(
+                    "배열수식 도와주세요",
+                    "구글링해서 어떤 IR Table을 찾아봐도 \n아세틸기의 wavenum ber는 ",
+                    "#재료공학 #건축공학 #환경공학",
+                    12,
+                    new Date()
+            );
             list.add(question);
         }
     }

@@ -11,10 +11,10 @@ import java.util.Date;
 public class Question {
     private String q_title;
     private String q_content;
-//    private String[] q_hashtag_array;
-//    private int q_price;
-//    private Date q_due_time;
-//    private Image q_image;
+    private String q_hashtag;
+    private int q_price;
+    private Date q_due_time;
+    //private Image q_image;
 
 //    public Question(String q_title, String q_content, String[] q_hashtag_array, int q_price, Date q_due_time, Image q_image) {
 //        this.q_title = q_title;
@@ -25,10 +25,17 @@ public class Question {
 //        this.q_image = q_image;
 //    }
 
-
     public Question(String q_title, String q_content) {
         this.q_title = q_title;
         this.q_content = q_content;
+    }
+
+    public Question(String q_title, String q_content, String q_hashtag, int q_price, Date q_due_time) {
+        this.q_title = q_title;
+        this.q_content = q_content;
+        this.q_hashtag = q_hashtag;
+        this.q_price = q_price;
+        this.q_due_time = q_due_time;
     }
 
     public String getQ_title() {
@@ -46,13 +53,13 @@ public class Question {
     public void setQ_content(String q_content) {
         this.q_content = q_content;
     }
-/*
-    public String[] getQ_hashtag_array() {
-        return q_hashtag_array;
+
+    public String getQ_hashtag() {
+        return q_hashtag;
     }
 
-    public void setQ_hashtag_array(String[] q_hashtag_array) {
-        this.q_hashtag_array = q_hashtag_array;
+    public void setQ_hashtag(String q_hashtag) {
+        this.q_hashtag = q_hashtag;
     }
 
     public int getQ_price() {
@@ -70,13 +77,4 @@ public class Question {
     public void setQ_due_time(Date q_due_time) {
         this.q_due_time = q_due_time;
     }
-
-    public Image getQ_image() {
-        return q_image;
-    }
-
-    public void setQ_image(Image q_image) {
-        this.q_image = q_image;
-    }
-    */
 }
