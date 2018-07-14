@@ -7,5 +7,6 @@
     <string name="open_drawer">Open Drawer </string>
     <string name="close_drawer">Close Drawer </string>
     <string name="title_activity_question_list">QuestionListActivity</string>
+    <string name="title_activity_filter">FilterActivity</string>
 
 </resources>

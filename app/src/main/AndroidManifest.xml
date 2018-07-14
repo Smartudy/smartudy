@@ -25,7 +25,11 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.sharewith.smartudy.activity.HomeActivity" />
         </activity>
-        <activity android:name="com.sharewith.smartudy.activity.LoginActivity"></activity>
+        <activity android:name="com.sharewith.smartudy.activity.LoginActivity" />
+        <activity
+            android:name="com.sharewith.smartudy.activity.FilterActivity"
+            android:label="@string/title_activity_filter"
+            android:theme="@style/AppTheme"></activity>
     </application>
 
 </manifest>

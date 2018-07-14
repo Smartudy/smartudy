@@ -45,7 +45,7 @@ public class QuestionListActivity extends AppCompatActivity {
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true); // 뒤로가기 버튼 활성화
         getSupportActionBar().setDisplayShowHomeEnabled(true);
-        getSupportActionBar().setTitle(categoryName); // 받는 인텐트의 내용에 따라 이제 달라지도록해야!
+        getSupportActionBar().setTitle(categoryName);
 
 
         // 자동완성 검색 창 관련 속성 설정
@@ -87,7 +87,9 @@ public class QuestionListActivity extends AppCompatActivity {
             //case android.R.id.home:
 
             case R.id.menu_filter_setting:
-                Toast.makeText(this, "filter", Toast.LENGTH_SHORT).show();
+                //Toast.makeText(this, "filter", Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(getApplicationContext(), FilterActivity.class);
+                startActivity(intent);
                 break;
             default:
                 break;

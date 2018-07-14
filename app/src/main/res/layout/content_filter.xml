@@ -1,0 +1,245 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+    tools:context="com.sharewith.smartudy.activity.FilterActivity"
+    tools:showIn="@layout/activity_filter"
+    android:orientation="vertical"
+    android:weightSum="100"
+    android:padding="16dp">
+
+    <!-- 정렬 15 -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="15"
+        android:orientation="vertical">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="정렬"
+            android:layout_marginBottom="8dp"/>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <RadioGroup
+                android:id="@+id/radiogroup_filter"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+                <RadioButton
+                    android:id="@+id/radiobtn_filter_newest"
+                    android:layout_width="72dp"
+                    android:layout_height="28dp"
+                    android:background="@drawable/btn_round_green_background"
+                    android:text="최신순"
+                    android:checked="true"
+                    android:gravity="center"
+                    android:textSize="14sp"
+                    android:textColor="#f9f9f9"
+                    android:letterSpacing="0.01"
+                    android:lineSpacingExtra="-2sp"
+                    android:button="@android:color/transparent"
+                    android:layout_marginRight="8dp"/>
+                <RadioButton
+                    android:id="@+id/radiobtn_filter_price"
+                    android:layout_width="72dp"
+                    android:layout_height="28dp"
+                    android:background="@drawable/btn_round_white_background"
+                    android:text="가격순"
+                    android:checked="false"
+                    android:gravity="center"
+                    android:textSize="14sp"
+                    android:textColor="#575757"
+                    android:letterSpacing="0.01"
+                    android:lineSpacingExtra="-2sp"
+                    android:button="@android:color/transparent"
+                    android:layout_marginRight="8dp"/>
+                <RadioButton
+                    android:id="@+id/radiobtn_filter_oldest"
+                    android:layout_width="72dp"
+                    android:layout_height="28dp"
+                    android:background="@drawable/btn_round_white_background"
+                    android:text="마감일순"
+                    android:checked="false"
+                    android:gravity="center"
+                    android:textSize="14sp"
+                    android:textColor="#575757"
+                    android:letterSpacing="0.01"
+                    android:lineSpacingExtra="-2sp"
+                    android:button="@android:color/transparent"
+                    android:layout_marginRight="8dp"/>
+
+            </RadioGroup>
+
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <!-- 과목명 30 -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="15"
+        android:orientation="vertical">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="과목명"
+            android:layout_marginBottom="8dp"/>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <Button
+                android:id="@+id/btn_filter_add_subject"
+                android:layout_width="100dp"
+                android:layout_height="28dp"
+                android:background="@drawable/btn_round_blue_background"
+                android:text="+ 과목추가"
+                android:checked="false"
+                android:gravity="center"
+                android:textSize="14sp"
+                android:textColor="@color/colorBackGround"
+                android:letterSpacing="0.01"
+                android:lineSpacingExtra="-2sp"
+                android:button="@android:color/transparent"
+                android:layout_marginRight="8dp"/>
+
+        </LinearLayout>
+
+
+    </LinearLayout>
+
+    <!-- 해쉬태그 45 -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="15"
+        android:orientation="vertical">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="해쉬태그"
+            android:layout_marginBottom="8dp"/>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <Button
+                android:id="@+id/btn_filter_add_hashtag"
+                android:layout_width="126dp"
+                android:layout_height="28dp"
+                android:background="@drawable/btn_round_blue_background"
+                android:text="+ 해쉬태그 추가"
+                android:checked="false"
+                android:gravity="center"
+                android:textSize="14sp"
+                android:textColor="@color/colorBackGround"
+                android:letterSpacing="0.01"
+                android:lineSpacingExtra="-2sp"
+                android:button="@android:color/transparent"
+                android:layout_marginRight="8dp" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <!-- 금액 60 -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="15"
+        android:orientation="vertical">
+
+        <android.support.constraint.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="금액"
+                app:layout_constraintLeft_toLeftOf="parent"/>
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintRight_toRightOf="parent"
+                android:orientation="horizontal">
+                <ImageView
+                    android:layout_width="18dp"
+                    android:layout_height="18dp"
+                    android:src="@drawable/coin"
+                    android:layout_marginRight="8dp"/>
+                <TextView
+                    android:id="@+id/textview_filter_min_price"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="100"
+                    android:fontFamily="@font/nanumsquareb"
+                    android:textSize="15sp"
+                    android:letterSpacing="0.28"
+                    android:textColor="@color/colorBlack"
+                    android:textStyle="bold"/>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="-"
+                    android:fontFamily="@font/nanumsquareb"
+                    android:textSize="15sp"
+                    android:letterSpacing="0.28"
+                    android:textColor="@color/colorBlack"
+                    android:textStyle="bold"/>
+                <TextView
+                    android:id="@+id/textview_filter_max_price"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="200"
+                    android:fontFamily="@font/nanumsquareb"
+                    android:textSize="15sp"
+                    android:letterSpacing="0.28"
+                    android:textColor="@color/colorBlack"
+                    android:textStyle="bold"/>
+            </LinearLayout>
+        </android.support.constraint.ConstraintLayout>
+
+        <SeekBar
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1" />
+
+
+
+    </LinearLayout>
+
+    <!-- 기타 80 -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="20">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="기타"
+            android:layout_marginBottom="8dp"/>
+
+    </LinearLayout>
+
+    <!-- 공백 85 -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="5">
+    </LinearLayout>
+
+    <!-- 버튼 100 -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="15">
+
+
+    </LinearLayout>
+</LinearLayout>
