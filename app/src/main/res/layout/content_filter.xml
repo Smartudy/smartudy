@@ -36,6 +36,7 @@
                     android:layout_height="28dp"
                     android:background="@drawable/btn_round_green_background"
                     android:text="최신순"
+                    android:fontFamily="@font/nanumsquareb"
                     android:checked="true"
                     android:gravity="center"
                     android:textSize="14sp"
@@ -50,6 +51,7 @@
                     android:layout_height="28dp"
                     android:background="@drawable/btn_round_white_background"
                     android:text="가격순"
+                    android:fontFamily="@font/nanumsquareb"
                     android:checked="false"
                     android:gravity="center"
                     android:textSize="14sp"
@@ -64,6 +66,7 @@
                     android:layout_height="28dp"
                     android:background="@drawable/btn_round_white_background"
                     android:text="마감일순"
+                    android:fontFamily="@font/nanumsquareb"
                     android:checked="false"
                     android:gravity="center"
                     android:textSize="14sp"
@@ -100,6 +103,7 @@
                 android:layout_height="28dp"
                 android:background="@drawable/btn_round_blue_background"
                 android:text="+ 과목추가"
+                android:fontFamily="@font/nanumsquareb"
                 android:checked="false"
                 android:gravity="center"
                 android:textSize="14sp"
@@ -134,6 +138,7 @@
                 android:layout_height="28dp"
                 android:background="@drawable/btn_round_blue_background"
                 android:text="+ 해쉬태그 추가"
+                android:fontFamily="@font/nanumsquareb"
                 android:checked="false"
                 android:gravity="center"
                 android:textSize="14sp"
@@ -157,7 +162,7 @@
         <android.support.constraint.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="8dp">
+            android:layout_marginBottom="24dp">
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -180,7 +185,7 @@
                     android:text="100"
                     android:fontFamily="@font/nanumsquareb"
                     android:textSize="15sp"
-                    android:letterSpacing="0.28"
+                    android:letterSpacing="0.01"
                     android:textColor="@color/colorBlack"
                     android:textStyle="bold"/>
                 <TextView
@@ -189,7 +194,7 @@
                     android:text="-"
                     android:fontFamily="@font/nanumsquareb"
                     android:textSize="15sp"
-                    android:letterSpacing="0.28"
+                    android:letterSpacing="0.01"
                     android:textColor="@color/colorBlack"
                     android:textStyle="bold"/>
                 <TextView
@@ -199,16 +204,17 @@
                     android:text="200"
                     android:fontFamily="@font/nanumsquareb"
                     android:textSize="15sp"
-                    android:letterSpacing="0.28"
+                    android:letterSpacing="0.01"
                     android:textColor="@color/colorBlack"
                     android:textStyle="bold"/>
             </LinearLayout>
         </android.support.constraint.ConstraintLayout>
 
         <SeekBar
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1" />
+            android:min="0"
+            android:max="1000"/>
 
 
 
@@ -218,28 +224,60 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="20">
+        android:layout_weight="20"
+        android:orientation="vertical">
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="기타"
             android:layout_marginBottom="8dp"/>
-
+        <RadioGroup
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <RadioButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="  답변 완료된 질문만 보기"
+                android:textSize="14sp"
+                android:letterSpacing="0.05"
+                android:fontFamily="@font/nanumsquarer"
+                android:textColor="#1d1e1f"
+                android:checked="true"
+                android:button="@drawable/checked"
+                android:layout_marginBottom="12dp"/>
+            <RadioButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="  답변 진행중인 질문만 보기"
+                android:textSize="14sp"
+                android:letterSpacing="0.05"
+                android:fontFamily="@font/nanumsquarer"
+                android:textColor="#1d1e1f"
+                android:checked="false"
+                android:button="@drawable/unchecked"/>
+        </RadioGroup>
     </LinearLayout>
 
-    <!-- 공백 85 -->
+    <!-- 공백 90 -->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="5">
+        android:layout_weight="10">
     </LinearLayout>
 
     <!-- 버튼 100 -->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="15">
-
+        android:layout_weight="10">
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:text="설정완료"
+            android:background="@drawable/btn_round_blue_background_radius_6dp"
+            android:textColor="@color/colorWhite"
+            android:textSize="16sp"
+            android:letterSpacing="0.19" />
 
     </LinearLayout>
 </LinearLayout>
