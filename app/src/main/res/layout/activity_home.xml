@@ -11,24 +11,29 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@color/colorWhite">
-
-        <android.support.design.widget.AppBarLayout
+        <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:elevation="0dp">
-
-            <android.support.v7.widget.Toolbar
-                android:id="@+id/toolbar"
+            android:layout_height="wrap_content">
+            <android.support.design.widget.AppBarLayout
+                android:id="@+id/appbar"
                 android:layout_width="match_parent"
-                android:layout_height="?android:attr/actionBarSize"
-                android:background="@color/colorWhite"
-                />
+                android:layout_height="wrap_content"
+                app:elevation="0dp">
 
-        </android.support.design.widget.AppBarLayout>
+               <include layout="@layout/toolbar_home"/>
 
-        <include
-            android:id="@+id/activity_home_content"
-            layout="@layout/activity_home_content" />
+            </android.support.design.widget.AppBarLayout>
+
+
+            <include
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/activity_home_content"
+                layout="@layout/activity_home_content"
+                android:layout_below="@id/appbar"
+                android:layout_marginTop="38dp"/>
+        </RelativeLayout>
+
 
         <android.support.design.widget.FloatingActionButton
             android:id="@+id/home_fab"

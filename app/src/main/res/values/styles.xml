@@ -7,6 +7,9 @@
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorMain</item>
         <item name="toolbarStyle">@style/myToolbarStyle</item>
+        <item name="android:statusBarColor">#ffffff</item>
+        <!--Status Bar 글자색깔-->
+        <item name="android:windowLightStatusBar">true</item>
     </style>
 
     <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
@@ -20,6 +23,35 @@
         <item name="android:fontFamily">@font/nanumsquareb</item>
     </style>
 
+    <!-- QnA창 스타일 -->
+    <style name="QnA_title_style">
+        <item name="android:textSize">18dp</item>
+        <item name="android:fontFamily">@string/main_font</item>
+        <item name="android:textColor">@color/colorWhite</item>
+    </style>
 
+    <style name="QnA_toolbar_style" parent="@style/ThemeOverlay.AppCompat.ActionBar">
+        <!-- Customize color of navigation drawer icon and back arrow -->
+        <item name="colorControlNormal">#ffffff</item>
+    </style>
+
+    <!-- 글쓰기창 스타일 -->
+    <style name="toolbar_write_title_style">
+        <item name="android:textSize">16dp</item>
+        <item name="android:fontFamily">@string/main_font</item>
+        <item name="android:textColor">@color/colorTitle</item>
+    </style>
+
+    <style name="contents_write_style">
+        <item name="android:textSize">14dp</item>
+        <item name="android:fontFamily">@string/sub_r_font</item>
+        <item name="android:textColor">@color/colorTitle</item>
+    </style>
+
+    <style name="bottom_write_style">
+        <item name="android:textSize">10dp</item>
+        <item name="android:fontFamily">@string/sub_r_font</item>
+        <item name="android:textColor">@color/colorTitle</item>
+    </style>
 
 </resources>

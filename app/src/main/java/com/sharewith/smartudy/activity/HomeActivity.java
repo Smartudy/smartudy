@@ -2,7 +2,9 @@ package com.sharewith.smartudy.activity;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.os.PersistableBundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.design.widget.BottomNavigationView;
 import android.support.design.widget.Snackbar;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
@@ -14,6 +16,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageButton;
+import android.widget.Toast;
 
 import com.sharewith.smartudy.directory.PaintBoard;
         import com.sharewith.smartudy.smartudy.R;
@@ -23,7 +26,6 @@ public class HomeActivity extends AppCompatActivity {
 
     private DrawerLayout mDrawerLayout;
     private EndDrawerToggle mDrawerToggle;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,11 +50,11 @@ public class HomeActivity extends AppCompatActivity {
 
         setSupportActionBar(toolbar);
         ActionBar actionBar = getSupportActionBar();
-        actionBar.setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM); //액션바를 커스터마이징 하기 위해
-        actionBar.setCustomView(R.layout.toolbar_home);
-        actionBar.setElevation(0); //z축 깊이 0으로 설정 하여 그림자 없애기.
+//        actionBar.setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM); //액션바를 커스터마이징 하기 위해
+//        actionBar.setCustomView(R.layout.toolbar_home);
+//        actionBar.setElevation(0); //z축 깊이 0으로 설정 하여 그림자 없애기.
 //        actionBar.setDisplayShowHomeEnabled(false);
-//        actionBar.setDisplayShowTitleEnabled(false);
+        actionBar.setDisplayShowTitleEnabled(false);
 
         mDrawerLayout.addDrawerListener(mDrawerToggle);
 
@@ -103,7 +105,7 @@ public class HomeActivity extends AppCompatActivity {
                     Snackbar.make(v, categories[idx], Snackbar.LENGTH_LONG).setAction("Action", null).show();
                     // TODO : 선택 시 각 과목에 맞는 질문목록창으로 넘어가야한다. 재플린3번화면 xml 구성 후 다시 작업예정
                     //Intent intent = new Intent(getApplicationContext(), QuestionListActivity.class);
-                    Intent intent = new Intent(getApplicationContext(),LoginActivity.class);
+                    Intent intent = new Intent(getApplicationContext(),QnAActivity.class);
                     startActivity(intent);
                 }
             });
