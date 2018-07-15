@@ -19,4 +19,6 @@
     <!-- FilterActivity -->
     <color name="textColor">#575757</color>
     <color name="selectedTextColor">#f9f9f9</color>
+    <color name="colorGreen">#35c141</color>
+    <color name="colorGray">#eaeaea</color>
 </resources>
