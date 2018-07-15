@@ -6,7 +6,7 @@
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorMain</item>
-        <item name="toolbarStyle">@style/ToolbarStyle</item>
+        <item name="toolbarStyle">@style/myToolbarStyle</item>
         <!--Status Bar 글자색깔
         <item name="android:statusBarColor">#ffffff</item>
         -->
@@ -14,6 +14,13 @@
     </style>
     <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
     <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
+
+    <style name="myToolbarStyle" parent="@style/Widget.AppCompat.Toolbar">
+        <item name="android:paddingRight">10dp</item>
+        <item name="android:background">@color/colorBackGround</item>
+        <item name="colorControlNormal">#000000</item>
+        <item name="android:fontFamily">@font/nanumsquareb</item>
+    </style>
 
     <!-- QnA창 스타일 -->
     <style name="QnA_title_style">
