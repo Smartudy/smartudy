@@ -4,11 +4,16 @@ import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.sharewith.smartudy.adapter.QnAListAdapter;
 import com.sharewith.smartudy.smartudy.R;
+
+import java.util.List;
 
 
 /**
@@ -19,12 +24,12 @@ import com.sharewith.smartudy.smartudy.R;
  * Use the {@link QnAListFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class QnAListFragment extends Fragment {
+public class QnAListFragment extends Fragment { //뷰페이저의 1페이지에 해당하는 리싸이클러뷰
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
-
+    private RecyclerView mRecyclerView;
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
@@ -62,11 +67,23 @@ public class QnAListFragment extends Fragment {
         }
     }
 
+    public void scroll(int position){
+        LinearLayoutManager llm = (LinearLayoutManager)mRecyclerView.getLayoutManager();
+        if(position != 0)
+            llm.scrollToPositionWithOffset(position,-65); //패딩20들어간거빼줌.
+        else
+            llm.scrollToPositionWithOffset(position,0);
+    }
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_qna_list, container, false);
+        View view = inflater.inflate(R.layout.fragment_qna_list, container, false);
+        mRecyclerView = view.findViewById(R.id.qna_recycler_view);
+        QnAListAdapter listadapter = new QnAListAdapter();
+        mRecyclerView.setAdapter(listadapter);
+        return view;
     }
 
     // TODO: Rename method, update argument and hook method into UI event

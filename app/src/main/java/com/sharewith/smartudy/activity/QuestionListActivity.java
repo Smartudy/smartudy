@@ -1,7 +1,6 @@
 package com.sharewith.smartudy.activity;
 
 import android.content.Intent;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -15,14 +14,10 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
-import android.widget.TextView;
-import android.widget.Toast;
 
-import com.sharewith.smartudy.directory.QuestionRecyclerAdapter;
+import com.sharewith.smartudy.adapter.QuestionRecyclerAdapter;
 import com.sharewith.smartudy.smartudy.R;
 import com.sharewith.smartudy.utils.Question;
-
-import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 import java.util.Date;

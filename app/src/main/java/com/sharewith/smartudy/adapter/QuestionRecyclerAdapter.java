@@ -1,5 +1,6 @@
-package com.sharewith.smartudy.directory;
+package com.sharewith.smartudy.adapter;
 
+import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -7,10 +8,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.sharewith.smartudy.activity.QnAActivity;
 import com.sharewith.smartudy.utils.Question;
 import com.sharewith.smartudy.smartudy.R;
-
-import org.w3c.dom.Text;
 
 import java.util.List;
 
@@ -55,6 +55,13 @@ public class QuestionRecyclerAdapter extends RecyclerView.Adapter<QuestionRecycl
         public TextView q_title, q_content, q_hashtag, q_price, q_remaining_time;
         public ViewHolder(View itemView){
             super(itemView);
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent = new Intent(v.getContext(), QnAActivity.class);
+                    v.getContext().startActivity(intent);
+                }
+            });
 
             q_title=(TextView)itemView.findViewById(R.id.textview_question_title);
             q_content=(TextView)itemView.findViewById(R.id.textview_question_content);

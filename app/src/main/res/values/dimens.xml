@@ -18,4 +18,11 @@
     <dimen name="login_input_height">44dp</dimen>
     <dimen name="login_input_padding">14dp</dimen>
     <dimen name="login_radius">6dp</dimen>
+
+    <!--QnA Activity-->
+    <dimen name="QnA_AppBar_height">98dp</dimen>
+    <dimen name="QnA_tab_margin_top">5dp</dimen>
+    <dimen name="QnA_list_content_lr_margin">16dp</dimen>
+    <dimen name="QnA_Content_Width">380dp</dimen>
+    <dimen name="QnA_Content_Start_Margin_Top">60dp</dimen>
 </resources>

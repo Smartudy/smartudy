@@ -4,14 +4,13 @@ import android.graphics.Color;
 import android.net.Uri;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.view.WindowManager;
+import android.widget.LinearLayout;
 
 import com.sharewith.smartudy.fragment.QnAListFragment;
 import com.sharewith.smartudy.fragment.WriteDrawFragment;
@@ -22,7 +21,7 @@ import com.sharewith.smartudy.fragment.WriteShotFragment;
 import com.sharewith.smartudy.fragment.WriteTextFragment;
 import com.sharewith.smartudy.smartudy.R;
 import com.sharewith.smartudy.utils.CustomViewPager;
-import com.sharewith.smartudy.utils.WriteFragmentPagerAdapter;
+import com.sharewith.smartudy.adapter.WriteFragmentPagerAdapter;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -38,13 +37,14 @@ public class QnAActivity extends AppCompatActivity implements WriteDrawFragment.
     private WriteFragment mWriteFragment;
     private QnAListFragment mQnAListFragment;
     private List<Fragment> datas;
-
+    private LinearLayout mLinear;
     private void setMember(){
         datas = new ArrayList<Fragment>();
         mTabLayout = findViewById(R.id.write_tablayout);
         mToolbar = findViewById(R.id.write_tooblar);
         mWriteFragment = new WriteFragment();
         mQnAListFragment = QnAListFragment.newInstance(null,null);
+        mLinear = findViewById(R.id.qna_linear);
     }
 
     private void setTabLayout(){
@@ -82,10 +82,14 @@ public class QnAActivity extends AppCompatActivity implements WriteDrawFragment.
                 int position = tab.getPosition();
                 int Tabcount = mTabLayout.getTabCount();
                 if(position==Tabcount-1){
+                    mLinear.setVisibility(View.GONE);
                     mViewPager.setCurrentItem(Tabcount-1,true);
-                }else if(position == 0){
+                }else{
+                    mLinear.setVisibility(View.VISIBLE);
                     mViewPager.setCurrentItem(0,true);
+                    mQnAListFragment.scroll(position);
                 }
+
             }
 
             @Override

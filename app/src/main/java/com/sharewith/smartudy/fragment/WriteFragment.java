@@ -1,18 +1,12 @@
 package com.sharewith.smartudy.fragment;
 
 import android.content.Context;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
-import android.support.v4.view.ViewPager;
-import android.support.v7.app.ActionBar;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -20,17 +14,7 @@ import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 
-import com.aurelhubert.ahbottomnavigation.AHBottomNavigation;
-import com.aurelhubert.ahbottomnavigation.AHBottomNavigationItem;
-import com.sharewith.smartudy.fragment.WriteDrawFragment;
-import com.sharewith.smartudy.fragment.WritePictureFragment;
-import com.sharewith.smartudy.fragment.WriteRecordFragment;
-import com.sharewith.smartudy.fragment.WriteShotFragment;
-import com.sharewith.smartudy.fragment.WriteTextFragment;
 import com.sharewith.smartudy.smartudy.R;
-import com.sharewith.smartudy.utils.WriteFragmentPagerAdapter;
-
-import java.util.List;
 
 public class WriteFragment extends Fragment{
 

@@ -33,7 +33,7 @@
         <activity android:name="com.sharewith.smartudy.activity.QnAActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.sharewith.smartudy.activity.HomeActivity" />
+                android:value="com.sharewith.smartudy.activity.QuestionListActivity" />
         </activity>
         <activity
             android:name="com.sharewith.smartudy.activity.FilterActivity"

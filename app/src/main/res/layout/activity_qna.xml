@@ -5,45 +5,60 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#f9f9f9"
     tools:context="com.sharewith.smartudy.activity.QnAActivity">
 
-    <android.support.design.widget.AppBarLayout
-        android:id="@+id/activity_write_appbar"
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentTop="true"
-        android:fitsSystemWindows="true"
-        app:elevation="0dp">
+        android:layout_height="match_parent">
 
-        <LinearLayout
+        <android.support.design.widget.AppBarLayout
+            android:id="@+id/activity_qna_appbar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@color/colorMain"
-            android:orientation="horizontal">
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
+            android:fitsSystemWindows="true"
+            app:elevation="0dp">
 
-            <include
-                android:id="@+id/write_tooblar"
-                layout="@layout/toolbar_write" />
-
-            <android.support.design.widget.TabLayout
-                android:id="@+id/write_tablayout"
-                android:layout_width="wrap_content"
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                app:tabMode="scrollable"
-                app:tabSelectedTextColor="@color/colorWhite"
-                app:tabTextAppearance="@style/QnA_title_style"
-                app:tabTextColor="#88ffffff">
+                android:background="@color/colorMain"
+                android:orientation="horizontal">
 
-            </android.support.design.widget.TabLayout>
-        </LinearLayout>
-    </android.support.design.widget.AppBarLayout>
+                <include
+                    android:id="@+id/write_tooblar"
+                    layout="@layout/toolbar_write" />
 
-    <com.sharewith.smartudy.utils.CustomViewPager
-        android:id="@+id/write_viewpager"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior" />
+                <android.support.design.widget.TabLayout
+                    android:id="@+id/write_tablayout"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/QnA_tab_margin_top"
+                    android:layout_gravity="top"
+                    app:tabMode="scrollable"
+                    app:tabSelectedTextColor="@color/colorWhite"
+                    app:tabTextAppearance="@style/QnA_title_style"
+                    app:tabTextColor="#88ffffff">
 
+                </android.support.design.widget.TabLayout>
+            </LinearLayout>
+        </android.support.design.widget.AppBarLayout>
+
+        <LinearLayout
+            android:id="@+id/qna_linear"
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="24dp"
+            android:layout_below="@id/activity_qna_appbar"
+            android:background="@color/colorMain"/>
+        <com.sharewith.smartudy.utils.CustomViewPager
+            android:id="@+id/write_viewpager"
+            android:layout_width="@dimen/QnA_Content_Width"
+            android:layout_height="match_parent"
+            android:layout_centerHorizontal="true"
+            android:layout_below="@id/activity_qna_appbar"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior" />
+    </RelativeLayout>
 </android.support.design.widget.CoordinatorLayout>
