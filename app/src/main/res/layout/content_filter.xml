@@ -94,29 +94,35 @@
             android:layout_height="wrap_content"
             android:text="과목명"
             android:layout_marginBottom="8dp"/>
-        <LinearLayout
-            android:id="@+id/linear_layout_filter_subject"
+
+        <HorizontalScrollView
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
-            <Button
-                android:id="@+id/btn_filter_add_subject"
-                android:layout_width="100dp"
+            android:layout_height="28dp"
+            android:scrollbarThumbHorizontal="@android:color/transparent">
+            <LinearLayout
+                android:id="@+id/linear_layout_filter_subject"
+                android:layout_width="match_parent"
                 android:layout_height="28dp"
-                android:background="@drawable/btn_round_blue_background"
-                android:text="+ 과목추가"
-                android:fontFamily="@font/nanumsquareb"
-                android:checked="false"
-                android:gravity="center"
-                android:textSize="14sp"
-                android:textColor="@color/colorBackGround"
-                android:letterSpacing="0.01"
-                android:lineSpacingExtra="-2sp"
-                android:button="@android:color/transparent"
-                android:layout_marginRight="8dp"/>
+                android:orientation="horizontal">
+                <Button
+                    android:id="@+id/btn_filter_add_subject"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@drawable/btn_round_blue_background"
+                    android:button="@android:color/transparent"
+                    android:checked="false"
+                    android:fontFamily="@font/nanumsquareb"
+                    android:gravity="center"
+                    android:letterSpacing="0.01"
+                    android:lineSpacingExtra="-2sp"
+                    android:paddingLeft="16dp"
+                    android:paddingRight="16dp"
+                    android:text="+ 과목추가"
+                    android:textColor="@color/colorBackGround"
+                    android:textSize="14sp" />
 
-        </LinearLayout>
-
+            </LinearLayout>
+        </HorizontalScrollView>
 
     </LinearLayout>
 
@@ -131,27 +137,30 @@
             android:layout_height="wrap_content"
             android:text="해쉬태그"
             android:layout_marginBottom="8dp"/>
-        <LinearLayout
+        <HorizontalScrollView
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-            <Button
-                android:id="@+id/btn_filter_add_hashtag"
-                android:layout_width="126dp"
-                android:layout_height="28dp"
-                android:background="@drawable/btn_round_blue_background"
-                android:text="+ 해쉬태그 추가"
-                android:fontFamily="@font/nanumsquareb"
-                android:checked="false"
-                android:gravity="center"
-                android:textSize="14sp"
-                android:textColor="@color/colorBackGround"
-                android:letterSpacing="0.01"
-                android:lineSpacingExtra="-2sp"
-                android:button="@android:color/transparent"
-                android:layout_marginRight="8dp" />
+            android:layout_height="28dp">
+            <LinearLayout
+                android:id="@+id/linear_layout_filter_hashtag"
+                android:layout_width="match_parent"
+                android:layout_height="28dp">
+                <Button
+                    android:id="@+id/btn_filter_add_hashtag"
+                    android:layout_width="126dp"
+                    android:layout_height="match_parent"
+                    android:background="@drawable/btn_round_blue_background"
+                    android:text="+ 해쉬태그 추가"
+                    android:fontFamily="@font/nanumsquareb"
+                    android:checked="false"
+                    android:gravity="center"
+                    android:textSize="14sp"
+                    android:textColor="@color/colorBackGround"
+                    android:letterSpacing="0.01"
+                    android:lineSpacingExtra="-2sp"
+                    android:button="@android:color/transparent"/>
 
-        </LinearLayout>
-
+            </LinearLayout>
+        </HorizontalScrollView>
     </LinearLayout>
 
     <!-- 금액 60 -->

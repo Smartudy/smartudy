@@ -58,5 +58,9 @@
         <item name="android:fontFamily">@string/sub_r_font</item>
         <item name="android:textColor">@color/colorTitle</item>
     </style>
+    
+    <style name="myDialog" parent="Theme.AppCompat.Dialog">
+        <item name="android:windowNoTitle">true</item>
+    </style>
 
 </resources>
