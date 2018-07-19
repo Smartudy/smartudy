@@ -15,6 +15,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.Toast;
 
@@ -30,8 +31,18 @@ public class HomeActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
         setContentView(R.layout.activity_home);
+
+        // TODO: 임시 로그인 창 이동용 버튼. 수정해야한다!
+        ((Button)findViewById(R.id.btn_home_login)).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
+                startActivity(intent);
+            }
+        });
+        // TODO: 여기까지!!
+
         Toolbar toolbar = (Toolbar)findViewById(R.id.toolbar);
         mDrawerLayout= (DrawerLayout)findViewById(R.id.home_drawer);
 

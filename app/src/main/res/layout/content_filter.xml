@@ -21,7 +21,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="정렬"
-            android:layout_marginBottom="8dp"/>
+            android:layout_marginBottom="8dp"
+            android:fontFamily="@font/nanumsquareb"/>
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
@@ -93,7 +94,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="과목명"
-            android:layout_marginBottom="8dp"/>
+            android:layout_marginBottom="8dp"
+            android:fontFamily="@font/nanumsquareb"/>
 
         <HorizontalScrollView
             android:layout_width="match_parent"
@@ -136,7 +138,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="해쉬태그"
-            android:layout_marginBottom="8dp"/>
+            android:layout_marginBottom="8dp"
+            android:fontFamily="@font/nanumsquareb"/>
         <HorizontalScrollView
             android:layout_width="match_parent"
             android:layout_height="28dp">
@@ -178,6 +181,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="금액"
+                android:fontFamily="@font/nanumsquareb"
                 app:layout_constraintLeft_toLeftOf="parent" />
 
             <LinearLayout
@@ -256,7 +260,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="기타"
-            android:layout_marginBottom="8dp"/>
+            android:layout_marginBottom="8dp"
+            android:fontFamily="@font/nanumsquareb"/>
         <RadioGroup
             android:id="@+id/radiogroup_etc"
             android:layout_width="match_parent"
@@ -301,12 +306,13 @@
         android:layout_weight="10">
         <Button
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="48dp"
             android:text="설정완료"
             android:background="@drawable/btn_round_blue_background_radius_6dp"
             android:textColor="@color/colorWhite"
             android:textSize="16sp"
-            android:letterSpacing="0.19" />
+            android:letterSpacing="0.19"
+            android:fontFamily="@font/nanumsquareb"/>
 
     </LinearLayout>
 </LinearLayout>

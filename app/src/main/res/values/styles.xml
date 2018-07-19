@@ -12,7 +12,10 @@
         -->
         <item name="android:windowLightStatusBar">true</item>
     </style>
+
+
     <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
+
     <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 
     <style name="myToolbarStyle" parent="@style/Widget.AppCompat.Toolbar">
@@ -58,7 +61,7 @@
         <item name="android:fontFamily">@string/sub_r_font</item>
         <item name="android:textColor">@color/colorTitle</item>
     </style>
-    
+
     <style name="myDialog" parent="Theme.AppCompat.Dialog">
         <item name="android:windowNoTitle">true</item>
     </style>
