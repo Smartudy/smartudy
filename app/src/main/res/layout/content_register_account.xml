@@ -38,7 +38,7 @@
             android:singleLine="true"
             android:textColor="@color/colorBlack"
             android:textColorHint="@color/Home_Text_Color"
-            android:textSize="14sp" />
+            android:textSize="14sp"/>
     </LinearLayout>
 
     <!-- 학과선택 45 -->
