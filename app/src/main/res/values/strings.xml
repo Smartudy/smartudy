@@ -14,5 +14,6 @@
     <string name="title_activity_authentication">AuthenticationActivity</string>
     <string name="title_activity_final_authentication">FinalAuthenticationActivity</string>
     <string name="title_activity_register_account">RegisterAccountActivity</string>
+    <string name="title_activity_find_password">FindPasswordActivity</string>
 
 </resources>
