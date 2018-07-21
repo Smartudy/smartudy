@@ -38,6 +38,18 @@
         <activity
             android:name="com.sharewith.smartudy.activity.FilterActivity"
             android:label="@string/title_activity_filter"
+            android:theme="@style/AppTheme" />
+        <activity
+            android:name="com.sharewith.smartudy.activity.AuthenticationActivity"
+            android:label="@string/title_activity_authentication"
+            android:theme="@style/AppTheme" />
+        <activity
+            android:name="com.sharewith.smartudy.activity.FinalAuthenticationActivity"
+            android:label="@string/title_activity_final_authentication"
+            android:theme="@style/AppTheme" />
+        <activity
+            android:name="com.sharewith.smartudy.activity.RegisterAccountActivity"
+            android:label="@string/title_activity_register_account"
             android:theme="@style/AppTheme"></activity>
     </application>
 

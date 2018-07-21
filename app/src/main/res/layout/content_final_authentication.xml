@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+    tools:context="com.sharewith.smartudy.activity.FinalAuthenticationActivity"
+    tools:showIn="@layout/activity_final_authentication"
+    android:padding="16dp"
+    android:orientation="vertical">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="44dp"
+        android:orientation="horizontal"
+        android:weightSum="100"
+        android:layout_marginBottom="5dp">
+        <EditText
+            android:id="@+id/textview_final_authentication_auth_digit"
+            android:layout_width="0dp"
+            android:layout_weight="80"
+            android:layout_height="match_parent"
+            android:hint="인증번호"
+            android:textSize="14sp"
+            android:textColor="@color/colorBlack"
+            android:letterSpacing="0.02"
+            android:fontFamily="@font/nanumsquareb"
+            android:textColorHint="@color/Home_Text_Color"
+            android:background="@drawable/edittext_round_white_background_radius_6dp"
+            android:paddingLeft="16dp"
+            android:paddingRight="16dp"
+            android:layout_marginRight="15dp"
+            android:inputType="numberDecimal" />
+
+        <Button
+            android:id="@+id/btn_final_authentication_retransmit"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="20"
+            android:background="@drawable/btn_round_blue_background_radius_6dp"
+            android:textColor="@color/colorWhite"
+            android:fontFamily="@font/nanumsquareb"
+            android:textSize="14sp"
+            android:letterSpacing="0.02"
+            android:text="재전송"/>
+    </LinearLayout>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="5dp"
+        android:text="(남은시간 2분 40초)"
+        android:gravity="center_horizontal"
+        android:textColor="#ee0000"
+        android:fontFamily="@font/nanumsquarer"/>
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="50dp"
+        android:layout_marginBottom="30dp"
+        android:layout_gravity="center">
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:text="* 3분 이내에 인증번호(6자리)를 입력하셔야 합니다.\n* 입력시간 초과시 '재전송' 버튼을 눌러 주시기 바랍니다."
+            android:fontFamily="@font/nanumsquarer"
+            android:layout_gravity="center"/>
+    </LinearLayout>
+
+
+    <Button
+        android:id="@+id/btn_final_authentication_submit"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:background="@drawable/btn_round_blue_background_radius_6dp"
+        android:text="확인"
+        android:textColor="@color/colorWhite"
+        android:textSize="16sp"
+        android:letterSpacing="0.02"
+        android:fontFamily="@font/nanumsquareb"/>
+
+</LinearLayout>

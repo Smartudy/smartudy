@@ -47,7 +47,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
         <Button
-            android:id="@+id/loginbtn"
+            android:id="@+id/btn_login_loginbtn"
             android:layout_width="@dimen/login_input_width"
             android:layout_height="@dimen/login_input_height"
             android:background="@drawable/login_round_button"
@@ -58,15 +58,17 @@
             android:text="Login"
             android:textColor="@color/colorWhite"/>
         <TextView
+            android:id="@+id/textview_login_register"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:paddingTop="12dp"
             android:textColor="@color/colorTitle"
             android:textSize="13sp"
             android:text="회원가입"
-            android:layout_alignLeft="@id/loginbtn"
-            android:layout_below="@id/loginbtn"/>
+            android:layout_alignLeft="@id/btn_login_loginbtn"
+            android:layout_below="@id/btn_login_loginbtn"/>
         <TextView
+            android:id="@+id/textview_login_find_pw"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:paddingTop="12dp"
@@ -74,8 +76,8 @@
             android:textSize="13sp"
             android:layout_gravity="right"
             android:text="비밀번호 찾기"
-            android:layout_alignRight="@id/loginbtn"
-            android:layout_below="@id/loginbtn"/>
+            android:layout_alignRight="@id/btn_login_loginbtn"
+            android:layout_below="@id/btn_login_loginbtn"/>
     </RelativeLayout>
 
     <LinearLayout

@@ -13,7 +13,10 @@
         <item name="android:windowLightStatusBar">true</item>
         <item name="coordinatorLayoutStyle">@style/Widget.Design.CoordinatorLayout</item>
     </style>
+
+
     <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
+
     <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 
     <style name="myToolbarStyle" parent="@style/Widget.AppCompat.Toolbar">
@@ -63,6 +66,10 @@
     <style name="fab_labels_style">
         <item name="android:background">@drawable/fab_label_background</item>
         <item name="android:textColor">#fff</item>
+    </style>
+
+    <style name="myDialog" parent="Theme.AppCompat.Dialog">
+        <item name="android:windowNoTitle">true</item>
     </style>
 
 </resources>
