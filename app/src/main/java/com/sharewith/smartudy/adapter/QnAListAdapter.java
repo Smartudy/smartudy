@@ -1,5 +1,6 @@
 package com.sharewith.smartudy.adapter;
 
+import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -11,7 +12,9 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.sharewith.smartudy.dto.NotePadDto;
 import com.sharewith.smartudy.smartudy.R;
+import com.sharewith.smartudy.dao.Write_DBhelper;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -21,12 +24,28 @@ import java.util.List;
  */
 
 public class QnAListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
-    //List<Fragment> datas;
+    List<NotePadDto> datas;
+    Context context;
     private List<Integer> mImagedatas;
     private RecyclerView mImageRecycler;
     private QnAImageAdapter mImageAdapter;
     private static final int VIEW_TYPE_QUESTION = 0;
     private static final int VIEW_TYPE_ANSWER = 1;
+    private Write_DBhelper DBhelper;
+
+    public void addNotePad(NotePadDto notepad){
+        if(notepad != null) {
+            datas.add(notepad);
+            notifyDataSetChanged();
+        }
+
+    }
+
+    public QnAListAdapter(Context context, List<NotePadDto> datas) {
+        this.datas = datas;
+        this.context = context;
+        DBhelper = new Write_DBhelper(context);
+    }
 
     public void setImageDatas(){
         if(mImagedatas == null) mImagedatas = new ArrayList<Integer>();
@@ -76,30 +95,35 @@ public class QnAListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder viewHolder, int position) {
         QuestionViewHolder qholder=null;
         AnswerViewHolder aholder=null;
+        NotePadDto notepad;
         if(position ==0)
             qholder = (QuestionViewHolder)viewHolder;
         else
             aholder = (AnswerViewHolder)viewHolder;
 
-        switch(position){
-            case 0:
-                qholder.mQuestionTitle.setText("질문입니다.");
-                break;
-            case 1:
-                aholder.mAnswerTitle.setText("첫번째 답변입니다.");
-                changeImageDatas();
-                ((QnAImageAdapter)aholder.mImageRecycler.getAdapter()).setImageDatas(mImagedatas);
-                break;
-            case 2:
-                aholder.mAnswerTitle.setText("두번째 답변입니다.");
+        List<NotePadDto> notepads = DBhelper.selectAllNotePad();
 
+        if(notepads.size() != 0) {
+            notepad = notepads.get(position);
+            switch (position) {
+                case 0:
+                    qholder.mQuestionTitle.setText(notepad.getTitle());
+                    qholder.mContentText.setText(notepad.getContents());
+                    break;
+                default:
+                    aholder.mAnswerTitle.setText(notepad.getTitle());
+                    aholder.mContentText.setText(notepad.getContents());
+                    changeImageDatas();
+                    ((QnAImageAdapter) aholder.mImageRecycler.getAdapter()).setImageDatas(mImagedatas);
+                    break;
+            }
         }
 
     }
 
     @Override
     public int getItemCount() {
-        return 3;
+        return datas.size();
     }
 
     /*뷰 홀더를 static으로 선언함으로써 outer class의 멤버에 접근하지 않겠다고 명시함.

@@ -1,6 +1,5 @@
 package com.sharewith.smartudy.fragment;
 
-import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -11,7 +10,9 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.sharewith.smartudy.adapter.QnAListAdapter;
+import com.sharewith.smartudy.dto.NotePadDto;
 import com.sharewith.smartudy.smartudy.R;
+import com.sharewith.smartudy.dao.Write_DBhelper;
 
 import java.util.List;
 
@@ -33,6 +34,7 @@ public class QnAListFragment extends Fragment { //뷰페이저의 1페이지에 
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
+    Write_DBhelper DBhelper;
 
     private OnFragmentInteractionListener mListener;
 
@@ -75,13 +77,19 @@ public class QnAListFragment extends Fragment { //뷰페이저의 1페이지에 
             llm.scrollToPositionWithOffset(position,0);
     }
 
+    public void addNotePad(NotePadDto notepad){
+        ((QnAListAdapter)mRecyclerView.getAdapter()).addNotePad(notepad);
+    }
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_qna_list, container, false);
         mRecyclerView = view.findViewById(R.id.qna_recycler_view);
-        QnAListAdapter listadapter = new QnAListAdapter();
+        DBhelper = new Write_DBhelper(view.getContext());
+        List<NotePadDto> notepads = DBhelper.selectAllNotePad();
+        QnAListAdapter listadapter = new QnAListAdapter(view.getContext(),notepads);
         mRecyclerView.setAdapter(listadapter);
         return view;
     }
@@ -93,16 +101,16 @@ public class QnAListFragment extends Fragment { //뷰페이저의 1페이지에 
         }
     }
 
-    @Override
-    public void onAttach(Context context) {
-        super.onAttach(context);
-        if (context instanceof OnFragmentInteractionListener) {
-            mListener = (OnFragmentInteractionListener) context;
-        } else {
-            throw new RuntimeException(context.toString()
-                    + " must implement OnFragmentInteractionListener");
-        }
-    }
+//    @Override
+//    public void onAttach(Context context) {
+//        super.onAttach(context);
+//        if (context instanceof OnFragmentInteractionListener) {
+//            mListener = (OnFragmentInteractionListener) context;
+//        } else {
+//            throw new RuntimeException(context.toString()
+//                    + " must implement OnFragmentInteractionListener");
+//        }
+//    }
 
     @Override
     public void onDetach() {

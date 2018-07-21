@@ -1,12 +1,21 @@
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="16dp"
     tools:context="com.sharewith.smartudy.fragment.WriteTextFragment">
 
-    <TextView
+    <EditText
+        android:id="@+id/write_fragment_contents"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="텍스트 입력 프래그먼트입니다." />
+        android:layout_height="wrap_content"
+        android:minHeight="100dp"
+        android:gravity="top"
+        android:inputType="text|textMultiLine"
+        android:background="@drawable/radius_corner"
+        android:textSize="14sp"
+        android:fontFamily="@string/sub_r_font"
+        android:textColor="#2b2828"
+        android:hint="본문을 입력해주세요"/>
 
-</FrameLayout>
+</LinearLayout>

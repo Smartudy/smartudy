@@ -1,7 +1,7 @@
 package com.sharewith.smartudy.activity;
 
 import android.graphics.Color;
-import android.net.Uri;
+import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.ActionBar;
@@ -12,23 +12,18 @@ import android.view.View;
 import android.view.WindowManager;
 import android.widget.LinearLayout;
 
+import com.sharewith.smartudy.dto.NotePadDto;
 import com.sharewith.smartudy.fragment.QnAListFragment;
-import com.sharewith.smartudy.fragment.WriteDrawFragment;
 import com.sharewith.smartudy.fragment.WriteFragment;
-import com.sharewith.smartudy.fragment.WritePictureFragment;
-import com.sharewith.smartudy.fragment.WriteRecordFragment;
-import com.sharewith.smartudy.fragment.WriteShotFragment;
-import com.sharewith.smartudy.fragment.WriteTextFragment;
 import com.sharewith.smartudy.smartudy.R;
 import com.sharewith.smartudy.utils.CustomViewPager;
 import com.sharewith.smartudy.adapter.WriteFragmentPagerAdapter;
+import com.sharewith.smartudy.dao.Write_DBhelper;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class QnAActivity extends AppCompatActivity implements WriteDrawFragment.OnDrawFragmentListener,
-        WriteRecordFragment.OnRecordFragmentListener,WritePictureFragment.OnPictureFragmentListener,
-        WriteShotFragment.OnShotFragmentListener,WriteTextFragment.OnTextFragmentListener,WriteFragment.WriteFragmentListener,QnAListFragment.OnFragmentInteractionListener {
+public class QnAActivity extends AppCompatActivity implements WriteFragment.WriteFrag_To_QnAActivity{
 
     private TabLayout mTabLayout;
     private CustomViewPager mViewPager;
@@ -38,13 +33,18 @@ public class QnAActivity extends AppCompatActivity implements WriteDrawFragment.
     private QnAListFragment mQnAListFragment;
     private List<Fragment> datas;
     private LinearLayout mLinear;
+    private AppBarLayout mAppBar;
+    private Write_DBhelper DBhelper;
     private void setMember(){
+        DBhelper = new Write_DBhelper(getApplicationContext());
         datas = new ArrayList<Fragment>();
+        mAppBar = findViewById(R.id.activity_qna_appbar);
         mTabLayout = findViewById(R.id.write_tablayout);
         mToolbar = findViewById(R.id.write_tooblar);
         mWriteFragment = new WriteFragment();
         mQnAListFragment = QnAListFragment.newInstance(null,null);
         mLinear = findViewById(R.id.qna_linear);
+
     }
 
     private void setTabLayout(){
@@ -73,6 +73,7 @@ public class QnAActivity extends AppCompatActivity implements WriteDrawFragment.
         mPagerAdapter = new WriteFragmentPagerAdapter(getSupportFragmentManager(),datas,mTabLayout.getTabCount());
         mViewPager.setAdapter(mPagerAdapter);
     }
+
 
     private void setListener(){
         mTabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
@@ -113,40 +114,23 @@ public class QnAActivity extends AppCompatActivity implements WriteDrawFragment.
         setActionBar();
         setViewPager();
         setListener();
+        DBhelper.deleteAll();
     }
+
 
     @Override
-    public void OnShotFragment() {
-
+    public void addNotePad(NotePadDto notepad) {
+        mQnAListFragment.addNotePad(notepad);
+        //WriteFragment에서 글 입력시 데이터 변화를 QnAListFragment에 있는 리싸이클러뷰의 어댑터에 알려야함.
+        //WriteFragment->QnAActivity->QnAListFragment 순서로 통신하게끔 중간에 액티비티가 껴있음.
+        //프래그먼트들끼리 바로 통신 불가능, 중간에 액티비티가 무조건 껴야함.
     }
 
-    @Override
-    public void OnDrawFragment() {
-
-    }
-
-    @Override
-    public void OnTextFragment() {
-
-    }
-
-    @Override
-    public void OnRecordFragment() {
-
-    }
-
-    @Override
-    public void OnPictureFragment() {
-
-    }
-
-    @Override //글쓰기 프래그먼트에서 발생한 이벤트를 처리
-    public void OnWriteFragment() {
-
-    }
-
-    @Override
-    public void onFragmentInteraction(Uri uri) {
-
-    }
+//    @Override
+//    public void setTransParentBackground() {
+//    }
+//
+//    @Override
+//    public void UnsetTransParentBackground() {
+//    }
 }
