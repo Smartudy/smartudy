@@ -9,18 +9,18 @@ import android.view.View;
 
 import com.sharewith.smartudy.smartudy.R;
 
-public class FindPasswordActivity extends AppCompatActivity {
+public class HonorLevelActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_find_password);
+        setContentView(R.layout.activity_honor_level);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-
         getSupportActionBar().setDisplayHomeAsUpEnabled(true); // 뒤로가기 버튼 활성화
         getSupportActionBar().setDisplayShowHomeEnabled(true);
-        getSupportActionBar().setTitle("비밀번호 찾기");
+        getSupportActionBar().setTitle("명예 등급 효과");
+
     }
 
     @Override
@@ -28,5 +28,4 @@ public class FindPasswordActivity extends AppCompatActivity {
         onBackPressed();
         return true;
     }
-
 }

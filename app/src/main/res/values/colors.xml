@@ -21,4 +21,9 @@
     <color name="selectedTextColor">#f9f9f9</color>
     <color name="colorGreen">#35c141</color>
     <color name="colorGray">#eaeaea</color>
+
+    <!-- HonorLevelActivity -->
+    <color name="textColorDark">#131314</color>
+    <color name="textColorGray">#666666</color>
+    <color name="textCOlorLightGray">#5d5f62</color>
 </resources>
