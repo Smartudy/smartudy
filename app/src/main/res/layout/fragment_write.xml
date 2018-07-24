@@ -33,7 +33,7 @@
             android:layout_height="match_parent"
             android:layout_above="@id/write_fragment_bottombar"
             android:layout_below="@id/write_title"
-            android:background="#888888"
+            android:background="#f9f9f9"
             android:padding="16dp"/>
         
         <LinearLayout

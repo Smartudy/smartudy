@@ -2,8 +2,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginBottom="16dp"
-    tools:context="com.sharewith.smartudy.fragment.WriteTextFragment">
+    android:orientation="vertical"
+    android:layout_marginBottom="16dp">
 
     <EditText
         android:id="@+id/write_fragment_contents"
@@ -17,5 +17,6 @@
         android:fontFamily="@string/sub_r_font"
         android:textColor="#2b2828"
         android:hint="본문을 입력해주세요"/>
+
 
 </LinearLayout>
