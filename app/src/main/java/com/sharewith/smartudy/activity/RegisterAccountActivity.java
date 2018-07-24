@@ -9,12 +9,15 @@ import android.support.design.widget.Snackbar;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.text.InputType;
 import android.view.KeyEvent;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.sharewith.smartudy.smartudy.R;
@@ -44,6 +47,22 @@ public class RegisterAccountActivity extends AppCompatActivity {
         updateMajorListFromDB();
 
         final EditText editText = ((EditText) findViewById(R.id.textview_final_authentication_auth_digit));
+        editText.setImeOptions(EditorInfo.IME_ACTION_NEXT);
+        editText.setInputType(InputType.TYPE_CLASS_TEXT);
+        editText.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+            @Override
+            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+                switch (actionId){
+                    case EditorInfo.IME_ACTION_NEXT:
+                        InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+                        imm.hideSoftInputFromWindow(v.getWindowToken(), 0);
+                        break;
+                    default:
+                        break;
+                }
+                return false;
+            }
+        });
 //        editText.setOnTouchListener(new View.OnTouchListener() {
 //            @Override
 //            public boolean onTouch(View v, MotionEvent event) {

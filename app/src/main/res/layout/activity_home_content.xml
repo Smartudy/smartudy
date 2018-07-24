@@ -285,4 +285,10 @@
         android:layout_height="wrap_content"
         android:text="임시 로그인버튼"
         android:layout_marginTop="50dp"/>
+    <Button
+        android:id="@+id/btn_home_level"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="임시 명예등급효과"
+        android:layout_marginTop="20dp"/>
 </LinearLayout>

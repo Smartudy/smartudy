@@ -29,7 +29,9 @@ public class LoginActivity extends AppCompatActivity {
         ((TextView)findViewById(R.id.textview_login_find_pw)).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(getApplicationContext(), "비밀번호 찾기", Toast.LENGTH_SHORT).show();
+                //Toast.makeText(getApplicationContext(), "비밀번호 찾기", Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(getApplicationContext(), FindPasswordActivity.class);
+                startActivity(intent);
             }
         });
 

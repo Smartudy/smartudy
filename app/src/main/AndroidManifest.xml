@@ -30,7 +30,9 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.sharewith.smartudy.activity.HomeActivity" />
         </activity>
-        <activity android:name="com.sharewith.smartudy.activity.LoginActivity">
+        <activity
+            android:name="com.sharewith.smartudy.activity.LoginActivity"
+            android:theme="@style/AppTheme">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.sharewith.smartudy.activity.HomeActivity" />
@@ -55,6 +57,14 @@
         <activity
             android:name="com.sharewith.smartudy.activity.RegisterAccountActivity"
             android:label="@string/title_activity_register_account"
+            android:theme="@style/AppTheme" />
+        <activity
+            android:name="com.sharewith.smartudy.activity.FindPasswordActivity"
+            android:label="@string/title_activity_find_password"
+            android:theme="@style/AppTheme" />
+        <activity
+            android:name="com.sharewith.smartudy.activity.HonorLevelActivity"
+            android:label="@string/title_activity_honor_level"
             android:theme="@style/AppTheme"></activity>
         <provider
             android:name="android.support.v4.content.FileProvider"

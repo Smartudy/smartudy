@@ -47,10 +47,19 @@ public class HomeActivity extends AppCompatActivity {
         setContentView(R.layout.activity_home);
         permissionCheck(); //카메라 접근 권한 획득을 위해
         // TODO: 임시 로그인 창 이동용 버튼. 수정해야한다!
+        // TODO: 임시 버튼들. 수정해야한다!
         ((Button)findViewById(R.id.btn_home_login)).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        ((Button)findViewById(R.id.btn_home_level)).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getApplicationContext(), HonorLevelActivity.class);
                 startActivity(intent);
             }
         });
