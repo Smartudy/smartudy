@@ -2,56 +2,84 @@ package com.sharewith.smartudy.activity;
 
 import android.graphics.Color;
 import android.support.design.widget.AppBarLayout;
+import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
+import android.view.MotionEvent;
 import android.view.View;
+import android.view.ViewDebug;
 import android.view.WindowManager;
 import android.widget.LinearLayout;
+import android.widget.Toast;
 
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
+import com.sharewith.smartudy.Interface.AsyncResponse;
+import com.sharewith.smartudy.adapter.WriteFragmentRecyclerAdapter;
 import com.sharewith.smartudy.dto.NotePadDto;
+import com.sharewith.smartudy.dto.WriteFragComponent;
 import com.sharewith.smartudy.fragment.QnAListFragment;
 import com.sharewith.smartudy.fragment.WriteFragment;
 import com.sharewith.smartudy.smartudy.R;
-import com.sharewith.smartudy.utils.CustomViewPager;
-import com.sharewith.smartudy.adapter.WriteFragmentPagerAdapter;
 import com.sharewith.smartudy.dao.Write_DBhelper;
+import com.sharewith.smartudy.utils.Constant;
+import com.sharewith.smartudy.utils.HttpUtils;
 
 import java.util.ArrayList;
-import java.util.List;
+
 
 public class QnAActivity extends AppCompatActivity implements WriteFragment.WriteFrag_To_QnAActivity{
 
     private TabLayout mTabLayout;
-    private CustomViewPager mViewPager;
     private Toolbar mToolbar;
-    private WriteFragmentPagerAdapter mPagerAdapter;
     private WriteFragment mWriteFragment;
     private QnAListFragment mQnAListFragment;
-    private List<Fragment> datas;
     private LinearLayout mLinear;
     private AppBarLayout mAppBar;
     private Write_DBhelper DBhelper;
+    private FloatingActionButton mFab,mFab2;
+    private FragmentManager mFragManager;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_qna);
+        setMember();
+        setTabLayout();
+        setActionBar();
+        setListener();
+        //DBhelper.deleteAll();
+    }
+
+
     private void setMember(){
         DBhelper = new Write_DBhelper(getApplicationContext());
-        datas = new ArrayList<Fragment>();
         mAppBar = findViewById(R.id.activity_qna_appbar);
         mTabLayout = findViewById(R.id.write_tablayout);
         mToolbar = findViewById(R.id.write_tooblar);
         mWriteFragment = new WriteFragment();
         mQnAListFragment = QnAListFragment.newInstance(null,null);
         mLinear = findViewById(R.id.qna_linear);
+        mFab = findViewById(R.id.activity_qna_fab);
+        mFab2 = findViewById(R.id.activity_qna_fab2);
+        mFab2.setVisibility(View.GONE);
+        mFab2.setClickable(false);
+        mFragManager = getSupportFragmentManager();
+        mFragManager.beginTransaction().add(R.id.activity_qna_container,mWriteFragment).addToBackStack(null).hide(mWriteFragment)
+                .add(R.id.activity_qna_container,mQnAListFragment).addToBackStack(null).commit();
 
     }
 
     private void setTabLayout(){
         mTabLayout.addTab(mTabLayout.newTab().setText("질문"));
-        mTabLayout.addTab(mTabLayout.newTab().setText("답변1"));
-        mTabLayout.addTab(mTabLayout.newTab().setText("답변2"));
-        mTabLayout.addTab(mTabLayout.newTab().setText("답변 작성중"));
     }
 
     private void setActionBar(){
@@ -65,56 +93,90 @@ public class QnAActivity extends AppCompatActivity implements WriteFragment.Writ
         getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_NAVIGATION_BAR);
     }
 
-    private void setViewPager(){
-        mViewPager = findViewById(R.id.write_viewpager);
-        mViewPager.setPagingEnabled(false); //뷰페이저 수평 스크롤 금지
-        datas.add(mQnAListFragment);
-        datas.add(mWriteFragment);
-        mPagerAdapter = new WriteFragmentPagerAdapter(getSupportFragmentManager(),datas,mTabLayout.getTabCount());
-        mViewPager.setAdapter(mPagerAdapter);
+    private void toggleFab(){
+        mFab.setVisibility(View.GONE);
+        mFab.setClickable(false);
+        mFab2.setVisibility(View.VISIBLE);
+        mFab2.setClickable(true);
+        switch(mTabLayout.getSelectedTabPosition()){
+            case 0:
+                mLinear.setVisibility(View.VISIBLE);
+                mFragManager.beginTransaction().show(mQnAListFragment).commit();
+                mFragManager.beginTransaction().hide(mWriteFragment).commit();
+                mFab2.setVisibility(View.GONE);
+                mFab2.setClickable(false);
+                break;
+            case 1:
+                mLinear.setVisibility(View.GONE);
+                mFragManager.beginTransaction().show(mWriteFragment).commit();
+                mFragManager.beginTransaction().hide(mQnAListFragment).commit();
+                mFab2.setVisibility(View.VISIBLE);
+                mFab2.setClickable(true);
+                break;
+        }
     }
-
 
     private void setListener(){
         mTabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
-            //탭 선택시 뷰페이저에게 알리기 위한 용도의 리스너
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
-                int position = tab.getPosition();
-                int Tabcount = mTabLayout.getTabCount();
-                if(position==Tabcount-1){
-                    mLinear.setVisibility(View.GONE);
-                    mViewPager.setCurrentItem(Tabcount-1,true);
-                }else{
-                    mLinear.setVisibility(View.VISIBLE);
-                    mViewPager.setCurrentItem(0,true);
-                    mQnAListFragment.scroll(position);
+                switch(tab.getPosition()){
+                    case 0:
+                        toggleFab();
+                        break;
+                    case 1:
+                        toggleFab();
+                        break;
                 }
-
             }
-
             @Override
             public void onTabUnselected(TabLayout.Tab tab) {
 
             }
-
             @Override
             public void onTabReselected(TabLayout.Tab tab) {
 
             }
         });
-    }
+        mFab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mTabLayout.addTab(mTabLayout.newTab().setText("답변 작성중"),true);
+            }
+        });
+        mFab2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ArrayList<WriteFragComponent> datas = mWriteFragment.getDatas();
+                String result = "";
+                try {
+                    HttpUtils util = HttpUtils.getInstance(HttpUtils.MULTIPART, null, Constant.PostURL, getApplicationContext(), datas);
+                    util.setDelegate(new AsyncResponse() {
+                        @Override
+                        public void aftermultipart(String result) { //HttpUtils의 doInBackground() 마치면 자동으로 호출되는 메소드
+                            Log.d("qna",result);
+                            JsonParser parser = new JsonParser();
+                            JsonObject json = parser.parse(result).getAsJsonObject();
+                            Log.d("qna",json.toString());
+                            if(json.get("success").getAsBoolean() == true){
+                                Toast.makeText(getApplicationContext(), "게시글이 등록 되었습니다.", Toast.LENGTH_SHORT).show();
+                                mFragManager.beginTransaction().remove(mWriteFragment).commit();
+                                mTabLayout.removeTabAt(1);
+                            }else{
+                                Toast.makeText(getApplicationContext(), "게시글 등록이 실패 하였습니다.", Toast.LENGTH_SHORT).show();
+                            }
+                        }
+                    });
+                    util.execute();
+                    //결과는 HttpUtils의 onPostExecute()에서 알아서 aftermultipart() 호출함.
+                }catch(Exception e){
+                    Log.d("QnAActivity","멀티파트 요청 중 에러 발생");
+                    e.printStackTrace();
+                }
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_qna);
-        setMember();
-        setTabLayout();
-        setActionBar();
-        setViewPager();
-        setListener();
-        DBhelper.deleteAll();
+
+            }
+        });
     }
 
 
@@ -126,11 +188,5 @@ public class QnAActivity extends AppCompatActivity implements WriteFragment.Writ
         //프래그먼트들끼리 바로 통신 불가능, 중간에 액티비티가 무조건 껴야함.
     }
 
-//    @Override
-//    public void setTransParentBackground() {
-//    }
-//
-//    @Override
-//    public void UnsetTransParentBackground() {
-//    }
+
 }

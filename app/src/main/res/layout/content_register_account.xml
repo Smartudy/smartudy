@@ -10,7 +10,7 @@
     tools:showIn="@layout/activity_register_account"
     android:orientation="vertical"
     android:padding="16dp"
-    android:weightSum="100">
+    android:weightSum="150">
 
     <!-- 닉네임 25 -->
     <LinearLayout
@@ -31,11 +31,67 @@
             android:layout_height="44dp"
             android:background="@drawable/edittext_round_white_background_radius_6dp"
             android:fontFamily="@font/nanumsquareb"
-            android:hint="닉네임"
             android:letterSpacing="0.02"
             android:paddingLeft="16dp"
             android:paddingRight="16dp"
             android:singleLine="true"
+            android:textColor="@color/colorBlack"
+            android:textColorHint="@color/Home_Text_Color"
+            android:textSize="14sp"/>
+    </LinearLayout>
+
+    <!-- 비밀번호 -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="25"
+        android:orientation="vertical">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="비밀번호"
+            android:layout_marginBottom="8dp"
+            android:fontFamily="@font/nanumsquareb"/>
+
+        <EditText
+            android:id="@+id/textview_final_authentication_auth_password"
+            android:layout_width="match_parent"
+            android:layout_height="44dp"
+            android:background="@drawable/edittext_round_white_background_radius_6dp"
+            android:fontFamily="@font/nanumsquareb"
+            android:letterSpacing="0.02"
+            android:paddingLeft="16dp"
+            android:paddingRight="16dp"
+            android:singleLine="true"
+            android:textColor="@color/colorBlack"
+            android:textColorHint="@color/Home_Text_Color"
+            android:textSize="14sp"/>
+    </LinearLayout>
+
+    <!-- 임시 폰번호 -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="25"
+        android:orientation="vertical">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="연락처"
+            android:layout_marginBottom="8dp"
+            android:fontFamily="@font/nanumsquareb"/>
+
+        <EditText
+            android:id="@+id/textview_final_authentication_auth_phone"
+            android:layout_width="match_parent"
+            android:layout_height="44dp"
+            android:background="@drawable/edittext_round_white_background_radius_6dp"
+            android:fontFamily="@font/nanumsquareb"
+            android:letterSpacing="0.02"
+            android:paddingLeft="16dp"
+            android:paddingRight="16dp"
+            android:singleLine="true"
+            android:hint="임시 폰번호 입력 칸"
             android:textColor="@color/colorBlack"
             android:textColorHint="@color/Home_Text_Color"
             android:textSize="14sp"/>

@@ -33,6 +33,7 @@ import com.sharewith.smartudy.utils.EndDrawerToggle;
 
 import static android.Manifest.permission.CAMERA;
 import static android.Manifest.permission.READ_EXTERNAL_STORAGE;
+import static android.Manifest.permission.RECORD_AUDIO;
 import static android.Manifest.permission.WRITE_EXTERNAL_STORAGE;
 
 public class HomeActivity extends AppCompatActivity {
@@ -91,13 +92,6 @@ public class HomeActivity extends AppCompatActivity {
 
         mDrawerLayout.addDrawerListener(mDrawerToggle);
 
-        /* 페인트보드 잠시 접어두기.
-        //페인트보드 내부에서 윈도우 사이즈를 구하기 위해 displayMetrics를 전달//
-        DisplayMetrics dm = new DisplayMetrics();
-        getWindowManager().getDefaultDisplay().getMetrics(dm);
-        //윈도우 매니저 -> 디스플레이 -> DisplayMetrics를 통해 화면 사이즈 가져오기//
-        PaintBoard paintBoard = (PaintBoard)findViewById(R.id.PaintBoard);
-        paintBoard.init(dm); //펜 스타일,굵기,색상 default로 초기화*/
 
         // 각 카테고리(과목) 선택 시에 적용될 OnClickListener를 적용시켜준다.
         setCategoryClickListener();
@@ -153,17 +147,21 @@ public class HomeActivity extends AppCompatActivity {
     public boolean currentpermission(){
         if(ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED
                 || ContextCompat.checkSelfPermission(this, WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED ||
-                ContextCompat.checkSelfPermission(this, READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED)
+                ContextCompat.checkSelfPermission(this, READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED||
+        ContextCompat.checkSelfPermission(this, RECORD_AUDIO) != PackageManager.PERMISSION_GRANTED)
             return false;
         return true;
     }
 
     public void permissionCheck(){
+        final String[] permissions = {WRITE_EXTERNAL_STORAGE
+                , READ_EXTERNAL_STORAGE,CAMERA,RECORD_AUDIO};
         //현재 앱에 카메라 권한이 있을 경우 PackageManager.PERMISSION_GRANTED or DENIED
-        if(currentpermission() == false){
+        if(!currentpermission()){
             if(ActivityCompat.shouldShowRequestPermissionRationale(this,CAMERA) ||
                     ActivityCompat.shouldShowRequestPermissionRationale(this,WRITE_EXTERNAL_STORAGE)||
-                    ActivityCompat.shouldShowRequestPermissionRationale(this,READ_EXTERNAL_STORAGE)){
+                    ActivityCompat.shouldShowRequestPermissionRationale(this,READ_EXTERNAL_STORAGE) ||
+                    ActivityCompat.shouldShowRequestPermissionRationale(this,RECORD_AUDIO)){
                 //과거에 권한 요청을 거절한적있는경우 true를 리턴.
                 AlertDialog.Builder alertBuilder = new AlertDialog.Builder(this);
                 alertBuilder.setCancelable(true);
@@ -172,17 +170,14 @@ public class HomeActivity extends AppCompatActivity {
                 alertBuilder.setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
 
                     public void onClick(DialogInterface dialog, int which) {
-                        ActivityCompat.requestPermissions(HomeActivity.this, new String[]{WRITE_EXTERNAL_STORAGE
-                                , READ_EXTERNAL_STORAGE,CAMERA}, PERMISSION_REQUEST_CODE);
+                        ActivityCompat.requestPermissions(HomeActivity.this, permissions, PERMISSION_REQUEST_CODE);
                     }
                 });
                 AlertDialog alert = alertBuilder.create();
                 alert.show();
                 Log.e("", "permission denied, show dialog");
             }else{
-                ActivityCompat.requestPermissions(this,
-                        new String[]{Manifest.permission.CAMERA, WRITE_EXTERNAL_STORAGE, READ_EXTERNAL_STORAGE}
-                        ,PERMISSION_REQUEST_CODE);
+                ActivityCompat.requestPermissions(this, permissions ,PERMISSION_REQUEST_CODE);
                 //거절한적 없는 경우 바로 권한을 요청하면 됨.
             }
         }
@@ -197,6 +192,7 @@ public class HomeActivity extends AppCompatActivity {
                 for (int i = 0; i < grantResults.length; i++) {
                     if (grantResults[i] != PackageManager.PERMISSION_GRANTED) {
                         flag = false;
+                        Log.d("LOG",permissions[i] + " 권한이 거부 되었습니다.");
                     }
                 }
                 if(!flag) finish();

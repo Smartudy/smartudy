@@ -55,14 +55,33 @@
             android:background="@color/colorMain"/>
 
 
-        <com.sharewith.smartudy.utils.CustomViewPager
-            android:id="@+id/write_viewpager"
+        <FrameLayout
+            android:id="@+id/activity_qna_container"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_centerHorizontal="true"
             android:layout_below="@id/activity_qna_appbar"
-            app:layout_behavior="@string/appbar_scrolling_view_behavior" />
+            android:layout_alignParentBottom="true"
+            />
 
+        <android.support.design.widget.FloatingActionButton
+            android:id="@+id/activity_qna_fab"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentEnd="true"
+            android:layout_margin="@dimen/fab_margin"
+            android:src="@drawable/fab_add"
+            app:fabSize="auto" />
 
+        <android.support.design.widget.FloatingActionButton
+            android:id="@+id/activity_qna_fab2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentEnd="true"
+            android:layout_marginRight="@dimen/fab_margin"
+            android:layout_marginBottom="@dimen/fab_margin_bottom"
+            app:srcCompat="@drawable/outline_done_24"
+            app:fabSize="auto" />
     </RelativeLayout>
 </android.support.design.widget.CoordinatorLayout>

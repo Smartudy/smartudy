@@ -5,48 +5,51 @@ package com.sharewith.smartudy.dto;
  */
 
 public class AccountDto {
-    private String a_tel_number;
-    private String a_nick;
-    private String a_password;
-    private String a_major;
-    private int a_grade;
+    private String Nick;
+    private String Password;
+    private String Phone;
+    private String Major;
+    private String Grade;
 
-    public AccountDto(String a_tel_number, String a_nick, String a_password, String a_major, int a_grade) {
-        this.a_tel_number = a_tel_number;
-        this.a_nick = a_nick;
-        this.a_password = a_password;
-        this.a_major = a_major;
-        this.a_grade = a_grade;
+    public AccountDto() {
     }
 
-    public String getA_tel_number() {
-        return a_tel_number;
+    public AccountDto(String Nick, String Password, String Phone, String Major, String Grade) {
+        this.Nick = Nick;
+        this.Password = Password;
+        this.Phone = Phone;
+        this.Major = Major;
+        this.Grade = Grade;
     }
-    public void setA_tel_number(String a_tel_number) {
-        this.a_tel_number = a_tel_number;
+
+    public String getPhone() {
+        return Phone;
     }
-    public String getA_nick() {
-        return a_nick;
+    public void setPhone(String Phone) {
+        this.Phone = Phone;
     }
-    public void setA_nick(String a_nick) {
-        this.a_nick = a_nick;
+    public String getNick() {
+        return Nick;
     }
-    public String getA_password() {
-        return a_password;
+    public void setNick(String Nick) {
+        this.Nick = Nick;
     }
-    public void setA_password(String a_password) {
-        this.a_password = a_password;
+    public String getPassword() {
+        return Password;
     }
-    public String getA_major() {
-        return a_major;
+    public void setPassword(String Password) {
+        this.Password = Password;
     }
-    public void setA_major(String a_major) {
-        this.a_major = a_major;
+    public String getMajor() {
+        return Major;
     }
-    public int getA_grade() {
-        return a_grade;
+    public void setajor(String Major) {
+        this.Major = Major;
     }
-    public void setA_grade(int a_grade) {
-        this.a_grade = a_grade;
+    public String getGrade() {
+        return Grade;
+    }
+    public void setGrade(String Grade) {
+        this.Grade = Grade;
     }
 }

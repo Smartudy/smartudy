@@ -10,6 +10,7 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.InputType;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.MotionEvent;
 import android.view.View;
@@ -20,18 +21,31 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.gson.Gson;
+import com.sharewith.smartudy.directory.HttpResultVO;
+import com.sharewith.smartudy.dto.AccountDto;
 import com.sharewith.smartudy.smartudy.R;
+import com.sharewith.smartudy.utils.Constant;
+import com.sharewith.smartudy.utils.HttpUtils;
 
 import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 
 public class RegisterAccountActivity extends AppCompatActivity {
 
-    private boolean isNickNameValid = false;
+    private boolean isNickNameValid = true;
+    private String mNick;
+    private String mMajor;
+    private String mGrade;
+    private String mPass;
+    private EditText mNick_Edit;
+    private EditText mPassword_Edit;
     ArrayList<String> major_list;
 
     String nickname = "";
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,6 +61,7 @@ public class RegisterAccountActivity extends AppCompatActivity {
         updateMajorListFromDB();
 
         final EditText editText = ((EditText) findViewById(R.id.textview_final_authentication_auth_digit));
+        mNick_Edit = editText;
         editText.setImeOptions(EditorInfo.IME_ACTION_NEXT);
         editText.setInputType(InputType.TYPE_CLASS_TEXT);
         editText.setOnEditorActionListener(new TextView.OnEditorActionListener() {
@@ -63,6 +78,11 @@ public class RegisterAccountActivity extends AppCompatActivity {
                 return false;
             }
         });
+        //비밀번호칸 추가했어 여기 수정좀 해줘
+        mPassword_Edit = findViewById(R.id.textview_final_authentication_auth_password);
+
+
+
 //        editText.setOnTouchListener(new View.OnTouchListener() {
 //            @Override
 //            public boolean onTouch(View v, MotionEvent event) {
@@ -77,6 +97,7 @@ public class RegisterAccountActivity extends AppCompatActivity {
                 if (!hasFocus) {
                     // TODO: if()문의 조건을 바꿔야함 - if(이미 존재하는 아이디인 경우){} / else{}
                     String userInput = editText.getText().toString();
+
                     if (isNickNameValid && userInput.equals(nickname)) return;
 
                     if (userInput.equals("공학수학마스터")) {
@@ -108,7 +129,8 @@ public class RegisterAccountActivity extends AppCompatActivity {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         btn_major.setBackgroundResource(R.drawable.edittext_round_white_background_radius_6dp_blue_border);
-                        btn_major.setText(major_list.get(which));
+                        mMajor = major_list.get(which);
+                        btn_major.setText(mMajor);
                     }
                 });
                 AlertDialog dialog = builder.create();
@@ -125,6 +147,7 @@ public class RegisterAccountActivity extends AppCompatActivity {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         btn_grade.setBackgroundResource(R.drawable.edittext_round_white_background_radius_6dp_blue_border);
+                        mGrade = grade[which];
                         btn_grade.setText(grade[which].concat("학년"));
                     }
                 });
@@ -136,17 +159,42 @@ public class RegisterAccountActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 // TODO: 현재까지 입력한 정보를 바탕으로 회원등록, 로그인 창으로 다시 돌아간다.
-                if (isNickNameValid) { // TODO: 다른조건도 확인해야한다! 학과 및 학년까지 모두 설정했는지.
-                    // addAccountToDB();
-                    finish();
-                }
-                else {
-                    Toast.makeText(RegisterAccountActivity.this, "정보입력이 불완전합니다.", Toast.LENGTH_SHORT).show();
-                }
+                    mNick = mNick_Edit.getText().toString();
+                    mPass = mPassword_Edit.getText().toString();
+                    HttpResultVO result = registerToServerByPost();
+                    if(result == null)
+                        Toast.makeText(RegisterAccountActivity.this,Constant.NICK_DUPLICATED,Toast.LENGTH_LONG).show();
+                    else if(!result.isSuccess())
+                        Toast.makeText(RegisterAccountActivity.this,result.getError(),Toast.LENGTH_LONG).show();
+                    else{
+                        Toast.makeText(RegisterAccountActivity.this, Constant.REGISTER_OK,Toast.LENGTH_LONG).show();
+                        finish();
+                    }
+
             }
         });
     }
 
+    private HttpResultVO registerToServerByPost(){
+        String json="";
+        HashMap<String,String> m = new HashMap<String,String>();
+        m.put("nickname",mNick);
+        m.put("password",mPass);
+        String phone = ((EditText)findViewById(R.id.textview_final_authentication_auth_phone)).getText().toString();
+        m.put("phone",phone);
+        m.put("major",mMajor);
+        m.put("grade",mGrade);
+        HttpUtils http = HttpUtils.getInstance(HttpUtils.POST,m,Constant.RegisterURL,getApplicationContext(),null);
+        try {
+            json = http.execute().get();
+        }catch(Exception e){
+            e.printStackTrace();
+            return null;
+        }
+
+        return new Gson().fromJson(json,HttpResultVO.class);
+
+    }
     public void updateMajorListFromDB() {
         major_list = new ArrayList<String>();
         // TODO: update major list from the database

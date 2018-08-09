@@ -2,9 +2,11 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.sharewith.smartudy.smartudy">
 
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
-    <uses-permission android:name="android.permission.CAMERA"/>
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.RECORD_AUDIO" />
+    <uses-permission android:name="android.permission.INTERNET" />
 
     <application
         android:allowBackup="true"
@@ -13,7 +15,6 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-
         <activity android:name="com.sharewith.smartudy.activity.HomeActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -37,7 +38,9 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.sharewith.smartudy.activity.HomeActivity" />
         </activity>
-        <activity android:name="com.sharewith.smartudy.activity.QnAActivity">
+        <activity android:name="com.sharewith.smartudy.activity.QnAActivity"
+            android:windowSoftInputMode="adjustResize"
+            >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.sharewith.smartudy.activity.QuestionListActivity" />
@@ -65,7 +68,8 @@
         <activity
             android:name="com.sharewith.smartudy.activity.HonorLevelActivity"
             android:label="@string/title_activity_honor_level"
-            android:theme="@style/AppTheme"></activity>
+            android:theme="@style/AppTheme" />
+
         <provider
             android:name="android.support.v4.content.FileProvider"
             android:authorities="${applicationId}.fileprovider"
@@ -76,6 +80,11 @@
                 android:resource="@xml/fileproviderpath" />
         </provider>
 
+        <activity android:name="com.sharewith.smartudy.activity.PaintBoardActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.sharewith.smartudy.activity.QnAActivity" />
+        </activity>
     </application>
 
 </manifest>

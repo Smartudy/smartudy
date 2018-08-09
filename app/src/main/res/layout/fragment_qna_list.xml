@@ -1,14 +1,20 @@
-<android.support.v7.widget.RecyclerView xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/qna_recycler_view"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    app:layoutManager="android.support.v7.widget.LinearLayoutManager"
-    android:layout_marginLeft="16dp"
-    android:layout_marginRight="16dp"
-    android:paddingLeft="@dimen/QnA_list_content_lr_margin"
-    android:paddingRight="@dimen/QnA_list_content_lr_margin"
-    tools:context="com.sharewith.smartudy.fragment.QnAListFragment">
+    android:layout_height="match_parent">
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/qna_recycler_view"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:layoutManager="android.support.v7.widget.LinearLayoutManager"
+            android:layout_marginLeft="16dp"
+            android:layout_marginRight="16dp"
+            android:paddingLeft="@dimen/QnA_list_content_lr_margin"
+            android:paddingRight="@dimen/QnA_list_content_lr_margin"
+            tools:context="com.sharewith.smartudy.fragment.QnAListFragment">
 
-</android.support.v7.widget.RecyclerView>
+        </android.support.v7.widget.RecyclerView>
+
+
+</RelativeLayout>

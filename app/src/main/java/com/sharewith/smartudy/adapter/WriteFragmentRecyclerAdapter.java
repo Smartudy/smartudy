@@ -2,6 +2,7 @@ package com.sharewith.smartudy.adapter;
 
 import android.content.Context;
 import android.graphics.Bitmap;
+import android.net.Uri;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -10,10 +11,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.SeekBar;
 
 import com.sharewith.smartudy.smartudy.R;
 import com.sharewith.smartudy.utils.BitmapImageProcess;
 import com.sharewith.smartudy.dto.WriteFragComponent;
+import com.sharewith.smartudy.utils.RecordSeekbar;
 
 import java.util.ArrayList;
 
@@ -23,15 +26,24 @@ import java.util.ArrayList;
 
 public class WriteFragmentRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     private Context mContext;
-    public static final int STATE_TEXT = 0;
-    public static final int STATE_SHOT = 1;
-    public static final int STATE_ALBUM = 2;
-    public static final int STATE_VOICE = 3;
+    public static final int STATE_TITLE = 0;
+    public static final int STATE_TEXT = 1;
+    public static final int STATE_PICTURE = 2;
+    public static final int STATE_RECORD = 3;
     public static final int STATE_DRAW = 4;
+    private EditTextHolder mTextHolder;
     //상수에 static final을 사용하는 이유
     //https://djkeh.github.io/articles/Why-should-final-member-variables-be-conventionally-static-in-Java-kor/
     private ArrayList<WriteFragComponent> datas;
     private boolean mFlag; //텍스트 입력 딱 한번만 하게 하기 위해서
+
+    public ArrayList<WriteFragComponent> getDatas() {
+        for(WriteFragComponent c : datas){
+            if(c.getType() == STATE_TEXT)
+                c.setString(mTextHolder.editText.getText().toString());
+        }
+        return datas;
+    }
 
     @Override
     public int getItemViewType(int position) {
@@ -51,10 +63,13 @@ public class WriteFragmentRecyclerAdapter extends RecyclerView.Adapter<RecyclerV
         switch(viewType){
             case STATE_TEXT:
                 view = LayoutInflater.from(parent.getContext()).inflate(R.layout.component_write_text,parent,false);
-                return new EditTextHolder(view);
-            case STATE_SHOT:
+                return mTextHolder = new EditTextHolder(view);
+            case STATE_PICTURE:
                 view = LayoutInflater.from(parent.getContext()).inflate(R.layout.component_write_image,parent,false);
                 return new ImageViewHolder(view);
+            case STATE_RECORD:
+                view = LayoutInflater.from(parent.getContext()).inflate(R.layout.component_write_record,parent,false);
+                return new RecordViewHolder(view);
         }
         return null;
     }
@@ -66,8 +81,11 @@ public class WriteFragmentRecyclerAdapter extends RecyclerView.Adapter<RecyclerV
         switch(type){
             case STATE_TEXT:
                 break;
-            case STATE_SHOT:
+            case STATE_PICTURE:
                 setImageView( ((ImageViewHolder)holder).imageView,str);
+                break;
+            case STATE_RECORD:
+                setRecordView( ((RecordViewHolder)holder).seekbar,((RecordViewHolder)holder).playbutton,str);
                 break;
         }
     }
@@ -77,20 +95,28 @@ public class WriteFragmentRecyclerAdapter extends RecyclerView.Adapter<RecyclerV
         return datas.size();
     }
 
-    //static -> 상위클래스의 멤버변수나 객체를 사용하지 않겠라는 것을 표시
+    //static -> 상위클래스의 인스턴스가 생성되어 있지 않아도 독자적으로 클래스 생성 가능.
     public static class EditTextHolder extends RecyclerView.ViewHolder{
-        public EditText editText;
+        public static EditText editText;
         public EditTextHolder(View itemView) {
             super(itemView);
             editText = itemView.findViewById(R.id.write_fragment_contents);
         }
     }
-
     public static class ImageViewHolder extends RecyclerView.ViewHolder{
         public ImageView imageView;
         public ImageViewHolder(View itemView) {
             super(itemView);
             imageView = itemView.findViewById(R.id.write_fragment_imageview);
+        }
+    }
+    public static class RecordViewHolder extends RecyclerView.ViewHolder{
+        public SeekBar seekbar;
+        public ImageView playbutton;
+        public RecordViewHolder(View itemView) {
+            super(itemView);
+            seekbar = itemView.findViewById(R.id.seekbar_write_audio);
+            playbutton = itemView.findViewById(R.id.play_button);
         }
     }
 
@@ -103,6 +129,15 @@ public class WriteFragmentRecyclerAdapter extends RecyclerView.Adapter<RecyclerV
         notifyDataSetChanged();
     }
 
+    private void setRecordView(final SeekBar seekbar,ImageView playbutton,final String uri){
+            playbutton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    RecordSeekbar player = new RecordSeekbar(mContext, Uri.parse(uri),seekbar);
+                    player.execute(); //자동으로 음악파일에 맞춰 시크바 갱신
+                }
+            });
+    }
     private void setImageView(ImageView imageView, String ImagePath){ //저장된 사진을 이미지뷰에 세팅
         Bitmap bitmap;
         int width = mContext.getResources().getDimensionPixelSize(R.dimen.Component_Write_Image_Width);

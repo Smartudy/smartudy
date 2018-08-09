@@ -6,7 +6,6 @@ import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
-import com.sharewith.smartudy.dto.AccountDto;
 
 /**
  * Created by cheba on 2018-07-23.
@@ -50,18 +49,18 @@ public class AccountDBOpenHelper {
         return this;
     }
     public void close(){ mDB.close(); }
-
-    public long insertColumn(AccountDto account){
-        ContentValues values = new ContentValues();
-        values.put("aTelNumber", account.getA_tel_number());
-        values.put("aNick", account.getA_nick());
-        values.put("aPassword", account.getA_password());
-        values.put("aMajor", account.getA_major());
-        values.put("aGrade", account.getA_grade());
-        return mDB.insert("accountDB", null, values);
-    }
-
-    public boolean deleteColumn(AccountDto account){
-        return mDB.delete("accountDB", "aTelNumber="+account.getA_tel_number(),null)>0;
-    }
+//
+//    public long insertColumn(AccountDto account){
+//        ContentValues values = new ContentValues();
+//        values.put("aTelNumber", account.getA_tel_number());
+//        values.put("aNick", account.getA_nick());
+//        values.put("aPassword", account.getA_password());
+//        values.put("aMajor", account.getA_major());
+//        values.put("aGrade", account.getA_grade());
+//        return mDB.insert("accountDB", null, values);
+//    }
+//
+//    public boolean deleteColumn(AccountDto account){
+//        return mDB.delete("accountDB", "aTelNumber="+account.getA_tel_number(),null)>0;
+//    }
 }

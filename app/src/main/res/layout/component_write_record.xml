@@ -5,18 +5,23 @@
     android:orientation="vertical"
     android:layout_marginBottom="16dp">
 
-    <EditText
-        android:id="@+id/write_fragment_contents"
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:minHeight="100dp"
-        android:gravity="top"
-        android:inputType="text|textMultiLine"
-        android:background="@drawable/radius_corner"
-        android:textSize="14sp"
-        android:fontFamily="@string/sub_r_font"
-        android:textColor="#2b2828"
-        android:hint="본문을 입력해주세요"/>
+        android:layout_height="wrap_content">
+        <ImageView
+            android:id="@+id/play_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:src="@drawable/fab_add"/>
+        <android.support.v7.widget.AppCompatSeekBar
+            android:id="@+id/seekbar_write_audio"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@id/play_button"
+            android:padding="16dp"/>
+
+    </RelativeLayout>
 
 
 </LinearLayout>
