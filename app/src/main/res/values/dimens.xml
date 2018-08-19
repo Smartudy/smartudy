@@ -13,6 +13,16 @@
     <dimen name="home_content_image_height">117dp</dimen>
     <dimen name="home_drawer_width">302dp</dimen>
 
+    <!-- HomeActivity_Large -->
+    <dimen name="home_text_size_large">20sp</dimen>
+    <dimen name="fab_margin_large">32dp</dimen>
+    <dimen name="fab_small_margin_large">26dp</dimen>
+    <dimen name="toolbar_margin_large">32dp</dimen>
+    <dimen name="toolbar_title_margin_right_large">364dp</dimen>
+    <dimen name="home_content_image_width_large">220dp</dimen>
+    <dimen name="home_content_image_height_large">234dp</dimen>
+    <dimen name="home_drawer_width_large">602dp</dimen>
+
     <!--LoginActivity-->
     <dimen name="login_input_width">328dp</dimen>
     <dimen name="login_margin_bottom">12dp</dimen>

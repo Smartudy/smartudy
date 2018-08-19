@@ -19,21 +19,21 @@
 
             <ImageButton
                 android:id="@+id/ImageButton0"
-                android:layout_width="@dimen/home_content_image_width"
-                android:layout_height="@dimen/home_content_image_height"
+                android:layout_width="@dimen/home_content_image_width_large"
+                android:layout_height="@dimen/home_content_image_height_large"
                 android:background="@color/colorWhite"
                 android:src="@drawable/one" />
 
             <TextView
-                android:layout_width="@dimen/home_content_image_width"
-                android:layout_height="@dimen/home_content_image_height"
+                android:layout_width="@dimen/home_content_image_width_large"
+                android:layout_height="@dimen/home_content_image_height_large"
                 android:layout_alignBottom="@id/ImageButton0"
                 android:layout_alignLeft="@id/ImageButton0"
                 android:layout_alignRight="@id/ImageButton0"
                 android:layout_alignTop="@id/ImageButton0"
                 android:paddingBottom="8dp"
                 android:gravity="bottom|center_horizontal"
-                android:textSize="@dimen/home_text_size"
+                android:textSize="@dimen/home_text_size_large"
                 android:textColor="@color/Home_Text_Color"
                 android:fontFamily="@font/nanumsquareb"
                 android:text="인문"/>
@@ -48,20 +48,20 @@
 
             <ImageButton
                 android:id="@+id/ImageButton1"
-                android:layout_width="@dimen/home_content_image_width"
-                android:layout_height="@dimen/home_content_image_height"
+                android:layout_width="@dimen/home_content_image_width_large"
+                android:layout_height="@dimen/home_content_image_height_large"
                 android:background="@color/colorWhite"
                 android:src="@drawable/two" />
             <TextView
-                android:layout_width="@dimen/home_content_image_width"
-                android:layout_height="@dimen/home_content_image_height"
+                android:layout_width="@dimen/home_content_image_width_large"
+                android:layout_height="@dimen/home_content_image_height_large"
                 android:layout_alignBottom="@id/ImageButton1"
                 android:layout_alignLeft="@id/ImageButton1"
                 android:layout_alignRight="@id/ImageButton1"
                 android:layout_alignTop="@id/ImageButton1"
                 android:paddingBottom="8dp"
                 android:gravity="bottom|center_horizontal"
-                android:textSize="@dimen/home_text_size"
+                android:textSize="@dimen/home_text_size_large"
                 android:textColor="@color/Home_Text_Color"
                 android:fontFamily="@string/main_font"
                 android:text="사회"/>
@@ -76,20 +76,20 @@
 
             <ImageButton
                 android:id="@+id/ImageButton2"
-                android:layout_width="@dimen/home_content_image_width"
-                android:layout_height="@dimen/home_content_image_height"
+                android:layout_width="@dimen/home_content_image_width_large"
+                android:layout_height="@dimen/home_content_image_height_large"
                 android:background="@color/colorWhite"
                 android:src="@drawable/three" />
             <TextView
-                android:layout_width="@dimen/home_content_image_width"
-                android:layout_height="@dimen/home_content_image_height"
+                android:layout_width="@dimen/home_content_image_width_large"
+                android:layout_height="@dimen/home_content_image_height_large"
                 android:layout_alignBottom="@id/ImageButton2"
                 android:layout_alignLeft="@id/ImageButton2"
                 android:layout_alignRight="@id/ImageButton2"
                 android:layout_alignTop="@id/ImageButton2"
                 android:paddingBottom="8dp"
                 android:gravity="bottom|center_horizontal"
-                android:textSize="@dimen/home_text_size"
+                android:textSize="@dimen/home_text_size_large"
                 android:textColor="@color/Home_Text_Color"
                 android:fontFamily="@string/main_font"
                 android:text="교육"/>
@@ -112,20 +112,20 @@
 
             <ImageButton
                 android:id="@+id/ImageButton3"
-                android:layout_width="@dimen/home_content_image_width"
-                android:layout_height="@dimen/home_content_image_height"
+                android:layout_width="@dimen/home_content_image_width_large"
+                android:layout_height="@dimen/home_content_image_height_large"
                 android:background="@color/colorWhite"
                 android:src="@drawable/four" />
             <TextView
-                android:layout_width="@dimen/home_content_image_width"
-                android:layout_height="@dimen/home_content_image_height"
+                android:layout_width="@dimen/home_content_image_width_large"
+                android:layout_height="@dimen/home_content_image_height_large"
                 android:layout_alignBottom="@id/ImageButton3"
                 android:layout_alignLeft="@id/ImageButton3"
                 android:layout_alignRight="@id/ImageButton3"
                 android:layout_alignTop="@id/ImageButton3"
                 android:paddingBottom="8dp"
                 android:gravity="bottom|center_horizontal"
-                android:textSize="@dimen/home_text_size"
+                android:textSize="@dimen/home_text_size_large"
                 android:textColor="@color/Home_Text_Color"
                 android:fontFamily="@string/main_font"
                 android:text="공학"/>
@@ -140,20 +140,20 @@
 
             <ImageButton
                 android:id="@+id/ImageButton4"
-                android:layout_width="@dimen/home_content_image_width"
-                android:layout_height="@dimen/home_content_image_height"
+                android:layout_width="@dimen/home_content_image_width_large"
+                android:layout_height="@dimen/home_content_image_height_large"
                 android:background="@color/colorWhite"
                 android:src="@drawable/five" />
             <TextView
-                android:layout_width="@dimen/home_content_image_width"
-                android:layout_height="@dimen/home_content_image_height"
+                android:layout_width="@dimen/home_content_image_width_large"
+                android:layout_height="@dimen/home_content_image_height_large"
                 android:layout_alignBottom="@id/ImageButton4"
                 android:layout_alignLeft="@id/ImageButton4"
                 android:layout_alignRight="@id/ImageButton4"
                 android:layout_alignTop="@id/ImageButton4"
                 android:paddingBottom="8dp"
                 android:gravity="bottom|center_horizontal"
-                android:textSize="@dimen/home_text_size"
+                android:textSize="@dimen/home_text_size_large"
                 android:textColor="@color/Home_Text_Color"
                 android:fontFamily="@font/nanumsquareb"
                 android:text="자연"/>
@@ -168,20 +168,20 @@
 
             <ImageButton
                 android:id="@+id/ImageButton5"
-                android:layout_width="@dimen/home_content_image_width"
-                android:layout_height="@dimen/home_content_image_height"
+                android:layout_width="@dimen/home_content_image_width_large"
+                android:layout_height="@dimen/home_content_image_height_large"
                 android:background="@color/colorWhite"
                 android:src="@drawable/six" />
             <TextView
-                android:layout_width="@dimen/home_content_image_width"
-                android:layout_height="@dimen/home_content_image_height"
+                android:layout_width="@dimen/home_content_image_width_large"
+                android:layout_height="@dimen/home_content_image_height_large"
                 android:layout_alignBottom="@id/ImageButton5"
                 android:layout_alignLeft="@id/ImageButton5"
                 android:layout_alignRight="@id/ImageButton5"
                 android:layout_alignTop="@id/ImageButton5"
                 android:paddingBottom="8dp"
                 android:gravity="bottom|center_horizontal"
-                android:textSize="@dimen/home_text_size"
+                android:textSize="@dimen/home_text_size_large"
                 android:textColor="@color/Home_Text_Color"
                 android:fontFamily="@font/nanumsquareb"
                 android:text="의학"/>
@@ -203,20 +203,20 @@
 
             <ImageButton
                 android:id="@+id/ImageButton6"
-                android:layout_width="@dimen/home_content_image_width"
-                android:layout_height="@dimen/home_content_image_height"
+                android:layout_width="@dimen/home_content_image_width_large"
+                android:layout_height="@dimen/home_content_image_height_large"
                 android:background="@color/colorWhite"
                 android:src="@drawable/seven" />
             <TextView
-                android:layout_width="@dimen/home_content_image_width"
-                android:layout_height="@dimen/home_content_image_height"
+                android:layout_width="@dimen/home_content_image_width_large"
+                android:layout_height="@dimen/home_content_image_height_large"
                 android:layout_alignBottom="@id/ImageButton6"
                 android:layout_alignLeft="@id/ImageButton6"
                 android:layout_alignRight="@id/ImageButton6"
                 android:layout_alignTop="@id/ImageButton6"
                 android:paddingBottom="8dp"
                 android:gravity="bottom|center_horizontal"
-                android:textSize="@dimen/home_text_size"
+                android:textSize="@dimen/home_text_size_large"
                 android:textColor="@color/Home_Text_Color"
                 android:fontFamily="@font/nanumsquareb"
                 android:text="예체능"/>
@@ -231,20 +231,20 @@
 
             <ImageButton
                 android:id="@+id/ImageButton7"
-                android:layout_width="@dimen/home_content_image_width"
-                android:layout_height="@dimen/home_content_image_height"
+                android:layout_width="@dimen/home_content_image_width_large"
+                android:layout_height="@dimen/home_content_image_height_large"
                 android:background="@color/colorWhite"
                 android:src="@drawable/seven" />
             <TextView
-                android:layout_width="@dimen/home_content_image_width"
-                android:layout_height="@dimen/home_content_image_height"
+                android:layout_width="@dimen/home_content_image_width_large"
+                android:layout_height="@dimen/home_content_image_height_large"
                 android:layout_alignBottom="@id/ImageButton7"
                 android:layout_alignLeft="@id/ImageButton7"
                 android:layout_alignRight="@id/ImageButton7"
                 android:layout_alignTop="@id/ImageButton7"
                 android:paddingBottom="8dp"
                 android:gravity="bottom|center_horizontal"
-                android:textSize="@dimen/home_text_size"
+                android:textSize="@dimen/home_text_size_large"
                 android:textColor="@color/Home_Text_Color"
                 android:fontFamily="@font/nanumsquareb"
                 android:text="사회"/>
@@ -259,20 +259,20 @@
 
             <ImageButton
                 android:id="@+id/ImageButton8"
-                android:layout_width="@dimen/home_content_image_width"
-                android:layout_height="@dimen/home_content_image_height"
+                android:layout_width="@dimen/home_content_image_width_large"
+                android:layout_height="@dimen/home_content_image_height_large"
                 android:background="@color/colorWhite"
                 android:src="@drawable/three" />
             <TextView
-                android:layout_width="@dimen/home_content_image_width"
-                android:layout_height="@dimen/home_content_image_height"
+                android:layout_width="@dimen/home_content_image_width_large"
+                android:layout_height="@dimen/home_content_image_height_large"
                 android:layout_alignBottom="@id/ImageButton8"
                 android:layout_alignLeft="@id/ImageButton8"
                 android:layout_alignRight="@id/ImageButton8"
                 android:layout_alignTop="@id/ImageButton8"
                 android:paddingBottom="8dp"
                 android:gravity="bottom|center_horizontal"
-                android:textSize="@dimen/home_text_size"
+                android:textSize="@dimen/home_text_size_large"
                 android:textColor="@color/Home_Text_Color"
                 android:fontFamily="@font/nanumsquareb"
                 android:text="사회"/>
@@ -284,7 +284,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="임시 로그인버튼"
-        android:layout_marginTop="50dp"/>
+        android:layout_marginTop="100dp"/>
     <Button
         android:id="@+id/btn_home_show_accounts"
         android:layout_width="wrap_content"

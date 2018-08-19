@@ -8,6 +8,7 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.InputType;
+import android.transition.TransitionManager;
 import android.util.TypedValue;
 import android.view.ContextThemeWrapper;
 import android.view.LayoutInflater;
@@ -97,7 +98,10 @@ public class FilterActivity extends AppCompatActivity {
                                 ViewGroup.LayoutParams.WRAP_CONTENT,
                                 ViewGroup.LayoutParams.WRAP_CONTENT
                         );
+
                         params.setMarginEnd(dpToPx(8));
+
+                        TransitionManager.beginDelayedTransition(linearLayout);
                         view.setPadding(dpToPx(16),0,dpToPx(16),0);
                         view.setLayoutParams(params);
                         ((Button)view).setText(selected);
@@ -165,6 +169,9 @@ public class FilterActivity extends AppCompatActivity {
                                 ViewGroup.LayoutParams.WRAP_CONTENT,
                                 ViewGroup.LayoutParams.WRAP_CONTENT
                         );
+                        // *** layout내의 view 변화를 애니메이션화 해주는 코드 ***
+                        TransitionManager.beginDelayedTransition(linearLayout);
+
                         params.setMarginEnd(dpToPx(8));
                         view.setPadding(dpToPx(16),0,dpToPx(16),0);
                         view.setLayoutParams(params);

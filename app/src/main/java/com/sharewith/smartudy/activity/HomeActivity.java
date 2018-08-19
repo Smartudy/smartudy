@@ -46,28 +46,47 @@ public class HomeActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
         permissionCheck(); //카메라 접근 권한 획득을 위해
-        // TODO: 임시 로그인 창 이동용 버튼. 수정해야한다!
-        // TODO: 임시 버튼들. 수정해야한다!
-        ((Button)findViewById(R.id.btn_home_login)).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
-                startActivity(intent);
-            }
-        });
 
-        ((Button)findViewById(R.id.btn_home_level)).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(getApplicationContext(), HonorLevelActivity.class);
-                startActivity(intent);
-            }
-        });
-        // TODO: 여기까지!!
+        temp(); // TODO: 임시 버튼들.
 
+        setToolbarAndDrawerAttrs();
+
+        // 각 카테고리(과목) 선택 시에 적용될 OnClickListener를 적용시켜준다.
+        setCategoryClickListener();
+
+        /*
+        페인트보드 잠시 접어두기.
+        //페인트보드 내부에서 윈도우 사이즈를 구하기 위해 displayMetrics를 전달//
+        DisplayMetrics dm = new DisplayMetrics();
+        getWindowManager().getDefaultDisplay().getMetrics(dm);
+        //윈도우 매니저 -> 디스플레이 -> DisplayMetrics를 통해 화면 사이즈 가져오기//
+        PaintBoard paintBoard = (PaintBoard)findViewById(R.id.PaintBoard);
+        paintBoard.init(dm); //펜 스타일,굵기,색상 default로 초기화
+        */
+    }
+
+    @Override
+    public void onPostCreate(@Nullable Bundle savedInstanceState, @Nullable PersistableBundle persistentState) {
+        super.onPostCreate(savedInstanceState, persistentState);
+        mDrawerToggle.syncState();
+    }
+
+    public void setToolbarAndDrawerAttrs(){
         Toolbar toolbar = (Toolbar)findViewById(R.id.toolbar);
-        mDrawerLayout= (DrawerLayout)findViewById(R.id.home_drawer);
+        toolbar.findViewById(R.id.toolbar_menu_bell).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(HomeActivity.this, "alarm not implemented", Toast.LENGTH_SHORT).show();
+            }
+        });
+        toolbar.findViewById(R.id.toolbar_menu_drawer).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mDrawerToggle.toggle();
+            }
+        });
 
+        mDrawerLayout= (DrawerLayout)findViewById(R.id.home_drawer);
         mDrawerToggle = new EndDrawerToggle(this,mDrawerLayout,toolbar,R.string.open_drawer,R.string.close_drawer){
 
             @Override //드로어가 열렸을때
@@ -83,48 +102,14 @@ public class HomeActivity extends AppCompatActivity {
 
         setSupportActionBar(toolbar);
         ActionBar actionBar = getSupportActionBar();
-//        actionBar.setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM); //액션바를 커스터마이징 하기 위해
-//        actionBar.setCustomView(R.layout.toolbar_home);
-//        actionBar.setElevation(0); //z축 깊이 0으로 설정 하여 그림자 없애기.
-//        actionBar.setDisplayShowHomeEnabled(false);
         actionBar.setDisplayShowTitleEnabled(false);
 
         mDrawerLayout.addDrawerListener(mDrawerToggle);
-
-        /* 페인트보드 잠시 접어두기.
-        //페인트보드 내부에서 윈도우 사이즈를 구하기 위해 displayMetrics를 전달//
-        DisplayMetrics dm = new DisplayMetrics();
-        getWindowManager().getDefaultDisplay().getMetrics(dm);
-        //윈도우 매니저 -> 디스플레이 -> DisplayMetrics를 통해 화면 사이즈 가져오기//
-        PaintBoard paintBoard = (PaintBoard)findViewById(R.id.PaintBoard);
-        paintBoard.init(dm); //펜 스타일,굵기,색상 default로 초기화*/
-
-        // 각 카테고리(과목) 선택 시에 적용될 OnClickListener를 적용시켜준다.
-        setCategoryClickListener();
     }
-
-    @Override
-    public void onPostCreate(@Nullable Bundle savedInstanceState, @Nullable PersistableBundle persistentState) {
-        super.onPostCreate(savedInstanceState, persistentState);
-        mDrawerToggle.syncState();
-    }
-
-//    @Override
-//    public void onConfigurationChanged(Configuration newConfig) {
-//        super.onConfigurationChanged(newConfig);
-//        mDrawerToggle.onConfigurationChanged(newConfig);
-//    }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        //여기에 액션바 메뉴 클릭 대한 이벤트를 처리하면 된다.
-
         return super.onOptionsItemSelected(item);
-    }
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        return super.onCreateOptionsMenu(menu);
     }
 
     public void setCategoryClickListener(){
@@ -206,6 +191,31 @@ public class HomeActivity extends AppCompatActivity {
         } else {
             super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         }
+    }
+
+    public void temp(){
+        ((Button)findViewById(R.id.btn_home_login)).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        ((Button)findViewById(R.id.btn_home_level)).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getApplicationContext(), HonorLevelActivity.class);
+                startActivity(intent);
+            }
+        });
+        ((Button)findViewById(R.id.btn_home_show_accounts)).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getApplicationContext(), temp.class);
+                startActivity(intent);
+            }
+        });
     }
 }
 

@@ -8,6 +8,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 
 import com.sharewith.smartudy.smartudy.R;
 
@@ -29,6 +30,7 @@ public class AuthenticationActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Intent intent = new Intent(getApplicationContext(), FinalAuthenticationActivity.class);
                 // TODO: 사용자가 입력한 정보들을 모아서 인증서버에 전달
+                intent.putExtra("telnum", ((EditText)findViewById(R.id.edittext_authentication_telephone_number)).getText().toString());
                 startActivity(intent);
                 finish();
             }

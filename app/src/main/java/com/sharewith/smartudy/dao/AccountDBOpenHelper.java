@@ -2,6 +2,7 @@ package com.sharewith.smartudy.dao;
 
 import android.content.ContentValues;
 import android.content.Context;
+import android.database.Cursor;
 import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
@@ -63,5 +64,19 @@ public class AccountDBOpenHelper {
 
     public boolean deleteColumn(AccountDto account){
         return mDB.delete("accountDB", "aTelNumber="+account.getA_tel_number(),null)>0;
+    }
+
+    public Cursor getAllColumns(){
+        return mDB.query("accountDB",null, null,null,null,null,null);
+    }
+
+    public boolean checkIfRowExists(String telnumber, String password){
+        Cursor cursor = mDB.query("accountDB", null, "aTelNumber=? AND aPassword=?", new String[]{telnumber, password},null,null,null);
+        if(cursor.getCount()<1){
+            cursor.close();
+            return false;
+        }
+        cursor.close();
+        return true;
     }
 }

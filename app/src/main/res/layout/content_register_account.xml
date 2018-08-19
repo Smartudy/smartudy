@@ -12,11 +12,11 @@
     android:padding="16dp"
     android:weightSum="100">
 
-    <!-- 닉네임 25 -->
+    <!-- 닉네임 20 -->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="25"
+        android:layout_weight="20"
         android:orientation="vertical">
         <TextView
             android:layout_width="wrap_content"
@@ -26,7 +26,7 @@
             android:fontFamily="@font/nanumsquareb"/>
 
         <EditText
-            android:id="@+id/textview_final_authentication_auth_digit"
+            android:id="@+id/textview_register_account_nickname"
             android:layout_width="match_parent"
             android:layout_height="44dp"
             android:background="@drawable/edittext_round_white_background_radius_6dp"
@@ -35,13 +35,60 @@
             android:letterSpacing="0.02"
             android:paddingLeft="16dp"
             android:paddingRight="16dp"
-            android:singleLine="true"
+            android:maxLines="1"
             android:textColor="@color/colorBlack"
             android:textColorHint="@color/Home_Text_Color"
-            android:textSize="14sp"/>
+            android:textSize="14sp"
+            android:nextFocusDown="@id/textview_register_account_password"/>
     </LinearLayout>
 
-    <!-- 학과선택 45 -->
+    <!-- 비번 50 -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="30"
+        android:orientation="vertical">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="비밀번호"
+            android:layout_marginBottom="8dp"
+            android:fontFamily="@font/nanumsquareb"/>
+
+        <EditText
+            android:id="@+id/textview_register_account_password"
+            android:layout_width="match_parent"
+            android:layout_height="44dp"
+            android:background="@drawable/edittext_round_white_background_radius_6dp"
+            android:hint="비밀번호"
+            android:letterSpacing="0.02"
+            android:paddingLeft="16dp"
+            android:paddingRight="16dp"
+            android:maxLines="1"
+            android:textColor="@color/colorBlack"
+            android:textColorHint="@color/Home_Text_Color"
+            android:textSize="14sp"
+            android:nextFocusDown="@id/textview_register_account_password_check" />
+
+        <EditText
+            android:id="@+id/textview_register_account_password_check"
+            android:layout_width="match_parent"
+            android:layout_height="44dp"
+            android:background="@drawable/edittext_round_white_background_radius_6dp"
+            android:hint="비밀번호 확인"
+            android:letterSpacing="0.02"
+            android:paddingLeft="16dp"
+            android:paddingRight="16dp"
+            android:maxLines="1"
+            android:textColor="@color/colorBlack"
+            android:textColorHint="@color/Home_Text_Color"
+            android:textSize="14sp"
+            android:layout_marginTop="10dp" />
+    </LinearLayout>
+
+
+
+    <!-- 학과선택 70 -->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
@@ -65,7 +112,7 @@
             android:letterSpacing="0.02"/>
     </LinearLayout>
 
-    <!-- 학년선택 65 -->
+    <!-- 학년선택 90 -->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
@@ -88,14 +135,6 @@
             android:fontFamily="@font/nanumsquareb"
             android:letterSpacing="0.02"/>
     </LinearLayout>
-
-    <!-- 공백 75 -->
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="10">
-        
-    </LinearLayout>
     
     <Button
         android:id="@+id/btn_register_account_register"
@@ -105,6 +144,7 @@
         android:textSize="16sp"
         android:textColor="@color/colorWhite"
         android:letterSpacing="0.02"
-        android:text="가입하기"/>
+        android:text="가입하기"
+        android:layout_marginTop="20dp"/>
 
 </LinearLayout>

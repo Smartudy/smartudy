@@ -23,5 +23,6 @@
     <!-- WriteFragment -->
     <dimen name="COMPONENT_IMAGE_WIDTH">328</dimen>
     <dimen name="COMPONENT_IMAGE_HEIGHT">112</dimen>
+    <string name="title_activity_temp">temp</string>
 
 </resources>

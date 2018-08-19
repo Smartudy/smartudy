@@ -53,14 +53,15 @@
 
     <style name="ToolbarStyle" parent="@style/ThemeOverlay.AppCompat.ActionBar">
         <item name="android:background">@color/colorBackGround</item>
-        <item name="colorControlNormal">#000000</item>
         <item name="android:fontFamily">@font/nanumsquareb</item>
+        <item name="colorControlNormal">#2b2828</item>
     </style>
 
     <style name="bottom_write_style">
         <item name="android:textSize">10dp</item>
         <item name="android:fontFamily">@string/sub_r_font</item>
         <item name="android:textColor">@color/colorTitle</item>
+
     </style>
 
     <style name="fab_labels_style">
@@ -71,7 +72,6 @@
     <style name="myDialog" parent="Theme.AppCompat.Dialog">
         <item name="android:windowNoTitle">true</item>
     </style>
-    
 
 
 </resources>
