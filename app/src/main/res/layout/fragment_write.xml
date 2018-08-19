@@ -35,100 +35,50 @@
             android:layout_below="@id/write_title"
             android:background="#f9f9f9"
             android:padding="16dp"/>
-        
+
         <LinearLayout
             android:id="@+id/write_fragment_bottombar"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="40dp"
             android:layout_alignParentBottom="true">
+
             <ImageView
                 android:id="@+id/write_fragment_bottom1"
                 android:layout_width="0dp"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:src="@drawable/bottom_1"/>
+                android:src="@drawable/bottom_1" />
+
             <ImageView
                 android:id="@+id/write_fragment_bottom2"
                 android:layout_width="0dp"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:src="@drawable/bottom_2"/>
+                android:src="@drawable/bottom_2" />
+
             <ImageView
                 android:id="@+id/write_fragment_bottom3"
                 android:layout_width="0dp"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:src="@drawable/bottom_3"/>
+                android:src="@drawable/bottom_3" />
+
             <ImageView
                 android:id="@+id/write_fragment_bottom4"
                 android:layout_width="0dp"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:src="@drawable/bottom_4"/>
+                android:src="@drawable/bottom_4" />
+
             <ImageView
                 android:id="@+id/write_fragment_bottom5"
                 android:layout_width="0dp"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:src="@drawable/bottom_5"/>
+                android:src="@drawable/bottom_5" />
         </LinearLayout>
 
-        <android.support.design.widget.FloatingActionButton
-            android:id="@+id/main_write_fab"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:layout_alignParentRight="true"
-            android:layout_marginRight="@dimen/fab_margin"
-            android:layout_marginBottom="70dp"
-            app:fabSize="mini"
-            android:src="@drawable/fab_add"/>
 
-        <!-- 플로팅 액션 버튼
-        <android.support.design.widget.FloatingActionButton
-            android:id="@+id/write_fab1"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:layout_alignParentRight="true"
-            android:layout_marginEnd="@dimen/fab_margin"
-            android:layout_marginBottom="80dp"
-            app:fabSize="normal"
-            android:src="@drawable/bottom_2"/>
-
-        <android.support.design.widget.FloatingActionButton
-            android:id="@+id/write_fab2"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:layout_alignParentRight="true"
-            android:layout_marginEnd="@dimen/fab_margin"
-            android:layout_marginBottom="140dp"
-            app:fabSize="normal"
-            android:src="@drawable/bottom_3"/>
-
-        <android.support.design.widget.FloatingActionButton
-            android:id="@+id/write_fab3"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:layout_alignParentRight="true"
-            android:layout_marginEnd="@dimen/fab_margin"
-            android:layout_marginBottom="200dp"
-            app:fabSize="normal"
-            android:src="@drawable/bottom_4"/>
-
-        <android.support.design.widget.FloatingActionButton
-            android:id="@+id/write_fab4"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:layout_alignParentRight="true"
-            android:layout_marginEnd="@dimen/fab_margin"
-            android:layout_marginBottom="260dp"
-            app:fabSize="normal"
-            android:src="@drawable/bottom_5"/>
--->
     </RelativeLayout>
 
 </android.support.design.widget.CoordinatorLayout>

@@ -25,28 +25,26 @@
     </LinearLayout>
 
     <EditText
-        android:id="@+id/edittext_login_phone_number"
+        android:id="@+id/login_phone"
         android:layout_width="@dimen/login_input_width"
         android:layout_height="@dimen/login_input_height"
         android:background="@drawable/input_border"
         android:layout_gravity="center"
-        android:hint="Phone number"
+        android:layout_marginBottom="@dimen/login_margin_bottom"
         android:fontFamily="@string/main_font"
         android:textSize="14sp"
         android:padding="@dimen/login_input_padding"
         android:maxLines="1"
-        android:layout_marginBottom="@dimen/login_margin_bottom"
         android:inputType="numberDecimal"/>
 
     <EditText
-        android:id="@+id/edittext_login_password"
+        android:id="@+id/login_password"
         android:layout_width="@dimen/login_input_width"
         android:layout_height="@dimen/login_input_height"
-        android:background="@drawable/input_border"
         android:layout_gravity="center"
-        android:hint="Password"
+        android:background="@drawable/input_border"
         android:fontFamily="@string/main_font"
-        android:textSize="14sp"
+        android:hint="Password"
         android:padding="@dimen/login_input_padding"
         android:maxLines="1"
         android:layout_marginBottom="32dp"

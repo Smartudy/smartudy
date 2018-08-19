@@ -6,6 +6,7 @@
     <!-- HomeActivity -->
     <dimen name="home_text_size">14sp</dimen>
     <dimen name="fab_margin">16dp</dimen>
+    <dimen name="fab_margin_bottom">60dp</dimen>
     <dimen name="fab_small_margin">23dp</dimen>
     <dimen name="toolbar_margin">16dp</dimen>
     <dimen name="toolbar_title_margin_right">182dp</dimen>

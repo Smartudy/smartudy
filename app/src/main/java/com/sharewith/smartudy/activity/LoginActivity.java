@@ -1,51 +1,42 @@
 package com.sharewith.smartudy.activity;
 
-import android.content.Context;
 import android.content.Intent;
-import android.database.SQLException;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.KeyEvent;
 import android.view.View;
-import android.view.inputmethod.EditorInfo;
-import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.sharewith.smartudy.dao.AccountDBOpenHelper;
+import com.google.gson.Gson;
+import com.sharewith.smartudy.directory.HttpResultVO;
 import com.sharewith.smartudy.smartudy.R;
+import com.sharewith.smartudy.utils.Constant;
+import com.sharewith.smartudy.utils.HttpUtils;
+
+import java.util.HashMap;
 
 public class LoginActivity extends AppCompatActivity {
+
+    private EditText mPhone;
+    private EditText mPassword;
+    private TextView mFindpw;
+    private TextView mRegister;
+    private Button mLogin;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
-
-        setOnEditorActionListener();
-        setOnClickListeners();
-
-    }
-
-    public void setOnEditorActionListener(){
-        ((EditText)findViewById(R.id.edittext_login_password)).setOnEditorActionListener(new TextView.OnEditorActionListener() {
-            @Override
-            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
-                switch (actionId) {
-                    case EditorInfo.IME_ACTION_NEXT:
-                        InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-                        imm.hideSoftInputFromWindow(v.getWindowToken(), 0);
-                        break;
-                    default:
-                        break;
-                }
-                return false;
-            }
-        });
-    }
+        mPhone = findViewById(R.id.login_phone);
+        mPassword = findViewById(R.id.login_password);
+        mRegister = findViewById(R.id.textview_login_register);
+        mFindpw = findViewById(R.id.textview_login_find_pw);
+        mLogin = findViewById(R.id.btn_login_loginbtn);
+        setListener();
+}
 
     @Override
     public boolean onSupportNavigateUp() {
@@ -53,49 +44,51 @@ public class LoginActivity extends AppCompatActivity {
         return true;
     }
 
-    public void setOnClickListeners(){
-        ((TextView)findViewById(R.id.textview_login_register)).setOnClickListener(new View.OnClickListener() {
+    private void setListener(){
+        mRegister.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //Toast.makeText(getApplicationContext(), "회원가입", Toast.LENGTH_SHORT).show();
-                Intent intent = new Intent(getApplicationContext(), AuthenticationActivity.class);
-                startActivity(intent);
+                startActivity(new Intent(getApplicationContext(), RegisterAccountActivity.class));
             }
         });
-        ((TextView)findViewById(R.id.textview_login_find_pw)).setOnClickListener(new View.OnClickListener() {
+        mFindpw.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //Toast.makeText(getApplicationContext(), "비밀번호 찾기", Toast.LENGTH_SHORT).show();
-                Intent intent = new Intent(getApplicationContext(), FindPasswordActivity.class);
-                startActivity(intent);
+                startActivity(new Intent(getApplicationContext(), FindPasswordActivity.class));
+            }
+        });
+        mLogin.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                HttpResultVO result = LoginToServer();
+                    if(result == null){//비회원
+                        Toast.makeText(getApplicationContext(), Constant.NO_MEMBER,Toast.LENGTH_LONG).show();
+                    }else if(!result.isSuccess()){
+                            //연락처, 비밀번호 불일치
+                            Toast.makeText(getApplicationContext(), Constant.LOGIN_FAIL,Toast.LENGTH_LONG).show();
+                    }else{
+                        Toast.makeText(getApplicationContext(), "로그인 성공",Toast.LENGTH_LONG).show();
+                        finish();
+                    }
             }
         });
 
-        ((Button)findViewById(R.id.btn_login_loginbtn)).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                //Toast.makeText(getApplicationContext(), "loginbtn clicked", Toast.LENGTH_SHORT).show();
-                String userinput_phone_number = ((EditText)findViewById(R.id.edittext_login_phone_number)).getText().toString();
-                String userinput_password = ((EditText)findViewById(R.id.edittext_login_password)).getText().toString();
 
-                AccountDBOpenHelper mAccountDBOpenHelper = new AccountDBOpenHelper(LoginActivity.this);
-                try{
-                    mAccountDBOpenHelper.open();
-                }catch (SQLException e){
-                    e.printStackTrace();
-                }
-                boolean isValid = mAccountDBOpenHelper.checkIfRowExists(userinput_phone_number, userinput_password);
-                mAccountDBOpenHelper.close();
 
-                if(isValid){
-                    // 올바른 번호와 비밀번호 입력.
-                    // TODO : 로그인 세션....
-                    finish();
-                }
-                else{
-                    Toast.makeText(LoginActivity.this, "존재하지 않는 계정입니다.", Toast.LENGTH_SHORT).show();
-                }
-            }
-        });
+    }
+    private HttpResultVO LoginToServer(){
+        String json="";
+        HashMap<String,String> map = new HashMap<>();
+        map.put("phone",mPhone.getText().toString());
+        map.put("password",mPassword.getText().toString());
+        HttpUtils http = HttpUtils.getInstance(HttpUtils.POST,map,Constant.LoginURL,getApplicationContext(),null);
+        try {
+            json = http.execute().get();
+            Log.d("LOG",json);
+        }catch(Exception e){
+            e.printStackTrace();
+            return null;
+        }
+        return new Gson().fromJson(json,HttpResultVO.class);
     }
 }

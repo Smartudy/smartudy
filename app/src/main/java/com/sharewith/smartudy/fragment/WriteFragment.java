@@ -5,8 +5,10 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Color;
 import android.graphics.Matrix;
 import android.media.ExifInterface;
+import android.media.MediaRecorder;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
@@ -20,8 +22,10 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.content.FileProvider;
 import android.support.v7.widget.RecyclerView;
+import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.Animation;
@@ -30,9 +34,11 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.ImageView;
 
+import com.sharewith.smartudy.activity.PaintBoardActivity;
 import com.sharewith.smartudy.activity.QnAActivity;
 import com.sharewith.smartudy.adapter.WriteFragmentRecyclerAdapter;
 import com.sharewith.smartudy.dto.NotePadDto;
+import com.sharewith.smartudy.dto.WriteFragComponent;
 import com.sharewith.smartudy.smartudy.R;
 import com.sharewith.smartudy.dao.Write_DBhelper;
 
@@ -40,10 +46,13 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.lang.reflect.Array;
+import java.net.URI;
 import java.nio.channels.FileChannel;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import static android.app.Activity.RESULT_OK;
 
@@ -58,18 +67,30 @@ public class WriteFragment extends Fragment{
     private ImageView bottom1,bottom2,bottom3,bottom4,bottom5;
     private Write_DBhelper mDBhelper;
     private RecyclerView mRecycler;
+    private WriteFragmentRecyclerAdapter mRecyclerAdapter;
     private EditText mTitle;
     private String mPictureName;
     private String mPicturePath;
     private Uri mPictureUri; //FileProvider가 사용할 이미지 파일에 대한 content uri
     private boolean is_fabopen;
+    private boolean mToggle = false;
     private static final int REQUEST_PICTURE = 0; //private static으로 선언하여 인스턴스끼리만 값을 공유하게끔.
     private static final int REQUEST_ALBUM = 1;
     private static final int REQUEST_CROP = 2;
+    private static final int REQUEST_RECORD = 3;
+    private static final int REQUEST_PAINT = 4;
+    private MediaRecorder recorder;
+    private URI uri;
 
     public static interface WriteFrag_To_QnAActivity{
         public void addNotePad(NotePadDto notepad);
         //WriteFragment의 + 버튼 눌렀을때 질문&답변창에 업데이트 하기 위해서
+    }
+
+    public ArrayList<WriteFragComponent> getDatas(){ // 글쓰기창에 입력한 값들을 서버로 multipart 전송하기 위해서 취합하는 함수
+        WriteFragComponent comp = new WriteFragComponent(WriteFragmentRecyclerAdapter.STATE_TITLE,-1,mTitle.getText().toString());
+        mRecyclerAdapter.getDatas().add(comp);
+        return mRecyclerAdapter.getDatas();
     }
 
     @Override
@@ -83,6 +104,16 @@ public class WriteFragment extends Fragment{
         super.onAttach(context);
     }
 
+    @Nullable
+    @Override
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        View view = inflater.inflate(R.layout.fragment_write,container,false);
+        setMember(view);
+        setListener();
+        super.onCreateView(inflater, container, savedInstanceState);
+        return view;
+    }
+
     public static interface WriteFragmentListener{
 //         void setTransParentBackground();
 //         void UnsetTransParentBackground();
@@ -91,7 +122,8 @@ public class WriteFragment extends Fragment{
     private void setMember(View view){
         mTitle = view.findViewById(R.id.write_title);
         mRecycler = view.findViewById(R.id.write_fragment_recycler);
-        mRecycler.setAdapter(new WriteFragmentRecyclerAdapter(getContext()));
+        mRecyclerAdapter = new WriteFragmentRecyclerAdapter(getContext());
+        mRecycler.setAdapter(mRecyclerAdapter);
         mDBhelper = new Write_DBhelper(view.getContext());
 //        mFragmentWrite = view.findViewById(R.id.fragment_write);
 //        mFragmentWrite.setOnClickListener(new View.OnClickListener() {
@@ -103,7 +135,6 @@ public class WriteFragment extends Fragment{
 //            }
 //        });
         fm = getActivity().getSupportFragmentManager();
-        main_fab = view.findViewById(R.id.main_write_fab);
         fab_open_anim = AnimationUtils.loadAnimation(getContext(),R.anim.fab_open);
         fab_close_anim = AnimationUtils.loadAnimation(getContext(),R.anim.fab_close);
         fab_rotate_backward = AnimationUtils.loadAnimation(getContext(),R.anim.rotate_backward);
@@ -117,7 +148,6 @@ public class WriteFragment extends Fragment{
     }
 
     private void setListener(){
-        main_fab.setOnClickListener(onClickListener);
         bottom1.setOnClickListener(onClickListener);
         bottom2.setOnClickListener(onClickListener);
         bottom3.setOnClickListener(onClickListener);
@@ -150,28 +180,24 @@ public class WriteFragment extends Fragment{
         notepad.setContents(contents);
     }
 
-
-
-
     View.OnClickListener onClickListener = new View.OnClickListener(){
         @Override
         public void onClick(View v) {
             switch(v.getId()){
-                case R.id.main_write_fab:
-                    InputMethodManager imm = (InputMethodManager)v.getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
-                    imm.hideSoftInputFromWindow(getView().getWindowToken(),0);
-                    //키보드 내리기
-                    NotePadDto notepad = new NotePadDto();
-                    setNotePad(notepad); //WriteFragment에 있는 모든 정보를 긁어와서 notepad객체에 설정
-                    //디비 업데이트
-                    mDBhelper.insertNotePad(notepad);
-                    ((QnAActivity)getActivity()).addNotePad(notepad);
-                    //QnAListFragment's 리싸이클러뷰 어댑터 갱신
-                    //WriteFragment->QnAActivity->QnAListFragment순서로 전달됨.
-                    break;
+//                case R.id.main_write_fab:
+//                    InputMethodManager imm = (InputMethodManager)v.getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
+//                    imm.hideSoftInputFromWindow(getView().getWindowToken(),0);
+//                    //키보드 내리기
+//                    NotePadDto notepad = new NotePadDto();
+//                    setNotePad(notepad); //WriteFragment에 있는 모든 정보를 긁어와서 notepad객체에 설정
+//                    //디비 업데이트
+//                    mDBhelper.insertNotePad(notepad);
+//                    ((QnAActivity)getActivity()).addNotePad(notepad);
+//                    //QnAListFragment's 리싸이클러뷰 어댑터 갱신
+//                    //WriteFragment->QnAActivity->QnAListFragment순서로 전달됨.
+//                    break;
                 case R.id.write_fragment_bottom1:
                     ((WriteFragmentRecyclerAdapter)mRecycler.getAdapter()).addView(WriteFragmentRecyclerAdapter.STATE_TEXT,"");
-                    mRecycler.smoothScrollToPosition(mRecycler.getChildCount());
                     break;
                 case R.id.write_fragment_bottom2:
                     selectPhoto();
@@ -179,9 +205,27 @@ public class WriteFragment extends Fragment{
                 case R.id.write_fragment_bottom3:
                     selectAlbum();
                     break;
+                case R.id.write_fragment_bottom4:
+                    RecordIconChange();
+                    if(!mToggle) {
+                        uri = startRecord();
+                        mToggle = true;
+                    }
+                    else {
+                        stopRecord();
+                        ((WriteFragmentRecyclerAdapter)mRecyclerAdapter).addView(WriteFragmentRecyclerAdapter.STATE_RECORD,uri.toString());
+                        mToggle = false;
+                    }
+                    break;
+                case R.id.write_fragment_bottom5:
+                    Intent intent = new Intent(getActivity(), PaintBoardActivity.class);
+                    startActivityForResult(intent,REQUEST_PAINT);
             }
+            scrollToLast();
         }
     };
+
+
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -206,10 +250,58 @@ public class WriteFragment extends Fragment{
                             crop();
                             break;
                         case REQUEST_CROP:
-                            ((WriteFragmentRecyclerAdapter)mRecycler.getAdapter()).addView(WriteFragmentRecyclerAdapter.STATE_SHOT,mPicturePath);
+                            ((WriteFragmentRecyclerAdapter)mRecycler.getAdapter()).addView(WriteFragmentRecyclerAdapter.STATE_PICTURE,mPicturePath);
+                            scrollToLast();
                             break;
-
+                    }
+                }
             }
+
+    private URI startRecord(){
+        URI FileURI= null;
+        try {
+            File publicdir = new File(Environment.getExternalStorageDirectory(), "smartudy");
+            if (!publicdir.exists())
+                publicdir.mkdirs();
+            String name = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date()) + ".mp3";
+            File recordFile = new File(publicdir, name);
+            FileURI = recordFile.toURI(); // file:/storage/emulated/0/smartudy/20180725_025324.mp3
+            Log.d("WriteFragment",FileURI+"에 저장했음.");
+
+            recorder = new MediaRecorder();
+            recorder.setAudioSource(MediaRecorder.AudioSource.MIC);
+            recorder.setOutputFormat(MediaRecorder.OutputFormat.THREE_GPP);
+            recorder.setAudioEncoder(MediaRecorder.AudioEncoder.AMR_NB);//위랑 순서 바뀌면 오류남
+            recorder.setOutputFile(recordFile.getAbsolutePath());
+            recorder.prepare();
+            recorder.start();
+        }catch(Exception e)
+        {
+            e.printStackTrace();
+        }
+        return FileURI;
+    }
+
+    private void stopRecord(){
+        if(recorder==null) return;
+        recorder.stop();
+        recorder.reset();
+        recorder.release();
+        recorder = null;
+    }
+
+
+    private void scrollToLast(){
+        int cnt = mRecyclerAdapter.getItemCount()-1;
+        if(cnt >= 0) mRecycler.smoothScrollToPosition(cnt);
+    }
+    private void RecordIconChange(){
+        if(!mToggle) {
+            bottom4.setImageResource(R.drawable.baseline_mic_white_18);
+            bottom4.setColorFilter(getResources().getColor(R.color.colorMain,null));
+        }else{
+            bottom4.setImageResource(R.drawable.bottom_4);
+            bottom4.setColorFilter(null);
         }
     }
 
@@ -237,15 +329,6 @@ public class WriteFragment extends Fragment{
 //        }
 //    }
 
-    @Nullable
-    @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_write,container,false);
-        setMember(view);
-        setListener();
-       super.onCreateView(inflater, container, savedInstanceState);
-       return view;
-    }
 
     //여기부터는 사진 및 비트맵 처리 함수들
 
@@ -330,7 +413,6 @@ public class WriteFragment extends Fragment{
         mPicturePath = Photo.getAbsolutePath();
         return Photo;
     }
-
 
 
 }
