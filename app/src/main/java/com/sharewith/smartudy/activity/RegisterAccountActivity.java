@@ -184,7 +184,7 @@ public class RegisterAccountActivity extends AppCompatActivity {
         m.put("phone",phone);
         m.put("major",mMajor);
         m.put("grade",mGrade);
-        HttpUtils http = HttpUtils.getInstance(HttpUtils.POST,m,Constant.RegisterURL,getApplicationContext(),null);
+        HttpUtils http = new HttpUtils(HttpUtils.POST,m,Constant.RegisterURL,getApplicationContext());
         try {
             json = http.execute().get();
         }catch(Exception e){

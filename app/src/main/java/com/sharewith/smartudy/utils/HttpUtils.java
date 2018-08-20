@@ -21,12 +21,14 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
+import java.io.UnsupportedEncodingException;
 import java.net.CookieManager;
 import java.net.HttpCookie;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URI;
 import java.net.URL;
+import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
@@ -38,7 +40,6 @@ import java.util.Set;
 
 public class HttpUtils extends AsyncTask<String, String, String>{
     private AsyncResponse delegate = null;
-    private static HttpUtils httpUtils;
     public static final int POST = 1;
     public static final int GET = 0;
     public static final int MULTIPART = 2;
@@ -50,27 +51,22 @@ public class HttpUtils extends AsyncTask<String, String, String>{
     HttpURLConnection con = null;
     private String boundary = "****";
     private String CRLF = "\r\n";//캐리지 리턴 + 라인 피드
-    private ArrayList<WriteFragComponent> multipartDatas;
+    private WriteFragComponent multipartdata;
 
-    private HttpUtils(int method,HashMap<String,String> map,String url,Context context,ArrayList<WriteFragComponent> datas){ //싱글톤으로 관리
+
+    public HttpUtils(int method, HashMap<String,String> map, String url, Context context){
         HttpUtils.Method = method;
         HttpUtils.map = map;
         HttpUtils.url = url;
         this.context = context;
-        multipartDatas = datas;
-    }
-
-    public static HttpUtils getInstance(int method,HashMap<String,String> map,String url,Context context,ArrayList<WriteFragComponent> datas) {
-        if(httpUtils == null)
-            return new HttpUtils(method,map,url,context,datas);
-        return httpUtils;
     }
 
 
     @Override
     protected void onPostExecute(String s) {
         super.onPostExecute(s);
-        delegate.aftermultipart(s);
+        if(delegate != null)
+            delegate.getAsyncResponse(s);
     }
 
     @Override
@@ -82,7 +78,7 @@ public class HttpUtils extends AsyncTask<String, String, String>{
     @Override
     protected String doInBackground(String... strs) {
         if(Method == MULTIPART)
-            return multipartRequest(multipartDatas,delegate);
+            return multipartRequest(multipartdata,delegate);
         else
             return request();
     }
@@ -96,78 +92,110 @@ public class HttpUtils extends AsyncTask<String, String, String>{
         }
     }
 
-    private String multipartRequest(ArrayList<WriteFragComponent> datas,AsyncResponse delegate){
-        this.delegate = delegate;
+    private void setMultipartAttrs(DataOutputStream dos,String key,String value) {
+        if(value == null || value.equals("")) return;
         try{
+        dos.writeBytes("--"+boundary + CRLF);
+        dos.writeBytes("Content-Disposition: form-data; name=\""+key+"\"" + CRLF);
+        dos.writeBytes(CRLF);
+        dos.write(value.getBytes("UTF-8"));
+        dos.writeBytes(CRLF);
+        }catch(Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void setMultipartHedaer() {
+        con.setRequestProperty("Content-Type", "multipart/form-data;boundary=" + boundary);
+        con.setDefaultUseCaches(false);
+        con.setUseCaches(false);
+        con.setDoInput(true);
+        con.setDoOutput(true);
+    }
+
+    private void setBinaryAttrs(DataOutputStream dos,String key,String path) {
+        if(path == null || path.equals("")) return;
+        File file = new File(path);
+        if(!file.exists()) {
+            Log.d("httputils", path + "에 해당하는 파일이 존재 하지 않습니다.");
+            return;
+        }
+        try {
+            dos.writeBytes("--"+boundary + CRLF);
+            dos.writeBytes("Content-Disposition: form-data; name=\""+key+"\";filename=\"" + file.getName() + "\"" + CRLF);
+            dos.writeBytes(CRLF);
+            FileInputStream fis = new FileInputStream(file.getAbsolutePath()); //path -> 이미지 파일의 절대경로
+            int buffersize;
+            while( (buffersize = Math.min(fis.available(),1024)) > 0) { //운영체제에서 1024바이트 단위로 데이터를 읽기 때문
+                byte[] buffer = new byte[buffersize];
+                fis.read(buffer,0,buffersize);
+                dos.write(buffer);
+            }
+            dos.writeBytes(CRLF);
+        }catch (Exception e) {
+            e.printStackTrace();
+        }
+
+    }
+
+    private String getResponseFromServer() {
+        String line;
+        String page = "";
+        try {
+            BufferedReader reader = new BufferedReader(new InputStreamReader(con.getInputStream(), "UTF-8"));
+            while ((line = reader.readLine()) != null) {
+                page += line;
+            }
+        }catch(Exception e) {
+            e.printStackTrace();
+        }
+        return page;
+    }
+
+    private String multipartRequest(WriteFragComponent data,AsyncResponse delegate) {//delegate -> Async 작업이 끝나면 자동으로 호출되는 후처리 클래스
+        this.delegate = delegate;
+        try {
             URL Url = new URL(url);
-            Log.d("httputils","서버로 MultiPart 요청 : "+url);
+            Log.d("httputils", "서버로 MultiPart 요청 : " + url);
             con = (HttpURLConnection) Url.openConnection();
+            setMultipartHedaer();
             con.setRequestMethod("POST");
-            con.setRequestProperty("Content-Type", "multipart/form-data;boundary=" + boundary);
-            con.setDefaultUseCaches(false);
-            con.setUseCaches(false);
-            con.setDoInput(true);
-            con.setDoOutput(true);
-            setCookieHeader();
-            //사용자가 로그인해서 세션 쿠키를 서버로부터 발급받은적 있다면 그 다음 요청 헤더 부터는 그 세션 쿠키를 포함해서 전송해야 함.
+            //setMultipartHedaer();
+            //setCookieHeader(); //사용자가 로그인해서 세션 쿠키를 서버로부터 발급받은적 있다면 그 다음 요청 헤더 부터는 그 세션 쿠키를 포함해서 전송해야 함.
             OutputStream os = con.getOutputStream();
             DataOutputStream dos = new DataOutputStream(os);
-            for(int i=0; i<datas.size(); i++) {
-                dos.writeBytes("--" + boundary + CRLF);
-                WriteFragComponent component = datas.get(i);
-                Log.d("httputils","서버로 "+component.getString()+" 전송");
-                if(component.getType() == WriteFragmentRecyclerAdapter.STATE_TITLE){
-                    dos.writeBytes("Content-Disposition: form-data; name=\"title\"" + CRLF);
-                    dos.writeBytes(CRLF);
-                    dos.write(component.getString().getBytes("UTF-8"));
-                    dos.writeBytes(CRLF);
-                }else if(component.getType() == WriteFragmentRecyclerAdapter.STATE_TEXT){
-                    dos.writeBytes("Content-Disposition: form-data; name=\"content\";" + CRLF);
-                    dos.writeBytes(CRLF);
-                    dos.write(component.getString().getBytes("UTF-8"));
-                    dos.writeBytes(CRLF);
-                }else if(component.getType() == WriteFragmentRecyclerAdapter.STATE_PICTURE){
-                    File file = new File(component.getString());
-                    if(!file.exists())
-                        Log.d("httputils",component.getString()+"에 해당하는 파일이 존재 하지 않습니다.");
-
-                        dos.writeBytes("Content-Disposition: form-data; name=\"images\";filename=\"" + file.getName() + "\"" + CRLF);
-
-                    dos.writeBytes(CRLF);
-                    FileInputStream fis = new FileInputStream(component.getString()); //datas.get(i) -> 이미지 파일의 절대경로
-
-                    int buffersize;
-                    while( (buffersize = Math.min(fis.available(),1024)) > 0) { //운영체제에서 1024바이트 단위로 데이터를 읽기 때문
-                        byte[] buffer = new byte[buffersize];
-                        fis.read(buffer,0,buffersize);
-                        dos.write(buffer);
-                    }
-                    dos.writeBytes(CRLF);
-                } else if((component.getType() == WriteFragmentRecyclerAdapter.STATE_RECORD)){
-                    File file = null;
-                    try {
-                        file = new File(new URI(component.getString()));
-                        if(!file.exists())
-                            Log.d("httputils",component.getString()+"에 해당하는 파일이 존재 하지 않습니다."); //file uri
-                    }catch(Exception e){
-                        e.printStackTrace();
-                    }
-                    dos.writeBytes("Content-Disposition: form-data; name=\"audio\";filename=\"" + file.getName() + "\"" + CRLF); dos.writeBytes(CRLF);
-                    FileInputStream fis = new FileInputStream(file.getAbsolutePath()); //file uri를 절대 경로로 변환
-                    int buffersize;
-                    while( (buffersize = Math.min(fis.available(),1024)) > 0) { //운영체제에서 1024바이트 단위로 데이터를 읽기 때문
-                        byte[] buffer = new byte[buffersize];
-                        fis.read(buffer,0,buffersize);
-                        dos.write(buffer);
-                    }
-                    dos.writeBytes(CRLF);
-                }
-            }
-            dos.writeBytes("--"+boundary+"--"+CRLF);
+            setMultipartAttrs(dos, "title", data.getTitle());
+            setMultipartAttrs(dos, "content", data.getContent());
+            setMultipartAttrs(dos, "subject", data.getSubject());
+            setMultipartAttrs(dos, "money", data.getMoney());
+            setMultipartAttrs(dos, "hashtag", data.getHashtag());
+            setMultipartAttrs(dos,"category",data.getCategory());
+            for (String path : data.getImages())
+                setBinaryAttrs(dos, "images", path);
+            for (String path : data.getAudios())
+                setBinaryAttrs(dos, "audios", Uri.parse(path).getPath());
+            for (String path : data.getDraws())
+                setBinaryAttrs(dos, "draws", path);
+            dos.writeBytes("--" + boundary + "--" + CRLF);
             dos.flush();
             dos.close();
 
-            /*
+            if (con.getResponseCode() != HttpURLConnection.HTTP_OK) //이때 서버로 요청
+                Log.d("LOG", "HTTP_OK를 받지 못했습니다.");
+            String jsonResult = getResponseFromServer();
+            //getCookieHeader();
+            return jsonResult;
+        }
+        catch(Exception e) {
+            e.printStackTrace();
+        }finally {
+            if (con != null)
+                con.disconnect();
+        }
+        return null;
+    }
+
+       /*
             POST /files HTTP/1.1
             Host: localhost
             Cache-Control: no-cache
@@ -184,76 +212,46 @@ public class HttpUtils extends AsyncTask<String, String, String>{
 
             나는 다른 데이터입니다.
             ------WebKitFormBoundary7MA4YWxkTrZu0gW--
-             */
-            if (con.getResponseCode() != HttpURLConnection.HTTP_OK) { //이때 요청이 보내짐.
-                Log.d("LOG", "HTTP_OK를 받지 못했습니다.");
-                return null;
-            }
-
-//            int bytesAvailable = mFileInputStream.available();
-//            int maxBufferSize = 1024;
-//            int bufferSize = Math.min(bytesAvailable, maxBufferSize);
-//
-//            byte[] buffer = new byte[bufferSize];
-//            int bytesRead = mFileInputStream.read(buffer, 0, bufferSize);
-//
-//            Log.d("Test", "image byte is " + bytesRead);
-//
-//            // read image
-//            while (bytesRead > 0) {f
-//                dos.write(buffer, 0, bufferSize);
-//                bytesAvailable = mFileInputStream.available();
-//                bufferSize = Math.min(bytesAvailable, maxBufferSize);
-//                bytesRead = mFileInputStream.read(buffer, 0, bufferSize);
-//            }
-//
-//            dos.writeBytes(lineEnd);
-//            dos.writeBytes(twoHyphens + boundary + twoHyphens + lineEnd);
-
-
-            BufferedReader reader = new BufferedReader(new InputStreamReader(con.getInputStream(), "UTF-8"));
-
-            String line;
-            String page = "";
-            while ((line = reader.readLine()) != null){
-                page += line;
-            }
-            getCookieHeader();
-            return page;
-        } catch (MalformedURLException e) { // for URL.
-            e.printStackTrace();
-        } catch (IOException e) { // for openConnection().
-            e.printStackTrace();
-        } finally {
-            if (con != null)
-                con.disconnect();
-        }
-        return null;
-    }
+        */
 
 
     private String request(){ //key&value로 전송하고 json으로 받기.
         String params = makeParameter(map);
         try{
-            URL Url = new URL(url);
-            con = (HttpURLConnection) Url.openConnection();
-            if(Method == HttpUtils.POST)
+            if(Method == HttpUtils.POST) {
+                URL Url = new URL(url);
+                con = (HttpURLConnection) Url.openConnection();
+                con.setRequestProperty("Accept","application/json");
                 con.setRequestMethod("POST");
-            else if(Method == HttpUtils.GET)
+                con.setDefaultUseCaches(false);
+                con.setUseCaches(false);
+                con.setDoInput(true);
+                con.setDoOutput(true);
+                con.setRequestProperty("Accept-Charset", "UTF-8");
+                OutputStream os = con.getOutputStream();
+                os.write(params.getBytes("UTF-8"));
+                os.flush();
+                os.close();
+            }
+            else if(Method == HttpUtils.GET) {
+                StringBuilder sb = new StringBuilder();
+                sb.append("?"+params);
+                url += sb.toString();
+                URL Url = new URL(url);
+                con = (HttpURLConnection) Url.openConnection();
                 con.setRequestMethod("GET");
-            con.setRequestProperty("Accept","application/json");
-            con.setDefaultUseCaches(false);
-            con.setUseCaches(false);
-            con.setDoInput(true);
-            con.setDoOutput(true);
-            setCookieHeader();
+                con.setRequestProperty("Accept","application/json");
+                con.setDefaultUseCaches(false);
+                con.setUseCaches(false);
+                con.setDoInput(true);
+                con.setRequestProperty("Accept-Charset", "UTF-8");
+                con.setDoOutput(false); //DoOutPut설정시 GET으로 설정해도 자동으로 POST로 바뀐다.
+            }
+            //setCookieHeader();
             //사용자가 로그인해서 세션 쿠키를 서버로부터 발급받은적 있다면 그 다음 요청 헤더 부터는 그 세션 쿠키를 포함해서 전송해야 함.
-            OutputStream os = con.getOutputStream();
-            os.write(params.getBytes("UTF-8"));
-            os.flush();
-            os.close();
 
-            Log.d("LOG",url+"로 HTTP 요청 전송");
+
+            Log.d("HttpUtils",url+"로 HTTP 요청 전송");
             if (con.getResponseCode() != HttpURLConnection.HTTP_OK) { //이때 요청이 보내짐.
                 Log.d("LOG", "HTTP_OK를 받지 못했습니다.");
                 return null;
@@ -266,7 +264,7 @@ public class HttpUtils extends AsyncTask<String, String, String>{
             while ((line = reader.readLine()) != null){
                 page += line;
             }
-            getCookieHeader();
+            //getCookieHeader();
             return page;
         } catch (MalformedURLException e) { // for URL.
             e.printStackTrace();
@@ -291,6 +289,12 @@ public class HttpUtils extends AsyncTask<String, String, String>{
             for (String k : params.keySet()) {
                 key = k;
                 value = params.get(k);
+                try {
+                    if(Method != POST)
+                        value = URLEncoder.encode(value,"UTF-8");
+                } catch (UnsupportedEncodingException e) {
+                    e.printStackTrace();
+                }
                 sb.append(key+"="+value+"&");
             }
             str = sb.toString();
@@ -340,5 +344,11 @@ public class HttpUtils extends AsyncTask<String, String, String>{
     }
     public void setDelegate(AsyncResponse delegate) {
         this.delegate = delegate;
+    }
+    public WriteFragComponent getMultipartdata() {
+        return multipartdata;
+    }
+    public void setMultipartdata(WriteFragComponent multipartdata) {
+        this.multipartdata = multipartdata;
     }
 }

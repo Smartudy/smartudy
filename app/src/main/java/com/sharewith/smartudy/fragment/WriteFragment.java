@@ -39,6 +39,7 @@ import com.sharewith.smartudy.activity.QnAActivity;
 import com.sharewith.smartudy.adapter.WriteFragmentRecyclerAdapter;
 import com.sharewith.smartudy.dto.NotePadDto;
 import com.sharewith.smartudy.dto.WriteFragComponent;
+import com.sharewith.smartudy.dto.WriteRecyclerDto;
 import com.sharewith.smartudy.smartudy.R;
 import com.sharewith.smartudy.dao.Write_DBhelper;
 
@@ -87,10 +88,31 @@ public class WriteFragment extends Fragment{
         //WriteFragment의 + 버튼 눌렀을때 질문&답변창에 업데이트 하기 위해서
     }
 
-    public ArrayList<WriteFragComponent> getDatas(){ // 글쓰기창에 입력한 값들을 서버로 multipart 전송하기 위해서 취합하는 함수
-        WriteFragComponent comp = new WriteFragComponent(WriteFragmentRecyclerAdapter.STATE_TITLE,-1,mTitle.getText().toString());
-        mRecyclerAdapter.getDatas().add(comp);
-        return mRecyclerAdapter.getDatas();
+    public WriteFragComponent.builder getDatas(){ // 글쓰기창에 입력한 값들을 서버로 multipart 전송하기 위해서 total에 취합하는 함수
+        //여기선 타이틀 + 본문 + 음악파일 + 그림파일 경로를 total에 취합
+        WriteFragComponent.builder total = new WriteFragComponent.builder();
+        ArrayList<WriteRecyclerDto> list = mRecyclerAdapter.getDatas();
+        ArrayList<String> images = new ArrayList<>();
+        ArrayList<String> audios = new ArrayList<>();
+        ArrayList<String> draws = new ArrayList<>();
+        for(int i=0; i<list.size(); i++){
+            WriteRecyclerDto element = list.get(i);
+            switch(element.getType()){
+                case WriteFragmentRecyclerAdapter.STATE_PICTURE:
+                    images.add(element.getStr());
+                    break;
+                case WriteFragmentRecyclerAdapter.STATE_RECORD:
+                    audios.add(element.getStr());
+                    break;
+                case WriteFragmentRecyclerAdapter.STATE_TEXT:
+                    total.setContent(element.getStr());
+                    break;
+            }
+        }
+        return total.setAudios(audios)
+                .setImages(images)
+                .setDraws(draws)
+                .setTitle(mTitle.getText().toString());
     }
 
     @Override
@@ -154,48 +176,12 @@ public class WriteFragment extends Fragment{
         bottom4.setOnClickListener(onClickListener);
         bottom5.setOnClickListener(onClickListener);
     }
-//    private void setFAB(View view){
-//        mfab1.setOnClickListener(onClickListener);
-//        mfab2.setOnClickListener(onClickListener);
-//        mfab3.setOnClickListener(onClickListener);
-//        mfab4.setOnClickListener(onClickListener);
-//        background.setBackgroundColor(Color.parseColor("#994C4C4C"));
-//        animation();
-//    }
 
-    private String getText(){
-        String contents = "";
-        for(int i=0; i<mRecycler.getChildCount(); i++){
-//            RecyclerView.ViewHolder viewHolder = mRecycler.findViewHolderForAdapterPosition(i);
-//            if(viewHolder instanceof WriteFragmentRecyclerAdapter.TextViewHolder)
-//                contents += ((WriteFragmentRecyclerAdapter.TextViewHolder) viewHolder).editText.getText().toString();
-        }
-        return contents;
-    }
-
-    private void setNotePad(NotePadDto notepad){ //디비에 업데이트 할때 사용됨.
-        String title = mTitle.getText().toString();
-        String contents = getText();
-        notepad.setTitle(title);
-        notepad.setContents(contents);
-    }
 
     View.OnClickListener onClickListener = new View.OnClickListener(){
         @Override
         public void onClick(View v) {
             switch(v.getId()){
-//                case R.id.main_write_fab:
-//                    InputMethodManager imm = (InputMethodManager)v.getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
-//                    imm.hideSoftInputFromWindow(getView().getWindowToken(),0);
-//                    //키보드 내리기
-//                    NotePadDto notepad = new NotePadDto();
-//                    setNotePad(notepad); //WriteFragment에 있는 모든 정보를 긁어와서 notepad객체에 설정
-//                    //디비 업데이트
-//                    mDBhelper.insertNotePad(notepad);
-//                    ((QnAActivity)getActivity()).addNotePad(notepad);
-//                    //QnAListFragment's 리싸이클러뷰 어댑터 갱신
-//                    //WriteFragment->QnAActivity->QnAListFragment순서로 전달됨.
-//                    break;
                 case R.id.write_fragment_bottom1:
                     ((WriteFragmentRecyclerAdapter)mRecycler.getAdapter()).addView(WriteFragmentRecyclerAdapter.STATE_TEXT,"");
                     break;

@@ -13,9 +13,10 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.SeekBar;
 
+import com.sharewith.smartudy.dto.WriteRecyclerDto;
 import com.sharewith.smartudy.smartudy.R;
 import com.sharewith.smartudy.utils.BitmapImageProcess;
-import com.sharewith.smartudy.dto.WriteFragComponent;
+import com.sharewith.smartudy.dto.WriteRecyclerDto;
 import com.sharewith.smartudy.utils.RecordSeekbar;
 
 import java.util.ArrayList;
@@ -34,13 +35,13 @@ public class WriteFragmentRecyclerAdapter extends RecyclerView.Adapter<RecyclerV
     private EditTextHolder mTextHolder;
     //상수에 static final을 사용하는 이유
     //https://djkeh.github.io/articles/Why-should-final-member-variables-be-conventionally-static-in-Java-kor/
-    private ArrayList<WriteFragComponent> datas;
+    private ArrayList<WriteRecyclerDto> datas;
     private boolean mFlag; //텍스트 입력 딱 한번만 하게 하기 위해서
 
-    public ArrayList<WriteFragComponent> getDatas() {
-        for(WriteFragComponent c : datas){
+    public ArrayList<WriteRecyclerDto> getDatas() { //path는 이미 설정되어있으므로 본문만 읽어옴.
+        for(WriteRecyclerDto c : datas){
             if(c.getType() == STATE_TEXT)
-                c.setString(mTextHolder.editText.getText().toString());
+                c.setStr(mTextHolder.editText.getText().toString());
         }
         return datas;
     }
@@ -53,7 +54,7 @@ public class WriteFragmentRecyclerAdapter extends RecyclerView.Adapter<RecyclerV
     public WriteFragmentRecyclerAdapter(Context context) {
         mContext = context;
         mFlag = false;
-        datas = new ArrayList<WriteFragComponent>();
+        datas = new ArrayList<WriteRecyclerDto>();
     }
 
     @NonNull
@@ -77,7 +78,7 @@ public class WriteFragmentRecyclerAdapter extends RecyclerView.Adapter<RecyclerV
     @Override
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
         int type = datas.get(position).getType();
-        String str = datas.get(position).getString();
+        String str = datas.get(position).getStr();
         switch(type){
             case STATE_TEXT:
                 break;
@@ -121,11 +122,11 @@ public class WriteFragmentRecyclerAdapter extends RecyclerView.Adapter<RecyclerV
     }
 
     public void addView(int current_state,String string) {
-        if(current_state == STATE_TEXT){
-            if(!mFlag) mFlag= true;
+        if(current_state == STATE_TEXT) {
+            if (!mFlag) mFlag = true;
             else return;
         }
-        datas.add(new WriteFragComponent(current_state,datas.size(),string));
+        datas.add(new WriteRecyclerDto(current_state,string));
         notifyDataSetChanged();
     }
 

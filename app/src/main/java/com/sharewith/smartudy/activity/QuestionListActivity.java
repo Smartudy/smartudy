@@ -3,71 +3,113 @@ package com.sharewith.smartudy.activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
+import android.widget.TextView;
 
+import com.google.gson.Gson;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
+import com.sharewith.smartudy.Interface.AsyncResponse;
 import com.sharewith.smartudy.adapter.QuestionRecyclerAdapter;
 import com.sharewith.smartudy.smartudy.R;
-import com.sharewith.smartudy.utils.Question;
+import com.sharewith.smartudy.dto.Question;
+import com.sharewith.smartudy.utils.Constant;
+import com.sharewith.smartudy.utils.HttpUtils;
+
+import org.json.JSONException;
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
+import org.json.simple.parser.ParseException;
 
 import java.util.ArrayList;
-import java.util.Date;
+import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
 
 public class QuestionListActivity extends AppCompatActivity {
 
     private static String[] suggestions = new String[]{"abcdefg","bcdefgh","cdefghi","defghij","efghijk"};
-    private RecyclerView recyclerView;
+    private RecyclerView mRecyclerView;
+    private String mCategory;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_question_list);
 
         Intent intent = getIntent();
-        String categoryName = intent.getStringExtra("categoryName");
+        mCategory = intent.getStringExtra("categoryName");
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true); // 뒤로가기 버튼 활성화
         getSupportActionBar().setDisplayShowHomeEnabled(true);
-        getSupportActionBar().setTitle(categoryName);
-
-
+        getSupportActionBar().setDisplayShowTitleEnabled(false);
+        TextView title =  findViewById(R.id.question_list_title);
+        title.setText(mCategory);
+        Log.d("QuestionListActivity","현재 카테고리는 "+mCategory);
         // 자동완성 검색 창 관련 속성 설정
         setAutoCompleteTextViewAttrs();
-
         // 플로팅버튼(하단 더하기버튼)의 리스너 등록
         setFloatingActionBtnClickListener();
 
-        recyclerView=(RecyclerView)findViewById(R.id.recyclerView);
+        mRecyclerView=findViewById(R.id.recyclerView);
+        mRecyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
+        mRecyclerView.setItemAnimator(new DefaultItemAnimator());
         List<Question> questionList = new ArrayList<Question>();
-        collectQuestionDataFromDB(categoryName, questionList); // DB에서 해당 과목의 모든 질문을 받아온다.(일단은 임의 데이터)
-        recyclerView.setAdapter(new QuestionRecyclerAdapter(questionList, R.layout.question_row_layout));
-        recyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
-        recyclerView.setItemAnimator(new DefaultItemAnimator());
-    }
+        final QuestionRecyclerAdapter adapter = new QuestionRecyclerAdapter(questionList,mRecyclerView,mCategory);
+        adapter.setOnLoadMoreListener(new QuestionRecyclerAdapter.OnLoadMoreListener() {
+            @Override
+            public void onLoadMore(int page) {
+                HashMap<String,String> arg = new HashMap<>();
+                arg.put("page",String.valueOf(page));
+                arg.put("category",mCategory);
+                Log.d("QuestionListActivity",mCategory+"의 "+String.valueOf(page)+"번 페이지 서버로 요청");
+                HttpUtils utils = new HttpUtils(HttpUtils.GET,arg, Constant.ListPageURL,getApplicationContext());// /board/listpage/?page=0
+                utils.setDelegate(new AsyncResponse() { //HttpUtils가 작업을 끝냈을때
+                    @Override
+                    public void getAsyncResponse(String result) {
+                        //서버로부터 데이터 받아서 어댑터에 데이터 추가
+                        Log.d("QuestionListActivity",result);
+                        JsonParser parser = new JsonParser();
+                        List<Question> datas;
+                        try {
+                            JsonObject root = parser.parse(result).getAsJsonObject();
+                            JsonElement success = root.get("success");
+                            if(success.getAsBoolean()){
+                                JsonArray arr = (JsonArray)root.get("datas");
+                                Gson gson = new Gson();
+                                Question[] qarr = gson.fromJson(arr,Question[].class);
+                                datas = Arrays.asList(qarr);
+                                adapter.addDatas(datas);
+                            }else{
+                               Log.d("QuestionListActivity","서버에서 질문 목록 받아오기 실패");
+                            }
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+                        adapter.setLoaded();
+                    }
+                });
+                utils.execute(); //서버에서 질문 리스트 가져오기
 
-    public void collectQuestionDataFromDB(String categoryName, List<Question> list){
-        for(int i=0;i<10;i++){
-            Question question=new Question(
-                    "배열수식 도와주세요",
-                    "구글링해서 어떤 IR Table을 찾아봐도 \n아세틸기의 wavenum ber는 ",
-                    "#재료공학 #건축공학 #환경공학",
-                    12,
-                    new Date()
-            );
-            list.add(question);
-        }
+            }
+        });
+        adapter.setFirstData();//onLoadMore() 메소드 실행됨.
+        mRecyclerView.setAdapter(adapter);
     }
 
     @Override
@@ -107,8 +149,9 @@ public class QuestionListActivity extends AppCompatActivity {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
+                Intent intent = new Intent(QuestionListActivity.this,QnAActivity.class);
+                intent.putExtra("category",mCategory);
+                startActivity(intent);
             }
         });
     }

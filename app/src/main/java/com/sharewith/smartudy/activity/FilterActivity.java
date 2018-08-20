@@ -106,25 +106,24 @@ public class FilterActivity extends AppCompatActivity {
                             @Override
                             public void onClick(final View v) {
                                 AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(FilterActivity.this);
-                                dialogBuilder.setMessage("삭제하시겠습니까?");
-                                dialogBuilder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
-                                    @Override
-                                    public void onClick(DialogInterface dialog, int which) {
-                                        String str = ((Button)v).getText().toString();
-                                        options_selected.remove(str);
-                                        options_available.add(str);
-                                        linearLayout.removeView(v);
-                                        Toast.makeText(getApplicationContext(), str, Toast.LENGTH_SHORT).show();
-                                    }
-                                });
-                                dialogBuilder.setNegativeButton("CANCEL", new DialogInterface.OnClickListener() {
+                                dialogBuilder
+                                        .setMessage("삭제하시겠습니까?")
+                                        .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                                            @Override
+                                            public void onClick(DialogInterface dialog, int which) {
+                                                String str = ((Button)v).getText().toString();
+                                                options_selected.remove(str);
+                                                options_available.add(str);
+                                                linearLayout.removeView(v);
+                                                Toast.makeText(getApplicationContext(), str, Toast.LENGTH_SHORT).show();
+                                            }
+                                        })
+                                        .setNegativeButton("CANCEL", new DialogInterface.OnClickListener() {
                                     @Override
                                     public void onClick(DialogInterface dialog, int which) {
                                         Toast.makeText(getApplicationContext(), "subject removal cancelled", Toast.LENGTH_SHORT).show();
                                     }
-                                });
-                                AlertDialog alertDialog = dialogBuilder.create();
-                                alertDialog.show();
+                                }).create().show();
                             }
                         });
                         linearLayout.addView(view, 0);

@@ -81,7 +81,7 @@ public class LoginActivity extends AppCompatActivity {
         HashMap<String,String> map = new HashMap<>();
         map.put("phone",mPhone.getText().toString());
         map.put("password",mPassword.getText().toString());
-        HttpUtils http = HttpUtils.getInstance(HttpUtils.POST,map,Constant.LoginURL,getApplicationContext(),null);
+        HttpUtils http = new HttpUtils(HttpUtils.POST,map,Constant.LoginURL,getApplicationContext());
         try {
             json = http.execute().get();
             Log.d("LOG",json);

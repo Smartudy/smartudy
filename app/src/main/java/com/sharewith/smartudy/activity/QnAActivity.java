@@ -11,11 +11,13 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewDebug;
 import android.view.WindowManager;
+import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
@@ -24,6 +26,7 @@ import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import com.sharewith.smartudy.Interface.AsyncResponse;
 import com.sharewith.smartudy.adapter.WriteFragmentRecyclerAdapter;
+import com.sharewith.smartudy.directory.CustomDialog;
 import com.sharewith.smartudy.dto.NotePadDto;
 import com.sharewith.smartudy.dto.WriteFragComponent;
 import com.sharewith.smartudy.fragment.QnAListFragment;
@@ -47,7 +50,9 @@ public class QnAActivity extends AppCompatActivity implements WriteFragment.Writ
     private Write_DBhelper DBhelper;
     private FloatingActionButton mFab,mFab2;
     private FragmentManager mFragManager;
-
+    private WriteFragComponent mData;
+    private CustomDialog mDialog;
+    private String mCategory;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -75,7 +80,8 @@ public class QnAActivity extends AppCompatActivity implements WriteFragment.Writ
         mFragManager = getSupportFragmentManager();
         mFragManager.beginTransaction().add(R.id.activity_qna_container,mWriteFragment).addToBackStack(null).hide(mWriteFragment)
                 .add(R.id.activity_qna_container,mQnAListFragment).addToBackStack(null).commit();
-
+        mDialog = new CustomDialog(this);
+        mCategory = getIntent().getStringExtra("category");
     }
 
     private void setTabLayout(){
@@ -147,38 +153,63 @@ public class QnAActivity extends AppCompatActivity implements WriteFragment.Writ
         mFab2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ArrayList<WriteFragComponent> datas = mWriteFragment.getDatas();
-                String result = "";
-                try {
-                    HttpUtils util = HttpUtils.getInstance(HttpUtils.MULTIPART, null, Constant.PostURL, getApplicationContext(), datas);
-                    util.setDelegate(new AsyncResponse() {
-                        @Override
-                        public void aftermultipart(String result) { //HttpUtils의 doInBackground() 마치면 자동으로 호출되는 메소드
-                            Log.d("qna",result);
-                            JsonParser parser = new JsonParser();
-                            JsonObject json = parser.parse(result).getAsJsonObject();
-                            Log.d("qna",json.toString());
-                            if(json.get("success").getAsBoolean() == true){
-                                Toast.makeText(getApplicationContext(), "게시글이 등록 되었습니다.", Toast.LENGTH_SHORT).show();
-                                mFragManager.beginTransaction().remove(mWriteFragment).commit();
-                                mTabLayout.removeTabAt(1);
-                            }else{
-                                Toast.makeText(getApplicationContext(), "게시글 등록이 실패 하였습니다.", Toast.LENGTH_SHORT).show();
-                            }
-                        }
-                    });
-                    util.execute();
-                    //결과는 HttpUtils의 onPostExecute()에서 알아서 aftermultipart() 호출함.
-                }catch(Exception e){
-                    Log.d("QnAActivity","멀티파트 요청 중 에러 발생");
-                    e.printStackTrace();
-                }
-
-
-            }
+                mDialog.showDialog();
+               }
         });
     }
 
+    public void postToServer(){ //작성된 글의 내용(다이얼로그 포함)을 서버로 전송
+        String result = "";
+        WriteFragComponent.builder builder = mWriteFragment.getDatas(); //글작성창에 있는 제목,본문,이미지,음악파일 경로 가져옴.
+        mDialog.setDialogContents(builder); //다이얼로그의 과목명,해쉬태그,금액까지 취합.
+        mData = builder.setCategory(mCategory).build(); // 카테고리명 까지 취합.
+        Log.d("QnAActivity","현재 카테고리 " + mCategory);
+        Log.d("QnAActivity",mData.toString());
+        try {
+            HttpUtils util = new HttpUtils(HttpUtils.MULTIPART, null, Constant.PostURL, getApplicationContext());
+            util.setMultipartdata(mData);
+            util.setDelegate(new AsyncResponse() {
+                @Override
+                public void getAsyncResponse(String result) { //HttpUtils의 doInBackground() 마치면 자동으로 호출되는 메소드
+                    Log.d("qna",result);
+                    JsonParser parser = new JsonParser();
+                    JsonObject json = parser.parse(result).getAsJsonObject();
+                    Log.d("qna",json.toString());
+                    if(json.get("success").getAsBoolean() == true){
+                        Toast.makeText(getApplicationContext(), "게시글이 등록 되었습니다.", Toast.LENGTH_SHORT).show();
+                        mFragManager.beginTransaction().remove(mWriteFragment).commit();
+                        mTabLayout.removeTabAt(1);
+                        mDialog.dismiss();
+                    }else{
+                        Toast.makeText(getApplicationContext(), "게시글 등록이 실패 하였습니다.", Toast.LENGTH_SHORT).show();
+                    }
+                }
+            });
+            util.execute();
+            //결과는 HttpUtils의 onPostExecute()에서 알아서 aftermultipart() 호출함.
+        }catch(Exception e){
+            Log.d("QnAActivity","멀티파트 요청 중 에러 발생");
+            e.printStackTrace();
+        }
+    }
+    private void showdialog(){
+//        DisplayMetrics dm = getApplicationContext().getResources().getDisplayMetrics(); //디바이스 화면크기를 구하기위해
+//        int width = dm.widthPixels; //디바이스 화면 너비
+//        int height = dm.heightPixels; //디바이스 화면 높이
+//
+//        dial = (Button) findViewById(R.id.dial);
+//        cd = new CustomDialog(this);
+//        WindowManager.LayoutParams wm = cd.getWindow().getAttributes();  //다이얼로그의 높이 너비 설정하기위해
+//        wm.copyFrom(cd.getWindow().getAttributes());  //여기서 설정한값을 그대로 다이얼로그에 넣겠다는의미
+//        wm.width = width / 2;  //화면 너비의 절반
+//        wm.height = height / 2;  //화면 높이의 절반
+//        dial.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                cd.show();  //다이얼로그
+//            }
+//        });
+    }
 
     @Override
     public void addNotePad(NotePadDto notepad) {

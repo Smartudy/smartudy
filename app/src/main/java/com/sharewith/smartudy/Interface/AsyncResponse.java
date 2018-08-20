@@ -5,5 +5,5 @@ package com.sharewith.smartudy.Interface;
  */
 
 public interface AsyncResponse {
-    public void aftermultipart(String result);
+     void getAsyncResponse(String result);
 }

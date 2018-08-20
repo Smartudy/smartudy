@@ -19,6 +19,16 @@
             app:theme="@style/ToolbarStyle"
             app:titleTextColor="#000000"
             app:popupTheme="@style/AppTheme.PopupOverlay">
+            <TextView
+                android:id="@+id/question_list_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:textColor="@color/colorTitle"
+                android:textSize="18sp"
+                android:fontFamily="@string/main_font"
+
+                />
         </android.support.v7.widget.Toolbar>
 
     </android.support.design.widget.AppBarLayout>
