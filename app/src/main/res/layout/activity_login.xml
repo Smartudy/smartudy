@@ -28,25 +28,27 @@
         android:id="@+id/login_phone"
         android:layout_width="@dimen/login_input_width"
         android:layout_height="@dimen/login_input_height"
+        android:background="@drawable/input_border"
         android:layout_gravity="center"
         android:layout_marginBottom="@dimen/login_margin_bottom"
-        android:background="@drawable/input_border"
         android:fontFamily="@string/main_font"
-        android:hint="Phone number"
+        android:textSize="14sp"
         android:padding="@dimen/login_input_padding"
-        android:textSize="14sp" />
+        android:maxLines="1"
+        android:inputType="numberDecimal"/>
 
     <EditText
         android:id="@+id/login_password"
         android:layout_width="@dimen/login_input_width"
         android:layout_height="@dimen/login_input_height"
         android:layout_gravity="center"
-        android:layout_marginBottom="32dp"
         android:background="@drawable/input_border"
         android:fontFamily="@string/main_font"
         android:hint="Password"
         android:padding="@dimen/login_input_padding"
-        android:textSize="14sp" />
+        android:maxLines="1"
+        android:layout_marginBottom="32dp"
+        android:inputType="textPassword"/>
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content">

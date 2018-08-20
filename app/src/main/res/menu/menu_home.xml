@@ -1,24 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
-
+<!--
     <item
         android:id="@+id/menu_title"
         android:title="Category"
         app:showAsAction="always">
     </item>
-<!--
-    <item
-        android:id="@+id/menu_alarm"
-        android:icon="@drawable/"
-        app:showAsAction="always">
-    </item>
+    -->
 
     <item
-        android:id="@+id/menu_pigbar"
-        android:icon="@drawable/"
+        android:id="@+id/toolbar_menu_bell"
+        android:title="bell"
+        android:icon="@drawable/bell"
         app:showAsAction="always">
     </item>
--->
 </menu>
 

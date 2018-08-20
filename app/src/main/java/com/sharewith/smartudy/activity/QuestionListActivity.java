@@ -1,6 +1,11 @@
 package com.sharewith.smartudy.activity;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.Matrix;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
@@ -9,6 +14,8 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.util.TypedValue;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -44,16 +51,19 @@ public class QuestionListActivity extends AppCompatActivity {
     private static String[] suggestions = new String[]{"abcdefg","bcdefgh","cdefghi","defghij","efghijk"};
     private RecyclerView mRecyclerView;
     private String mCategory;
+    protected String resourceSizeTag;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_question_list);
 
         Intent intent = getIntent();
-        mCategory = intent.getStringExtra("categoryName");
+        mCategory = intent.getStringExtra("mCategory");
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        ((TextView)toolbar.findViewById(R.id.toolbar_title)).setText(mCategory);
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true); // 뒤로가기 버튼 활성화
         getSupportActionBar().setDisplayShowHomeEnabled(true);
@@ -61,6 +71,7 @@ public class QuestionListActivity extends AppCompatActivity {
         TextView title =  findViewById(R.id.question_list_title);
         title.setText(mCategory);
         Log.d("QuestionListActivity","현재 카테고리는 "+mCategory);
+
         // 자동완성 검색 창 관련 속성 설정
         setAutoCompleteTextViewAttrs();
         // 플로팅버튼(하단 더하기버튼)의 리스너 등록
@@ -113,10 +124,30 @@ public class QuestionListActivity extends AppCompatActivity {
     }
 
     @Override
+    public void setContentView(int layoutResID) {
+        LayoutInflater inflater = getLayoutInflater();
+        View view = inflater.inflate(layoutResID, null);
+        resourceSizeTag = (String)view.getTag();
+        super.setContentView(view);
+    }
+
+    @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu_quesiont_list, menu);
+        //TODO: 더 다양한 화면 크기 지원시 옵션을 늘려야한다.
+        if(resourceSizeTag.equals("large")){
+            menu.findItem(R.id.menu_filter_setting).setIcon(resizeImage(R.mipmap.rectangle_3,dpToPx(35),dpToPx(35)));
+        }
         return super.onCreateOptionsMenu(menu);
     }
+
+    public int dpToPx(int sizeInDP){
+        int pxVal = (int) TypedValue.applyDimension(
+                TypedValue.COMPLEX_UNIT_DIP, sizeInDP, getResources().getDisplayMetrics()
+        );
+        return pxVal;
+    }
+
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
 
@@ -154,5 +185,23 @@ public class QuestionListActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+    }
+
+    private Drawable resizeImage(int resId, int w, int h)
+    {
+        // load the origial Bitmap
+        Bitmap BitmapOrg = BitmapFactory.decodeResource(getResources(), resId);
+        int width = BitmapOrg.getWidth();
+        int height = BitmapOrg.getHeight();
+        int newWidth = w;
+        int newHeight = h;
+        // calculate the scale
+        float scaleWidth = ((float) newWidth) / width;
+        float scaleHeight = ((float) newHeight) / height;
+        // create a matrix for the manipulation
+        Matrix matrix = new Matrix();
+        matrix.postScale(scaleWidth, scaleHeight);
+        Bitmap resizedBitmap = Bitmap.createBitmap(BitmapOrg, 0, 0,width, height, matrix, true);
+        return new BitmapDrawable(QuestionListActivity.this.getResources(), resizedBitmap);
     }
 }

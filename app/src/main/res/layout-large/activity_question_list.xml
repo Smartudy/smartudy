@@ -5,7 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:tag="normal"
+    android:tag="large"
     tools:context="com.sharewith.smartudy.activity.QuestionListActivity">
 
     <android.support.design.widget.AppBarLayout
@@ -18,19 +18,11 @@
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
-            app:theme="@style/ToolbarStyle"
-            app:titleTextColor="#000000"
-            app:popupTheme="@style/AppTheme.PopupOverlay">
-            <TextView
-                android:id="@+id/question_list_title"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:textColor="@color/colorTitle"
-                android:textSize="18sp"
-                android:fontFamily="@string/main_font"
-                />
+            app:popupTheme="@style/AppTheme.PopupOverlay"
+            app:theme="@style/ToolbarStyle">
+
             <include layout="@layout/toolbar_default"/>
+
         </android.support.v7.widget.Toolbar>
 
     </android.support.design.widget.AppBarLayout>
@@ -39,8 +31,8 @@
 
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/fab"
-        android:layout_width="52dp"
-        android:layout_height="52dp"
+        android:layout_width="70dp"
+        android:layout_height="70dp"
         android:layout_gravity="bottom|end"
         android:layout_margin="@dimen/fab_margin"
         app:srcCompat="@drawable/fab_add" />
