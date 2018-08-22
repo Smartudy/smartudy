@@ -6,50 +6,63 @@
     android:layout_height="wrap_content"
     android:background="@drawable/radius_corner"
     android:orientation="vertical">
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_gravity="center"
-        android:orientation="vertical"
         android:layout_marginLeft="12dp"
         android:layout_marginRight="12dp"
-        android:layout_marginTop="20dp">
+        android:layout_marginTop="20dp"
+        android:orientation="vertical">
 
-        <RelativeLayout
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="20dp">
 
             <TextView
                 android:id="@+id/qna_question_title"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
+                android:layout_weight="8"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentTop="true"
                 android:fontFamily="@string/main_font"
                 android:text="배열 수식 도와주세요"
                 android:textColor="@color/colorTitle"
                 android:textSize="18sp" />
 
-            <ImageView
-                android:id="@+id/qna_coin_image"
-                android:layout_width="wrap_content"
+            <LinearLayout
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_toLeftOf="@id/qna_coin_text"
-                android:layout_marginRight="4dp"
-                android:layout_centerVertical="true"
-                android:src="@drawable/coin" />
+                android:layout_weight="2"
+                android:layout_gravity="center_vertical"
+                android:gravity="center">
+                <ImageView
+                    android:id="@+id/qna_coin_image"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="4dp"
+                    android:layout_toLeftOf="@id/qna_coin_text"
+                    android:src="@drawable/coin" />
 
-            <TextView
-                android:id="@+id/qna_coin_text"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentRight="true"
-                android:fontFamily="@string/sub_font"
-                android:layout_centerVertical="true"
-                android:text="12"
-                android:textColor="@color/colorBlack"
-                android:textSize="13sp" />
-        </RelativeLayout>
+                <TextView
+                    android:id="@+id/qna_coin_text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:fontFamily="@font/nanumsquareeb"
+                    android:text="1000"
+                    android:textColor="@color/colorBlack"
+                    android:textSize="13sp" />
+
+            </LinearLayout>
+
+
+        </LinearLayout>
 
         <RelativeLayout
             android:layout_width="match_parent"
@@ -126,8 +139,8 @@
             android:layout_width="match_parent"
             android:layout_height="120dp"
             android:layout_marginBottom="20dp"
-            app:layoutManager="android.support.v7.widget.LinearLayoutManager"
-            android:orientation="horizontal"/>
+            android:orientation="horizontal"
+            app:layoutManager="android.support.v7.widget.LinearLayoutManager" />
 
         <EditText
             android:id="@+id/qna_content_text"

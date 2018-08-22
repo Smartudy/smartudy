@@ -4,6 +4,7 @@ import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,7 +13,9 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.sharewith.smartudy.dto.Answer;
 import com.sharewith.smartudy.dto.NotePadDto;
+import com.sharewith.smartudy.dto.Question_Selected;
 import com.sharewith.smartudy.smartudy.R;
 import com.sharewith.smartudy.dao.Write_DBhelper;
 
@@ -24,7 +27,8 @@ import java.util.List;
  */
 
 public class QnAListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
-    List<NotePadDto> datas;
+    Question_Selected question;
+    ArrayList<Answer> answers;
     Context context;
     private List<Integer> mImagedatas;
     private RecyclerView mImageRecycler;
@@ -33,17 +37,10 @@ public class QnAListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
     private static final int VIEW_TYPE_ANSWER = 1;
     private Write_DBhelper DBhelper;
 
-    public void addNotePad(NotePadDto notepad){
-        if(notepad != null) {
-            datas.add(notepad);
-            notifyDataSetChanged();
-        }
-
-    }
-
-    public QnAListAdapter(Context context, List<NotePadDto> datas) {
-        this.datas = datas;
+    public QnAListAdapter(Context context, Question_Selected q,ArrayList<Answer> answers) {
+        this.question = q;
         this.context = context;
+        this.answers = answers;
         DBhelper = new Write_DBhelper(context);
     }
 
@@ -95,35 +92,39 @@ public class QnAListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder viewHolder, int position) {
         QuestionViewHolder qholder=null;
         AnswerViewHolder aholder=null;
-        NotePadDto notepad;
         if(position ==0)
             qholder = (QuestionViewHolder)viewHolder;
         else
             aholder = (AnswerViewHolder)viewHolder;
 
-        List<NotePadDto> notepads = DBhelper.selectAllNotePad();
-
-        if(notepads.size() != 0) {
-            notepad = notepads.get(position);
             switch (position) {
                 case 0:
-                    qholder.mQuestionTitle.setText(notepad.getTitle());
-                    qholder.mContentText.setText(notepad.getContents());
+                    qholder.mQuestionTitle.setText(question.getTitle());
+                    qholder.mContentText.setText(question.getContent());
+                    qholder.mCoinText.setText(question.getMoney());
+                    //qholder.mLevel.setText(question.getLevel());
+                    //qholder.mUserName.setText(question.getNickname());
+                    qholder.mTimeText.setText(question.getTime());
+                    qholder.mHashTag.setText(question.getHashtag());
+                    //qholder.mUserInfo.setText(question.getQuestioncount() + " | "+question.getPickrate());
                     break;
                 default:
-                    aholder.mAnswerTitle.setText(notepad.getTitle());
-                    aholder.mContentText.setText(notepad.getContents());
+                    Answer answer = answers.get(position);
+                    Log.d("QuestionListAdapter",answer.toString());
+                    Log.d("QuestionListAdapter",answer.toString());
                     changeImageDatas();
                     ((QnAImageAdapter) aholder.mImageRecycler.getAdapter()).setImageDatas(mImagedatas);
+                    aholder.mContentText.setText(answer.getContent());
+                    aholder.mAnswerTitle.setText(answer.getTitle());
                     break;
             }
-        }
-
     }
+
+
 
     @Override
     public int getItemCount() {
-        return datas.size();
+        return answers.size()+1;
     }
 
     /*뷰 홀더를 static으로 선언함으로써 outer class의 멤버에 접근하지 않겠다고 명시함.
@@ -131,18 +132,18 @@ public class QnAListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
     * outer class의 참조가 계속 유지되어 메모리 누수 발생 가능성이 있음.
     * */
      static class QuestionViewHolder extends RecyclerView.ViewHolder{
-             private TextView mQuestionTitle;
-             private ImageView mCoinImage;
-             private TextView mCoinText;
-             private TextView mUserName;
-             private Button mLevel;
-             private TextView mUserInfo;
-             private ImageView mClockImage;
-             private TextView mTimeText;
-             private RecyclerView mImageRecycler;
-             private EditText mContentText;
-             private TextView mHashTag;
-             private Button mComplainButton;
+              TextView mQuestionTitle;
+              ImageView mCoinImage;
+              TextView mCoinText;
+              TextView mUserName;
+              Button mLevel;
+              TextView mUserInfo;
+              ImageView mClockImage;
+              TextView mTimeText;
+              RecyclerView mImageRecycler;
+              EditText mContentText;
+              TextView mHashTag;
+              Button mComplainButton;
 
              QuestionViewHolder(View item) {
                  super(item);
@@ -162,13 +163,13 @@ public class QnAListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
     }
 
      static class AnswerViewHolder extends RecyclerView.ViewHolder{
-        private TextView mAnswerTitle;
-        private TextView mUserName;
-        private Button mLevel;
-        private TextView mUserInfo;
-        private RecyclerView mImageRecycler;
-        private EditText mContentText;
-        private Button mComplainButton;
+         TextView mAnswerTitle;
+         TextView mUserName;
+         Button mLevel;
+         TextView mUserInfo;
+         RecyclerView mImageRecycler;
+         EditText mContentText;
+         Button mComplainButton;
 
          AnswerViewHolder(View item) {
             super(item);

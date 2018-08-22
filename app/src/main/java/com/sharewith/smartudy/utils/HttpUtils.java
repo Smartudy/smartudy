@@ -149,6 +149,7 @@ public class HttpUtils extends AsyncTask<String, String, String>{
         }catch(Exception e) {
             e.printStackTrace();
         }
+        Log.d("HttpUtils","서버로 부터 받은 데이터" + page);
         return page;
     }
 
@@ -166,6 +167,7 @@ public class HttpUtils extends AsyncTask<String, String, String>{
             DataOutputStream dos = new DataOutputStream(os);
             setMultipartAttrs(dos, "title", data.getTitle());
             setMultipartAttrs(dos, "content", data.getContent());
+            setMultipartAttrs(dos,"grp",data.getGrp());
             setMultipartAttrs(dos, "subject", data.getSubject());
             setMultipartAttrs(dos, "money", data.getMoney());
             setMultipartAttrs(dos, "hashtag", data.getHashtag());

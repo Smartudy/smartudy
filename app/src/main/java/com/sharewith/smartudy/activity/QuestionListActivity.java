@@ -59,14 +59,11 @@ public class QuestionListActivity extends AppCompatActivity {
         setContentView(R.layout.activity_question_list);
 
         Intent intent = getIntent();
-        mCategory = intent.getStringExtra("mCategory");
+        mCategory = intent.getStringExtra("categoryName");
 
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        ((TextView)toolbar.findViewById(R.id.toolbar_title)).setText(mCategory);
-
         getSupportActionBar().setDisplayHomeAsUpEnabled(true); // 뒤로가기 버튼 활성화
-        getSupportActionBar().setDisplayShowHomeEnabled(true);
         getSupportActionBar().setDisplayShowTitleEnabled(false);
         TextView title =  findViewById(R.id.question_list_title);
         title.setText(mCategory);
@@ -94,6 +91,7 @@ public class QuestionListActivity extends AppCompatActivity {
                     @Override
                     public void getAsyncResponse(String result) {
                         //서버로부터 데이터 받아서 어댑터에 데이터 추가
+                        if(result == null) return;
                         Log.d("QuestionListActivity",result);
                         JsonParser parser = new JsonParser();
                         List<Question> datas;

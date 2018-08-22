@@ -13,6 +13,7 @@ public class WriteFragComponent { //빌더 패턴 적용
     String title;
     String content;
     String category;
+    String grp;
     String hashtag;
     String subject;
     String money;
@@ -25,6 +26,7 @@ public class WriteFragComponent { //빌더 패턴 적용
         this.content = b.content;
         this.hashtag = b.hashtag;
         this.money = b.money;
+        this.grp = b.grp;
         this.subject = b.subject;
         this.images = b.images; //파일의 절대 경로(외장메모리/smartudy/~.jpg)
         this.audios = b.audios;
@@ -36,12 +38,16 @@ public class WriteFragComponent { //빌더 패턴 적용
         String title;
         String content;
         String category;
+        String grp;
         String money;
         String hashtag = "";
         String subject;
         ArrayList<String> images= new ArrayList<>(); //파일의 절대 경로(외장메모리/smartudy/~.jpg)
         ArrayList<String> audios= new ArrayList<>();
         ArrayList<String> draws= new ArrayList<>();
+        public builder setGrp(String grp) {
+            this.grp = grp; return this;
+        }
         public builder setCategory(String category) {
             this.category = category;
             return this;
@@ -98,6 +104,7 @@ public class WriteFragComponent { //빌더 패턴 적용
                 "title='" + title + '\'' +
                 ", content='" + content + '\'' +
                 ", category='" + category + '\'' +
+                ", grp='" + grp + '\'' +
                 ", hashtag='" + hashtag + '\'' +
                 ", subject='" + subject + '\'' +
                 ", money='" + money + '\'' +
@@ -106,6 +113,7 @@ public class WriteFragComponent { //빌더 패턴 적용
                 ", draws=" + draws +
                 '}';
     }
+
     public String getTitle() {
         return title;
     }
@@ -133,4 +141,5 @@ public class WriteFragComponent { //빌더 패턴 적용
     public String getCategory() {
         return category;
     }
+    public String getGrp(){return grp;}
 }

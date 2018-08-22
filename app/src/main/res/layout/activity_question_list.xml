@@ -30,7 +30,6 @@
                 android:textSize="18sp"
                 android:fontFamily="@string/main_font"
                 />
-            <include layout="@layout/toolbar_default"/>
         </android.support.v7.widget.Toolbar>
 
     </android.support.design.widget.AppBarLayout>

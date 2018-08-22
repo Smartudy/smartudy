@@ -39,7 +39,7 @@ import com.sharewith.smartudy.utils.HttpUtils;
 import java.util.ArrayList;
 
 
-public class QnAActivity extends AppCompatActivity implements WriteFragment.WriteFrag_To_QnAActivity{
+public class QnAActivity extends AppCompatActivity{
 
     private TabLayout mTabLayout;
     private Toolbar mToolbar;
@@ -53,6 +53,7 @@ public class QnAActivity extends AppCompatActivity implements WriteFragment.Writ
     private WriteFragComponent mData;
     private CustomDialog mDialog;
     private String mCategory;
+    private String mQuestionId;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -71,7 +72,8 @@ public class QnAActivity extends AppCompatActivity implements WriteFragment.Writ
         mTabLayout = findViewById(R.id.write_tablayout);
         mToolbar = findViewById(R.id.write_tooblar);
         mWriteFragment = new WriteFragment();
-        mQnAListFragment = QnAListFragment.newInstance(null,null);
+        mQuestionId = getIntent().getStringExtra("grp");
+        mQnAListFragment = QnAListFragment.newInstance(mQuestionId,null);
         mLinear = findViewById(R.id.qna_linear);
         mFab = findViewById(R.id.activity_qna_fab);
         mFab2 = findViewById(R.id.activity_qna_fab2);
@@ -113,9 +115,9 @@ public class QnAActivity extends AppCompatActivity implements WriteFragment.Writ
                 mFab2.setClickable(false);
                 break;
             case 1:
-                mLinear.setVisibility(View.GONE);
-                mFragManager.beginTransaction().show(mWriteFragment).commit();
+                mLinear.setVisibility(View.INVISIBLE);
                 mFragManager.beginTransaction().hide(mQnAListFragment).commit();
+                mFragManager.beginTransaction().show(mWriteFragment).commit();
                 mFab2.setVisibility(View.VISIBLE);
                 mFab2.setClickable(true);
                 break;
@@ -162,11 +164,12 @@ public class QnAActivity extends AppCompatActivity implements WriteFragment.Writ
         String result = "";
         WriteFragComponent.builder builder = mWriteFragment.getDatas(); //글작성창에 있는 제목,본문,이미지,음악파일 경로 가져옴.
         mDialog.setDialogContents(builder); //다이얼로그의 과목명,해쉬태그,금액까지 취합.
-        mData = builder.setCategory(mCategory).build(); // 카테고리명 까지 취합.
+        Log.d("QnAActivity","질문의 아이디는 "+mQuestionId);
+        mData = builder.setCategory(mCategory).setGrp(mQuestionId).build(); // 카테고리명 까지 취합.
         Log.d("QnAActivity","현재 카테고리 " + mCategory);
         Log.d("QnAActivity",mData.toString());
         try {
-            HttpUtils util = new HttpUtils(HttpUtils.MULTIPART, null, Constant.PostURL, getApplicationContext());
+            HttpUtils util = new HttpUtils(HttpUtils.MULTIPART, null, Constant.PostAnswerURL, getApplicationContext());
             util.setMultipartdata(mData);
             util.setDelegate(new AsyncResponse() {
                 @Override
@@ -209,14 +212,6 @@ public class QnAActivity extends AppCompatActivity implements WriteFragment.Writ
 //                cd.show();  //다이얼로그
 //            }
 //        });
-    }
-
-    @Override
-    public void addNotePad(NotePadDto notepad) {
-        mQnAListFragment.addNotePad(notepad);
-        //WriteFragment에서 글 입력시 데이터 변화를 QnAListFragment에 있는 리싸이클러뷰의 어댑터에 알려야함.
-        //WriteFragment->QnAActivity->QnAListFragment 순서로 통신하게끔 중간에 액티비티가 껴있음.
-        //프래그먼트들끼리 바로 통신 불가능, 중간에 액티비티가 무조건 껴야함.
     }
 
 

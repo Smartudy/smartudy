@@ -6,16 +6,37 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.google.gson.Gson;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
+import com.google.gson.reflect.TypeToken;
+import com.sharewith.smartudy.Interface.AsyncResponse;
 import com.sharewith.smartudy.adapter.QnAListAdapter;
+import com.sharewith.smartudy.dto.Answer;
 import com.sharewith.smartudy.dto.NotePadDto;
+import com.sharewith.smartudy.dto.Question_Selected;
 import com.sharewith.smartudy.smartudy.R;
 import com.sharewith.smartudy.dao.Write_DBhelper;
+import com.sharewith.smartudy.utils.Constant;
+import com.sharewith.smartudy.utils.HttpUtils;
 
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
+import org.json.simple.parser.ParseException;
+
+import java.lang.reflect.Type;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.concurrent.ExecutionException;
 
 public class QnAListFragment extends Fragment { //뷰페이저의 1페이지에 해당하는 리싸이클러뷰
     private static final String ARG_PARAM1 = "param1";
@@ -23,6 +44,8 @@ public class QnAListFragment extends Fragment { //뷰페이저의 1페이지에 
     private RecyclerView mRecyclerView;
     private String mParam1;
     private String mParam2;
+
+
     Write_DBhelper DBhelper;
 
     public QnAListFragment() {
@@ -55,15 +78,53 @@ public class QnAListFragment extends Fragment { //뷰페이저의 1페이지에 
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_qna_list, container, false);
         setMember(view);
-        DBhelper = new Write_DBhelper(view.getContext());
-        List<NotePadDto> notepads = DBhelper.selectAllNotePad();
-        QnAListAdapter listadapter = new QnAListAdapter(view.getContext(),notepads);
-        mRecyclerView.setAdapter(listadapter);
+        Question_Selected mSelectedQuestion = getQuestionFromServer();
+        ArrayList<Answer> answers = getAnswerFromServer();
+        QnAListAdapter adapter = new QnAListAdapter(getContext(),mSelectedQuestion,answers);
+        mRecyclerView.setAdapter(adapter);
         return view;
     }
 
-    public void addNotePad(NotePadDto notepad){
-        ((QnAListAdapter)mRecyclerView.getAdapter()).addNotePad(notepad);
+    public Question_Selected getQuestionFromServer(){
+        HashMap<String,String> map = new HashMap<>();
+        Question_Selected q = new Question_Selected();
+        map.put("id",mParam1);
+        Log.d("QnAListFragment","질문글의 아이디는 " + mParam1);
+        HttpUtils utils = new HttpUtils(HttpUtils.GET,map, Constant.GetQuestionURL,getContext());
+        try {
+            String result = utils.execute().get();
+            Gson gson = new Gson();
+            q = gson.fromJson(result,Question_Selected.class);
+            Log.d("temp",q.toString());
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        } catch (ExecutionException e) {
+            e.printStackTrace();
+        }
+        return q;
+    }
+
+    public ArrayList<Answer> getAnswerFromServer(){
+        HashMap<String,String> map = new HashMap<>();
+        ArrayList<Answer> answers = null;
+        map.put("grp",mParam1);
+        HttpUtils utils = new HttpUtils(HttpUtils.GET,map, Constant.GetAnswerURL,getContext());
+        try {
+            String result = utils.execute().get();
+            Log.d("QnAListFragment",result+"서버로 부터 수신");
+            JsonObject root = (JsonObject)new JsonParser().parse(result);
+            Gson gson = new Gson();
+            if(root.get("success").getAsBoolean() == true) {
+                JsonArray arr = root.get("datas").getAsJsonArray();
+                answers = gson.fromJson(arr,new TypeToken<ArrayList<Answer>>(){}.getType());
+                for (int i = 0; i < answers.size(); i++)
+                    Log.d("QnAListFragment", answers.get(i).getTitle() + " 답변을 서버로 부터 수신함");
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return answers;
     }
 
     public void scroll(int position){

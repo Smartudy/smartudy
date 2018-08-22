@@ -64,7 +64,6 @@ public class WriteFragment extends Fragment{
     private FragmentTransaction ft;
     private WriteFragmentListener mQnAActivity;
     private FloatingActionButton main_fab;
-    private Animation fab_open_anim,fab_close_anim,fab_rotate_forward,fab_rotate_backward;
     private ImageView bottom1,bottom2,bottom3,bottom4,bottom5;
     private Write_DBhelper mDBhelper;
     private RecyclerView mRecycler;
@@ -157,10 +156,6 @@ public class WriteFragment extends Fragment{
 //            }
 //        });
         fm = getActivity().getSupportFragmentManager();
-        fab_open_anim = AnimationUtils.loadAnimation(getContext(),R.anim.fab_open);
-        fab_close_anim = AnimationUtils.loadAnimation(getContext(),R.anim.fab_close);
-        fab_rotate_backward = AnimationUtils.loadAnimation(getContext(),R.anim.rotate_backward);
-        fab_rotate_forward = AnimationUtils.loadAnimation(getContext(),R.anim.rotate_forward);
         bottom1 = view.findViewById(R.id.write_fragment_bottom1);
         bottom2 = view.findViewById(R.id.write_fragment_bottom2);
         bottom3 = view.findViewById(R.id.write_fragment_bottom3);

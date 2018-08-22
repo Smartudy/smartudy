@@ -54,16 +54,16 @@ public class AccountDBOpenHelper {
 
     public long insertColumn(AccountDto account){
         ContentValues values = new ContentValues();
-        values.put("aTelNumber", account.getA_tel_number());
-        values.put("aNick", account.getA_nick());
-        values.put("aPassword", account.getA_password());
-        values.put("aMajor", account.getA_major());
-        values.put("aGrade", account.getA_grade());
+        values.put("aTelNumber", account.getPhone());
+        values.put("aNick", account.getNick());
+        values.put("aPassword", account.getPassword());
+        values.put("aMajor", account.getMajor());
+        values.put("aGrade", account.getGrade());
         return mDB.insert("accountDB", null, values);
     }
 
     public boolean deleteColumn(AccountDto account){
-        return mDB.delete("accountDB", "aTelNumber="+account.getA_tel_number(),null)>0;
+        return mDB.delete("accountDB", "aTelNumber="+account.getPhone(),null)>0;
     }
 
     public Cursor getAllColumns(){

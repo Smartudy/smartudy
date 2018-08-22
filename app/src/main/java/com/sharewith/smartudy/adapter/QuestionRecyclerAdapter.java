@@ -1,5 +1,6 @@
 package com.sharewith.smartudy.adapter;
 
+import android.content.Context;
 import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.LinearLayoutManager;
@@ -7,8 +8,10 @@ import android.support.v7.widget.RecyclerView;
 import android.text.Layout;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -39,8 +42,10 @@ public class QuestionRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.V
     private int lastVisibleItem, totalItemCount;
     private boolean loading = false;
     private OnLoadMoreListener onLoadMoreListener; //서버로 부터 데이터를 가져오는 리스너 인터페이스
+    RecyclerView.OnClickListener mItemListener;
     private int page = 0;
     private int total = 0;
+    private String mCategory = "";
     public QuestionRecyclerAdapter(List<Question> list, final RecyclerView recycler,String category){
         this.mDatas=list;
         this.mRecycler = recycler;
@@ -56,7 +61,6 @@ public class QuestionRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.V
                             lastVisibleItem = linearLayoutManager.findLastVisibleItemPosition();
                             if(!loading && totalItemCount <= visibleThreshold + lastVisibleItem){ // 리싸이클러 뷰 하단부에 항상 visibleThreshold 개수 만큼의 아이템이 있어야 함.
                                 if(onLoadMoreListener != null) {
-
                                     onLoadMoreListener.onLoadMore(page);
                                 }
                                 loading = true;
@@ -64,12 +68,14 @@ public class QuestionRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.V
                         }
             });
         }
+        mCategory = category;
 
     }
 
     public int getTotalDatas(String category){
         HashMap<String,String> map = new HashMap<>();
         map.put("category",category);
+        Log.d("QuestionRecyclerAdapter",category);
         HttpUtils utils = new HttpUtils(HttpUtils.GET,map, Constant.GetQuestionCountURL,null);
         try {
             String result = utils.execute().get();
@@ -101,7 +107,7 @@ public class QuestionRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.V
     @NonNull
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view;
+        final View view;
         if(viewType == 0) {
             view = LayoutInflater.from(parent.getContext()).inflate(R.layout.question_row_layout, parent, false);
             return new ItemViewHolder(view);
@@ -112,8 +118,11 @@ public class QuestionRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.V
         }
     }
 
+
+
+
     @Override
-    public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull final RecyclerView.ViewHolder holder, final int position) {
         if(holder instanceof ItemViewHolder){
             Question data = mDatas.get(position);
             Log.d("QuestionRecyclerAdapter",data.toString());
@@ -122,6 +131,16 @@ public class QuestionRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.V
             ((ItemViewHolder) holder).price.setText(data.getMoney());
             ((ItemViewHolder) holder).time.setText(data.getFormattedTime());
             ((ItemViewHolder) holder).hashtag.setText(data.getHashtag());
+            (holder.itemView).setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Context context = holder.itemView.getContext();
+                    Intent intent = new Intent(context,QnAActivity.class);
+                    intent.putExtra("grp",mDatas.get(position).getId());
+                    intent.putExtra("category",mCategory);
+                    context.startActivity(intent);
+                }
+            });
         }else if(holder instanceof ProgressViewHolder){
             ((ProgressViewHolder) holder).progressBar.setIndeterminate(true);
         }
@@ -210,5 +229,8 @@ public class QuestionRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.V
     }
     public void setOnLoadMoreListener(OnLoadMoreListener onLoadMoreListener) {
         this.onLoadMoreListener = onLoadMoreListener;
+    }
+    public void setListener(RecyclerView.OnClickListener listener){
+        this.mItemListener = listener;
     }
 }
