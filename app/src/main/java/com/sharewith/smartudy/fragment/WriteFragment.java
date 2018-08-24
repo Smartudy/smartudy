@@ -286,30 +286,6 @@ public class WriteFragment extends Fragment{
         }
     }
 
-    //    public void animation(){
-//            if(is_fabopen){//닫으려고 할때
-//                main_fab.startAnimation(fab_rotate_backward);
-//                mfab1.startAnimation(fab_close_anim);
-//                mfab2.startAnimation(fab_close_anim);
-//                mfab3.startAnimation(fab_close_anim);
-//                mfab4.startAnimation(fab_close_anim);
-//                mfab1.setClickable(false);mfab2.setClickable(false);
-//                mfab3.setClickable(false);mfab4.setClickable(false);
-//                background.setVisibility(View.GONE);
-//                is_fabopen = false;
-//            }else{//열려고 할때
-//                main_fab.startAnimation(fab_rotate_forward);
-//                mfab1.startAnimation(fab_open_anim);
-//                mfab2.startAnimation(fab_open_anim);
-//                mfab3.startAnimation(fab_open_anim);
-//                mfab4.startAnimation(fab_open_anim);
-//                mfab1.setClickable(true);mfab2.setClickable(true);
-//                mfab3.setClickable(true);mfab4.setClickable(true);
-//                background.setVisibility(View.VISIBLE);
-//                is_fabopen = true;
-//        }
-//    }
-
 
     //여기부터는 사진 및 비트맵 처리 함수들
 

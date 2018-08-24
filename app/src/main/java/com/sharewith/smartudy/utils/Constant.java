@@ -16,6 +16,7 @@ public class Constant {
     public static final String ListPageURL = URL+"/board/listpage";
     public static final String GetQuestionCountURL = URL+"/board/questioncount";
     public static final String GetQuestionURL = URL+"/board/question";
+    public static final String GetAnswersURL = URL+"/board/answers";
     public static final String GetAnswerURL = URL+"/board/answer";
 
     public static final String REGISTER_OK = "회원가입이 정상 처리 되었습니다.";

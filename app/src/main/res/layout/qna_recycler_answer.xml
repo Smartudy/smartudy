@@ -6,16 +6,8 @@
     android:layout_height="wrap_content"
     android:background="@drawable/radius_corner"
     android:orientation="vertical"
-    android:layout_marginTop="24dp">
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_gravity="center"
-        android:orientation="vertical"
-        android:paddingLeft="12dp"
-        android:paddingRight="12dp"
-        android:paddingTop="20dp">
+    android:padding="16dp"
+    android:layout_marginBottom="24dp">
 
         <RelativeLayout
             android:layout_width="match_parent"
@@ -135,6 +127,4 @@
                 android:textColor="#666666"
                 android:textSize="11sp" />
         </RelativeLayout>
-    </LinearLayout>
-
 </LinearLayout>

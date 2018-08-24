@@ -22,8 +22,9 @@ public class Answer {
 
     @Override
     public String toString() {
-        return "Question_Selected{" +
+        return "Answer{" +
                 "id=" + id +
+                ", grp='" + grp + '\'' +
                 ", title='" + title + '\'' +
                 ", content='" + content + '\'' +
                 ", hashtag='" + hashtag + '\'' +
