@@ -17,9 +17,11 @@ import android.view.ViewGroup;
 import android.view.ViewManager;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.HorizontalScrollView;
 import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
+import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -68,7 +70,7 @@ public class FilterActivity extends AppCompatActivity {
         options_available = new ArrayList<String>();
         options_selected = new ArrayList<String>();
         selected="";
-        // TODO: this array should be loaded from the database
+        // TODO: this array should be loaded from the server
         String[] arr = {"C/C++", "Java", "Python", "Embedded", "BlockChain", "IoT", "Android", "iOS", "AI"};
         for(String str : arr){
             options_available.add(str);
@@ -101,7 +103,7 @@ public class FilterActivity extends AppCompatActivity {
 
                         params.setMarginEnd(dpToPx(8));
 
-                        TransitionManager.beginDelayedTransition(linearLayout);
+                        //TransitionManager.beginDelayedTransition(linearLayout);
                         view.setPadding(dpToPx(16),0,dpToPx(16),0);
                         view.setLayoutParams(params);
                         ((Button)view).setText(selected);
@@ -119,6 +121,7 @@ public class FilterActivity extends AppCompatActivity {
                                                 options_selected.remove(str);
                                                 options_available.add(str);
                                                 linearLayout.removeView(v);
+                                                ((HorizontalScrollView)findViewById(R.id.scrollview_filter_subject)).fullScroll(View.FOCUS_RIGHT);
                                                 Toast.makeText(getApplicationContext(), str, Toast.LENGTH_SHORT).show();
                                             }
                                         })
@@ -130,7 +133,15 @@ public class FilterActivity extends AppCompatActivity {
                                 }).create().show();
                             }
                         });
-                        linearLayout.addView(view, 0);
+                        int viewCount = linearLayout.getChildCount();
+                        linearLayout.addView(view, viewCount-1);
+                        final HorizontalScrollView sv = (HorizontalScrollView)findViewById(R.id.scrollview_filter_subject);
+                        sv.postDelayed(new Runnable() {
+                            @Override
+                            public void run() {
+                                sv.fullScroll(HorizontalScrollView.FOCUS_RIGHT);
+                            }
+                        }, 300L);
                     }
                 });
                 builder.setCancelable(true);
@@ -169,7 +180,7 @@ public class FilterActivity extends AppCompatActivity {
                                 ViewGroup.LayoutParams.WRAP_CONTENT
                         );
                         // *** layout내의 view 변화를 애니메이션화 해주는 코드 ***
-                        TransitionManager.beginDelayedTransition(linearLayout);
+                        //TransitionManager.beginDelayedTransition(linearLayout);
 
                         params.setMarginEnd(dpToPx(8));
                         view.setPadding(dpToPx(16),0,dpToPx(16),0);
@@ -199,7 +210,15 @@ public class FilterActivity extends AppCompatActivity {
                                 alertDialog.show();
                             }
                         });
-                        linearLayout.addView(view, 0);
+                        int viewCount = linearLayout.getChildCount();
+                        linearLayout.addView(view, viewCount-1);
+                        final HorizontalScrollView sv = (HorizontalScrollView)findViewById(R.id.scrollview_filter_hashtag);
+                        sv.postDelayed(new Runnable() {
+                            @Override
+                            public void run() {
+                                sv.fullScroll(HorizontalScrollView.FOCUS_RIGHT);
+                            }
+                        }, 300L);
                     }
                 });
                 builder.setNegativeButton("CANCEL", new DialogInterface.OnClickListener() {

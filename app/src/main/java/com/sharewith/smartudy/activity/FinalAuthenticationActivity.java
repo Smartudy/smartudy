@@ -2,8 +2,6 @@ package com.sharewith.smartudy.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
@@ -43,7 +41,7 @@ public class FinalAuthenticationActivity extends AppCompatActivity {
         ((Button)findViewById(R.id.btn_final_authentication_retransmit)).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String str = ((EditText)findViewById(R.id.textview_final_authentication_auth_digit)).getText().toString();
+                String str = ((EditText)findViewById(R.id.textview_final_authentication_auth_nickname)).getText().toString();
                 Toast.makeText(getApplicationContext(), "input: ".concat(str), Toast.LENGTH_SHORT).show();
             }
         });

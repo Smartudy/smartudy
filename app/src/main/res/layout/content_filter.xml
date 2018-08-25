@@ -98,6 +98,7 @@
             android:fontFamily="@font/nanumsquareb"/>
 
         <HorizontalScrollView
+            android:id="@+id/scrollview_filter_subject"
             android:layout_width="match_parent"
             android:layout_height="28dp"
             android:scrollbarThumbHorizontal="@android:color/transparent">
@@ -141,6 +142,7 @@
             android:layout_marginBottom="8dp"
             android:fontFamily="@font/nanumsquareb"/>
         <HorizontalScrollView
+            android:id="@+id/scrollview_filter_hashtag"
             android:layout_width="match_parent"
             android:layout_height="28dp">
             <LinearLayout
