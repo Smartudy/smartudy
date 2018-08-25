@@ -4,19 +4,47 @@
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
-    android:padding="16dp">
+    android:padding="16dp"
+    android:gravity="center_vertical">
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="2"
-        android:orientation="vertical">
+        android:minWidth="300dp"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_marginBottom="25dp">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/colorBlack"
+            android:textSize="16sp"
+            android:fontFamily="@font/nanumsquareeb"
+            android:text="태그/코인 설정"
+            android:letterSpacing="0.02"
+            android:layout_marginBottom="4dp"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/dialogTextColorLightGray"
+            android:letterSpacing="0.01"
+            android:textSize="10sp"
+            android:fontFamily="@font/nanumsquarer"
+            android:text="가격이 저렴할수록 채택률이 높아집니다!"
+            android:layout_marginBottom="4dp"/>
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_marginBottom="20dp">
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="과목명"
             android:layout_marginBottom="8dp"
-            android:fontFamily="@font/nanumsquareb"/>
+            android:fontFamily="@font/nanumsquareb"
+            android:textSize="14sp"
+            android:textColor="@color/dialogTextColorBlack"/>
 
         <HorizontalScrollView
             android:layout_width="match_parent"
@@ -53,18 +81,21 @@
     <!-- 해쉬태그 45 -->
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="2"
-        android:orientation="vertical">
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_marginBottom="20dp">
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="해쉬태그"
             android:layout_marginBottom="8dp"
-            android:fontFamily="@font/nanumsquareb"/>
+            android:fontFamily="@font/nanumsquareb"
+            android:textSize="14sp"
+            android:textColor="@color/dialogTextColorBlack"/>
         <HorizontalScrollView
             android:layout_width="match_parent"
-            android:layout_height="28dp">
+            android:layout_height="28dp"
+            android:scrollbarThumbHorizontal="@android:color/transparent">
             <LinearLayout
                 android:id="@+id/linear_layout_filter_hashtag"
                 android:layout_width="match_parent"
@@ -93,49 +124,57 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1">
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="25dp">
         <TextView
+            android:id="@+id/textview_dialog_amount"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="금액"
             android:fontFamily="@font/nanumsquareb"
+            android:textSize="14sp"
+            android:textColor="@color/dialogTextColorBlack"
             android:layout_alignParentLeft="true"
-            android:layout_alignParentTop="true"/>
+            android:layout_alignParentTop="true"
+            android:layout_marginBottom="10dp"/>
 
-        <LinearLayout
-            android:layout_width="wrap_content"
+        <RelativeLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
             android:layout_alignParentRight="true"
-            android:layout_alignParentTop="true">
+            android:layout_alignParentTop="true"
+            android:id="@+id/linearLayout">
 
             <ImageView
                 android:layout_width="18dp"
                 android:layout_height="18dp"
-                android:layout_marginRight="8dp"
-                android:src="@drawable/coin" />
-
+                android:layout_toLeftOf="@+id/dialog_custom_text_money"
+                android:src="@drawable/coin"
+                android:layout_marginRight="5dp"/>
             <TextView
                 android:id="@+id/dialog_custom_text_money"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentTop="true"
                 android:fontFamily="@font/nanumsquareb"
                 android:letterSpacing="0.01"
                 android:text="0"
                 android:textColor="@color/colorBlack"
                 android:textSize="15sp"
-                android:textStyle="bold" />
+                android:textStyle="bold"
+                android:layout_marginRight="5dp"/>
 
-
-        </LinearLayout>
+        </RelativeLayout>
 
         <android.support.v7.widget.AppCompatSeekBar
             android:id="@+id/dialog_custom_seekbar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_centerInParent="true"
-            android:max="1500"/>
+            android:layout_below="@+id/textview_dialog_amount"
+            android:max="1000"/>
+
+
     </RelativeLayout>
 
     <LinearLayout

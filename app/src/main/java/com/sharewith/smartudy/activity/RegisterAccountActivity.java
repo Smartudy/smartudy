@@ -334,7 +334,7 @@ public class RegisterAccountActivity extends AppCompatActivity {
             }
         });
     }
-    
+
     public boolean isNickInputValid(String str) {
         // TODO: 닉네임 검사 기준 정해야함
         if (str.length() < 1 || str.length() > 20) return false;

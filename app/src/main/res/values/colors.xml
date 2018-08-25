@@ -26,4 +26,8 @@
     <color name="textColorDark">#131314</color>
     <color name="textColorGray">#666666</color>
     <color name="textCOlorLightGray">#5d5f62</color>
+
+    <!-- dialog text-->
+    <color name="dialogTextColorBlack">#1d1e1f</color>
+    <color name="dialogTextColorLightGray">#5d5f62</color>
 </resources>

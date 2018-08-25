@@ -34,14 +34,19 @@ import java.util.ArrayList;
 
 public class FilterActivity extends AppCompatActivity {
 
-    // TODO: 사용자가 선택한 값을 QuestionListActivity에서 startActivityForResult(intent) 사용하여 리턴받는 식으로 사용해야한다! (나중에)
-    // 지금은 그냥 startActivity(intent)로 사용중
+    // 사용자가 선택한 값을 QuestionListActivity에서 startActivityForResult(intent) 사용하여 리턴받는 식으로 사용해야한다! (나중에) - DONE!
 
-    private ArrayList<String> options_available;
-    private ArrayList<String> options_selected;
-    private String selected="";
+    private RadioGroup radioGroup_order, radioGroup_etc;
+    private CrystalRangeSeekbar seekbar;
 
+    private ArrayList<String> options_available, options_selected;
     private ArrayList<String> hashtag_selected;
+
+    private String selected = "";
+
+    private int orderOption = 0;
+    private int maxCoin=0, minCoin=1000;
+    private int etcOption = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -63,6 +68,23 @@ public class FilterActivity extends AppCompatActivity {
         setSubjectAddBtnListener();
 
         setHashTagAddBtnListener();
+
+        findViewById(R.id.btn_filter_submit).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(FilterActivity.this, "결과전달..", Toast.LENGTH_LONG).show();
+
+                Intent intent = new Intent();
+                intent.putExtra("orderOption", orderOption);  // 필터정보를 인텐트에 담는다
+                intent.putExtra("subjectArrayList", options_selected);
+                intent.putExtra("hashtagArrayList", hashtag_selected);
+                intent.putExtra("minCoin", minCoin);
+                intent.putExtra("maxCoin", maxCoin);
+                intent.putExtra("etcOption", etcOption);
+                setResult(RESULT_OK, intent); // QuestionListActivity에게 RESULT_OK 상태임과 함께 인텐트에 담긴 결과값을 전달한다.
+                finish();
+            }
+        });
     }
 
     public void init_arraylists(){
@@ -103,7 +125,7 @@ public class FilterActivity extends AppCompatActivity {
 
                         params.setMarginEnd(dpToPx(8));
 
-                        //TransitionManager.beginDelayedTransition(linearLayout);
+                        TransitionManager.beginDelayedTransition(linearLayout);
                         view.setPadding(dpToPx(16),0,dpToPx(16),0);
                         view.setLayoutParams(params);
                         ((Button)view).setText(selected);
@@ -141,7 +163,7 @@ public class FilterActivity extends AppCompatActivity {
                             public void run() {
                                 sv.fullScroll(HorizontalScrollView.FOCUS_RIGHT);
                             }
-                        }, 300L);
+                        }, 500L);
                     }
                 });
                 builder.setCancelable(true);
@@ -163,7 +185,7 @@ public class FilterActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 final AlertDialog.Builder builder = new AlertDialog.Builder(FilterActivity.this);
-                builder.setTitle("Hashtag input");
+                builder.setTitle("해시태그를 입력해주세요");
                 final EditText input = new EditText(FilterActivity.this);
                 input.setInputType(InputType.TYPE_CLASS_TEXT);
                 builder.setView(input);
@@ -180,7 +202,7 @@ public class FilterActivity extends AppCompatActivity {
                                 ViewGroup.LayoutParams.WRAP_CONTENT
                         );
                         // *** layout내의 view 변화를 애니메이션화 해주는 코드 ***
-                        //TransitionManager.beginDelayedTransition(linearLayout);
+                        TransitionManager.beginDelayedTransition(linearLayout);
 
                         params.setMarginEnd(dpToPx(8));
                         view.setPadding(dpToPx(16),0,dpToPx(16),0);
@@ -218,7 +240,7 @@ public class FilterActivity extends AppCompatActivity {
                             public void run() {
                                 sv.fullScroll(HorizontalScrollView.FOCUS_RIGHT);
                             }
-                        }, 300L);
+                        }, 500L);
                     }
                 });
                 builder.setNegativeButton("CANCEL", new DialogInterface.OnClickListener() {
@@ -235,7 +257,7 @@ public class FilterActivity extends AppCompatActivity {
     }
 
     public void setRadioBtnOnClickListener(){
-        final RadioGroup radioGroup_order = (RadioGroup)findViewById(R.id.radiogroup_filter);
+        radioGroup_order = (RadioGroup)findViewById(R.id.radiogroup_filter);
         final RadioButton rb_newest=(RadioButton)findViewById(R.id.radiobtn_filter_newest);
         final RadioButton rb_price=(RadioButton)findViewById(R.id.radiobtn_filter_price);
         final RadioButton rb_oldest=(RadioButton)findViewById(R.id.radiobtn_filter_oldest);
@@ -250,6 +272,7 @@ public class FilterActivity extends AppCompatActivity {
                     rb_price.setTextColor(getColor(R.color.textColor));
                     rb_oldest.setBackgroundResource(R.drawable.btn_round_white_background);
                     rb_oldest.setTextColor(getColor(R.color.textColor));
+                    orderOption = 0;
                 }
                 else if(rb_price.isChecked()){
                     rb_newest.setBackgroundResource(R.drawable.btn_round_white_background);
@@ -258,6 +281,7 @@ public class FilterActivity extends AppCompatActivity {
                     rb_price.setTextColor(getColor(R.color.selectedTextColor));
                     rb_oldest.setBackgroundResource(R.drawable.btn_round_white_background);
                     rb_oldest.setTextColor(getColor(R.color.textColor));
+                    orderOption = 1;
                 }
                 else if(rb_oldest.isChecked()){
                     rb_newest.setBackgroundResource(R.drawable.btn_round_white_background);
@@ -266,6 +290,7 @@ public class FilterActivity extends AppCompatActivity {
                     rb_price.setTextColor(getColor(R.color.textColor));
                     rb_oldest.setBackgroundResource(R.drawable.btn_round_green_background);
                     rb_oldest.setTextColor(getColor(R.color.selectedTextColor));
+                    orderOption = 2;
                 }
                 else{
                     Toast.makeText(getApplicationContext(), "radio group error", Toast.LENGTH_LONG).show();
@@ -273,7 +298,8 @@ public class FilterActivity extends AppCompatActivity {
             }
         });
 
-        final RadioGroup radioGroup_etc = (RadioGroup)findViewById(R.id.radiogroup_etc);
+        radioGroup_etc = (RadioGroup)findViewById(R.id.radiogroup_etc);
+        final RadioButton rb_all = (RadioButton)findViewById(R.id.radiobtn_filter_etc_all);
         final RadioButton rb_finished = (RadioButton)findViewById(R.id.radiobtn_filter_etc_finished);
         final RadioButton rb_unfinished = (RadioButton)findViewById(R.id.radiobtn_filter_etc_unfinished);
 
@@ -281,24 +307,36 @@ public class FilterActivity extends AppCompatActivity {
             @Override
             public void onCheckedChanged(RadioGroup group, int checkedId) {
                 if(rb_finished.isChecked()){
+                    rb_all.setButtonDrawable(R.drawable.unchecked);
                     rb_finished.setButtonDrawable(R.drawable.checked);
                     rb_unfinished.setButtonDrawable(R.drawable.unchecked);
+                    etcOption = 0;
                 }
-                else{
+                else if(rb_unfinished.isChecked()){
+                    rb_all.setButtonDrawable(R.drawable.unchecked);
                     rb_finished.setButtonDrawable(R.drawable.unchecked);
                     rb_unfinished.setButtonDrawable(R.drawable.checked);
+                    etcOption = 1;
+                }
+                else if(rb_all.isChecked()){
+                    rb_all.setButtonDrawable(R.drawable.checked);
+                    rb_finished.setButtonDrawable(R.drawable.unchecked);
+                    rb_unfinished.setButtonDrawable(R.drawable.unchecked);
+                    etcOption = 2;
                 }
             }
         });
     }
 
     public void setSeekBarChangeListener(){
-        CrystalRangeSeekbar seekbar = (CrystalRangeSeekbar)findViewById(R.id.seekbar_filter_price);
+        seekbar = (CrystalRangeSeekbar)findViewById(R.id.seekbar_filter_price);
         seekbar.setOnRangeSeekbarChangeListener(new OnRangeSeekbarChangeListener() {
             @Override
             public void valueChanged(Number minValue, Number maxValue) {
-                ((TextView)findViewById(R.id.textview_filter_min_price)).setText(Integer.toString(minValue.intValue()));
-                ((TextView)findViewById(R.id.textview_filter_max_price)).setText(Integer.toString(maxValue.intValue()));
+                minCoin = minValue.intValue();
+                maxCoin = maxValue.intValue();
+                ((TextView)findViewById(R.id.textview_filter_min_price)).setText(Integer.toString(minCoin));
+                ((TextView)findViewById(R.id.textview_filter_max_price)).setText(Integer.toString(maxCoin));
             }
         });
     }

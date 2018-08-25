@@ -10,6 +10,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.text.InputType;
+import android.transition.TransitionManager;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.util.TypedValue;
@@ -21,6 +22,7 @@ import android.view.Window;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.HorizontalScrollView;
 import android.widget.LinearLayout;
 import android.widget.SeekBar;
 import android.widget.Spinner;
@@ -82,7 +84,7 @@ public class CustomDialog extends Dialog {
         setSubjectAddBtnListener();
         setHashTagAddBtnListener();
         setOkBtnListener();
-        setDialogSize();
+        //setDialogSize();
         setSeekbarListener();
         show();
     }
@@ -127,7 +129,7 @@ public class CustomDialog extends Dialog {
         subject_available = new ArrayList<String>();
         subject_selected = new ArrayList<String>();
         selected="";
-        // TODO: this array should be loaded from the database
+        // TODO: this array should be loaded from the server
         String[] arr = {"C/C++", "Java", "Python", "Embedded", "BlockChain", "IoT", "Android", "iOS", "AI"};
         for(String str : arr){
             subject_available.add(str);
@@ -190,6 +192,9 @@ public class CustomDialog extends Dialog {
                                 ViewGroup.LayoutParams.WRAP_CONTENT,
                                 ViewGroup.LayoutParams.WRAP_CONTENT
                         );
+                        // *** layout내의 view 변화를 애니메이션화 해주는 코드 ***
+                        TransitionManager.beginDelayedTransition(linearLayout);
+
                         params.setMarginEnd(dpToPx(8));
                         view.setPadding(dpToPx(16),0,dpToPx(16),0);
                         view.setLayoutParams(params);
@@ -214,7 +219,15 @@ public class CustomDialog extends Dialog {
                                 }).create().show();
                             }
                         });
-                        linearLayout.addView(view, 0);
+                        int viewCount = linearLayout.getChildCount();
+                        linearLayout.addView(view, viewCount-1);
+                        final HorizontalScrollView sv = (HorizontalScrollView)findViewById(R.id.scrollview_filter_hashtag);
+                        sv.postDelayed(new Runnable() {
+                            @Override
+                            public void run() {
+                                sv.fullScroll(HorizontalScrollView.FOCUS_RIGHT);
+                            }
+                        }, 500L);
                     }
                 }).setNegativeButton("취소", new DialogInterface.OnClickListener() {
                     @Override
@@ -249,6 +262,7 @@ public class CustomDialog extends Dialog {
                                 ViewGroup.LayoutParams.WRAP_CONTENT
                         );
                         params.setMarginEnd(dpToPx(8));
+                        TransitionManager.beginDelayedTransition(linearLayout);
                         view.setPadding(dpToPx(16),0,dpToPx(16),0);
                         view.setLayoutParams(params);
                         ((Button)view).setText(selected);
@@ -266,11 +280,20 @@ public class CustomDialog extends Dialog {
                                                 subject_selected.remove(str);
                                                 subject_available.add(str);
                                                 linearLayout.removeView(v);
+                                                ((HorizontalScrollView)findViewById(R.id.scrollview_filter_subject)).fullScroll(View.FOCUS_RIGHT);
                                             }
                                         }).create().show();
                             }
                         });
-                        linearLayout.addView(view, 0);
+                        int viewCount = linearLayout.getChildCount();
+                        linearLayout.addView(view, viewCount-1);
+                        final HorizontalScrollView sv = (HorizontalScrollView)findViewById(R.id.scrollview_filter_subject);
+                        sv.postDelayed(new Runnable() {
+                            @Override
+                            public void run() {
+                                sv.fullScroll(HorizontalScrollView.FOCUS_RIGHT);
+                            }
+                        }, 500L);
                     }
                 });
                 builder.setCancelable(true);

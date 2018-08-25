@@ -22,6 +22,7 @@ import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
@@ -148,20 +149,43 @@ public class QuestionListActivity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-
-        switch (item.getItemId()){
+        switch (item.getItemId()) {
             //case android.R.id.home:
-
             case R.id.menu_filter_setting:
                 //Toast.makeText(this, "filter", Toast.LENGTH_SHORT).show();
                 Intent intent = new Intent(getApplicationContext(), FilterActivity.class);
-                startActivity(intent);
+                startActivityForResult(intent, 3000);
                 break;
             default:
                 break;
         }
         return super.onOptionsItemSelected(item);
     }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if(resultCode==RESULT_OK){
+            switch (requestCode){
+                case 3000:
+                    // data.getStringExtra("hashtag").... 등등 필터의 결과를 가져와서
+                    // 서버에게 필터된 결과를 요청한다.
+
+                    data.getIntExtra("orderOption",0);
+                    data.getStringArrayListExtra("subjectArrayList");
+                    data.getStringArrayListExtra("hashtagArrayList");
+                    data.getIntExtra("minCoin", 0);
+                    data.getIntExtra("maxCoin", 1000);
+                    data.getIntExtra("etcOption", 0);
+
+                    Toast.makeText(QuestionListActivity.this, "필터링된 결과 표시중", Toast.LENGTH_LONG).show();
+
+                    // TODO: 필터옵션을 토대로 서버에게 데이터 재요청
+                    break;
+            }
+        }
+        else super.onActivityResult(requestCode, resultCode, data);
+    }
+
     @Override
     public boolean onSupportNavigateUp() {
         onBackPressed();

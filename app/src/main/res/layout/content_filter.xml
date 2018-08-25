@@ -144,7 +144,8 @@
         <HorizontalScrollView
             android:id="@+id/scrollview_filter_hashtag"
             android:layout_width="match_parent"
-            android:layout_height="28dp">
+            android:layout_height="28dp"
+            android:scrollbarThumbHorizontal="@android:color/transparent">
             <LinearLayout
                 android:id="@+id/linear_layout_filter_hashtag"
                 android:layout_width="match_parent"
@@ -252,11 +253,11 @@
 
     </LinearLayout>
 
-    <!-- 기타 80 -->
+    <!-- 기타 85 -->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="20"
+        android:layout_weight="25"
         android:orientation="vertical">
         <TextView
             android:layout_width="wrap_content"
@@ -269,6 +270,18 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
             <RadioButton
+                android:id="@+id/radiobtn_filter_etc_all"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="  전체보기"
+                android:textSize="14sp"
+                android:letterSpacing="0.05"
+                android:fontFamily="@font/nanumsquarer"
+                android:textColor="#1d1e1f"
+                android:checked="true"
+                android:button="@drawable/checked"
+                android:layout_marginBottom="12dp"/>
+            <RadioButton
                 android:id="@+id/radiobtn_filter_etc_finished"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -277,8 +290,8 @@
                 android:letterSpacing="0.05"
                 android:fontFamily="@font/nanumsquarer"
                 android:textColor="#1d1e1f"
-                android:checked="true"
-                android:button="@drawable/checked"
+                android:checked="false"
+                android:button="@drawable/unchecked"
                 android:layout_marginBottom="12dp"/>
             <RadioButton
                 android:id="@+id/radiobtn_filter_etc_unfinished"
@@ -294,19 +307,13 @@
         </RadioGroup>
     </LinearLayout>
 
-    <!-- 공백 90 -->
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="10">
-    </LinearLayout>
-
     <!-- 버튼 100 -->
-    <LinearLayout
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="10">
+        android:layout_weight="15">
         <Button
+            android:id="@+id/btn_filter_submit"
             android:layout_width="match_parent"
             android:layout_height="48dp"
             android:text="설정완료"
@@ -314,7 +321,8 @@
             android:textColor="@color/colorWhite"
             android:textSize="16sp"
             android:letterSpacing="0.19"
-            android:fontFamily="@font/nanumsquareb"/>
+            android:fontFamily="@font/nanumsquareb"
+            android:layout_alignParentBottom="true"/>
 
-    </LinearLayout>
+    </RelativeLayout>
 </LinearLayout>
