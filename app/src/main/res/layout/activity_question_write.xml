@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.design.widget.CoordinatorLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.sharewith.smartudy.activity.QuestionWriteActivity">
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <android.support.design.widget.AppBarLayout
+            android:id="@+id/question_write_appbar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:theme="@style/AppTheme.AppBarOverlay"
+            app:elevation="0dp">
+
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/question_write_toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            app:theme="@style/ToolbarStyle"
+            app:titleTextColor="#000000">
+            <TextView
+                android:id="@+id/question_write_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:textColor="@color/colorTitle"
+                android:textSize="16sp"
+                android:text="질문 작성"
+                android:fontFamily="@string/main_font"
+                />
+            <TextView
+                android:id="@+id/question_write_ok"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="right"
+                android:paddingRight="16dp"
+                android:textColor="@color/colorTitle"
+                android:textSize="16sp"
+                android:text="완료"
+                android:fontFamily="@string/main_font"
+                />
+        </android.support.v7.widget.Toolbar>
+
+    </android.support.design.widget.AppBarLayout>
+
+    <fragment
+        android:id="@+id/question_write_fragment"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/question_write_appbar"
+        android:name="com.sharewith.smartudy.fragment.WriteFragment"
+        tools:layout="@layout/fragment_write"/>
+
+    </RelativeLayout>
+</android.support.design.widget.CoordinatorLayout>

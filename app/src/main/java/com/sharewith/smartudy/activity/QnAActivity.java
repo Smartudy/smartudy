@@ -13,6 +13,7 @@ import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.util.DisplayMetrics;
 import android.util.Log;
+import android.view.Display;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewDebug;
@@ -54,6 +55,8 @@ public class QnAActivity extends AppCompatActivity{
     private CustomDialog mDialog;
     private String mCategory;
     private String mQuestionId;
+
+    private String registredID;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -71,6 +74,7 @@ public class QnAActivity extends AppCompatActivity{
         mAppBar = findViewById(R.id.activity_qna_appbar);
         mTabLayout = findViewById(R.id.write_tablayout);
         mToolbar = findViewById(R.id.write_tooblar);
+        mFragManager = getSupportFragmentManager();
         mWriteFragment = new WriteFragment();
         mQuestionId = getIntent().getStringExtra("grp");
         mQnAListFragment = QnAListFragment.newInstance(mQuestionId,null);
@@ -79,10 +83,12 @@ public class QnAActivity extends AppCompatActivity{
         mFab2 = findViewById(R.id.activity_qna_fab2);
         mFab2.setVisibility(View.GONE);
         mFab2.setClickable(false);
-        mFragManager = getSupportFragmentManager();
-        mFragManager.beginTransaction().add(R.id.activity_qna_container,mWriteFragment).addToBackStack(null).hide(mWriteFragment)
+        mFragManager.beginTransaction().add(R.id.activity_qna_container,mWriteFragment)
+                .addToBackStack(null).hide(mWriteFragment)
                 .add(R.id.activity_qna_container,mQnAListFragment).addToBackStack(null).commit();
-        mDialog = new CustomDialog(this);
+        DisplayMetrics metrics = getApplicationContext().getResources().getDisplayMetrics();
+        Display display = getWindowManager().getDefaultDisplay();
+        mDialog = new CustomDialog(this, CustomDialog.ANSWER, display,metrics,Constant.PostAnswerURL);
         mCategory = getIntent().getStringExtra("category");
     }
 
@@ -106,22 +112,30 @@ public class QnAActivity extends AppCompatActivity{
         mFab.setClickable(false);
         mFab2.setVisibility(View.VISIBLE);
         mFab2.setClickable(true);
-        switch(mTabLayout.getSelectedTabPosition()){
-            case 0:
-                mLinear.setVisibility(View.VISIBLE);
-                mFragManager.beginTransaction().show(mQnAListFragment).commit();
-                mFragManager.beginTransaction().hide(mWriteFragment).commit();
-                mFab2.setVisibility(View.GONE);
-                mFab2.setClickable(false);
-                break;
-            case 1:
-                mLinear.setVisibility(View.INVISIBLE);
-                mFragManager.beginTransaction().hide(mQnAListFragment).commit();
-                mFragManager.beginTransaction().show(mWriteFragment).commit();
-                mFab2.setVisibility(View.VISIBLE);
-                mFab2.setClickable(true);
-                break;
+        int last = mTabLayout.getTabCount()-1;
+        if(last != 0 && mTabLayout.getSelectedTabPosition() == last) {
+            mLinear.setVisibility(View.INVISIBLE);
+            mFragManager.beginTransaction().hide(mQnAListFragment).commit();
+            mFragManager.beginTransaction().show(mWriteFragment).commit();
+            mFab2.setVisibility(View.VISIBLE);
+            mFab2.setClickable(true);
+        }else {
+            mLinear.setVisibility(View.VISIBLE);
+            mFragManager.beginTransaction().show(mQnAListFragment).commit();
+            mFragManager.beginTransaction().hide(mWriteFragment).commit();
+            mFab2.setVisibility(View.GONE);
+            mFab2.setClickable(false);
         }
+    }
+
+    public void afterAnswerPost(){
+        mFragManager.beginTransaction().remove(mWriteFragment).commit();
+        mTabLayout.removeTabAt(mTabLayout.getTabCount()-1);
+        toggleFab();
+        mFab.setVisibility(View.VISIBLE);
+        mFab.setClickable(true);
+        Log.d("temp","등록된 아이디 " +registredID);
+        mQnAListFragment.getAnswerAfterPost(registredID);
     }
 
     private void setListener(){
@@ -154,64 +168,21 @@ public class QnAActivity extends AppCompatActivity{
         });
         mFab2.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) {
+            public void onClick(View v) { //답변 등록 버튼
+                WriteFragComponent.builder builder = mWriteFragment.getDatas();//글작성창에 있는 제목,본문,이미지,음악파일 경로 가져옴.
+                builder.setCategory(mCategory).setGrp(mQuestionId);
+                mDialog.setBuilder(builder);//나머지 금액,과목,해시태그 설정을 위해
                 mDialog.showDialog();
                }
         });
     }
 
-    public void postToServer(){ //작성된 글의 내용(다이얼로그 포함)을 서버로 전송
-        String result = "";
-        WriteFragComponent.builder builder = mWriteFragment.getDatas(); //글작성창에 있는 제목,본문,이미지,음악파일 경로 가져옴.
-        mDialog.setDialogContents(builder); //다이얼로그의 과목명,해쉬태그,금액까지 취합.
-        Log.d("QnAActivity","질문의 아이디는 "+mQuestionId);
-        mData = builder.setCategory(mCategory).setGrp(mQuestionId).build(); // 카테고리명 까지 취합.
-        Log.d("QnAActivity","현재 카테고리 " + mCategory);
-        Log.d("QnAActivity",mData.toString());
-        try {
-            HttpUtils util = new HttpUtils(HttpUtils.MULTIPART, null, Constant.PostAnswerURL, getApplicationContext());
-            util.setMultipartdata(mData);
-            util.setDelegate(new AsyncResponse() {
-                @Override
-                public void getAsyncResponse(String result) { //HttpUtils의 doInBackground() 마치면 자동으로 호출되는 메소드
-                    Log.d("qna",result);
-                    JsonParser parser = new JsonParser();
-                    JsonObject json = parser.parse(result).getAsJsonObject();
-                    Log.d("qna",json.toString());
-                    if(json.get("success").getAsBoolean() == true){
-                        Toast.makeText(getApplicationContext(), "게시글이 등록 되었습니다.", Toast.LENGTH_SHORT).show();
-                        mFragManager.beginTransaction().remove(mWriteFragment).commit();
-                        mTabLayout.removeTabAt(1);
-                        mDialog.dismiss();
-                    }else{
-                        Toast.makeText(getApplicationContext(), "게시글 등록이 실패 하였습니다.", Toast.LENGTH_SHORT).show();
-                    }
-                }
-            });
-            util.execute();
-            //결과는 HttpUtils의 onPostExecute()에서 알아서 aftermultipart() 호출함.
-        }catch(Exception e){
-            Log.d("QnAActivity","멀티파트 요청 중 에러 발생");
-            e.printStackTrace();
-        }
+    public String getRegistredID() {
+        return registredID;
     }
-    private void showdialog(){
-//        DisplayMetrics dm = getApplicationContext().getResources().getDisplayMetrics(); //디바이스 화면크기를 구하기위해
-//        int width = dm.widthPixels; //디바이스 화면 너비
-//        int height = dm.heightPixels; //디바이스 화면 높이
-//
-//        dial = (Button) findViewById(R.id.dial);
-//        cd = new CustomDialog(this);
-//        WindowManager.LayoutParams wm = cd.getWindow().getAttributes();  //다이얼로그의 높이 너비 설정하기위해
-//        wm.copyFrom(cd.getWindow().getAttributes());  //여기서 설정한값을 그대로 다이얼로그에 넣겠다는의미
-//        wm.width = width / 2;  //화면 너비의 절반
-//        wm.height = height / 2;  //화면 높이의 절반
-//        dial.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                cd.show();  //다이얼로그
-//            }
-//        });
+
+    public void setRegistredID(String registredID) {
+        this.registredID = registredID;
     }
 
 

@@ -12,6 +12,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
@@ -79,7 +80,7 @@ public class QnAListFragment extends Fragment { //뷰페이저의 1페이지에 
         View view = inflater.inflate(R.layout.fragment_qna_list, container, false);
         setMember(view);
         Question_Selected mSelectedQuestion = getQuestionFromServer();
-        ArrayList<Answer> answers = getAnswerFromServer();
+        ArrayList<Answer> answers = getAnswersFromServer();
         QnAListAdapter adapter = new QnAListAdapter(getContext(),mSelectedQuestion,answers);
         mRecyclerView.setAdapter(adapter);
         return view;
@@ -104,11 +105,11 @@ public class QnAListFragment extends Fragment { //뷰페이저의 1페이지에 
         return q;
     }
 
-    public ArrayList<Answer> getAnswerFromServer(){
+    public ArrayList<Answer> getAnswersFromServer(){ //처음 답변 목록 가져올때 사용
         HashMap<String,String> map = new HashMap<>();
         ArrayList<Answer> answers = null;
         map.put("grp",mParam1);
-        HttpUtils utils = new HttpUtils(HttpUtils.GET,map, Constant.GetAnswerURL,getContext());
+        HttpUtils utils = new HttpUtils(HttpUtils.GET,map, Constant.GetAnswersURL,getContext());
         try {
             String result = utils.execute().get();
             Log.d("QnAListFragment",result+"서버로 부터 수신");
@@ -125,6 +126,31 @@ public class QnAListFragment extends Fragment { //뷰페이저의 1페이지에 
         }
 
         return answers;
+    }
+
+    public void getAnswerAfterPost(String AnswerID){ //답변 등록후 등록된 답변 가져오기 위해 사용
+        HashMap<String,String> map = new HashMap<>();
+        map.put("id",AnswerID);
+        HttpUtils utils = new HttpUtils(HttpUtils.GET,map, Constant.GetAnswerURL,getContext());
+        try {
+            String result = utils.execute().get();
+            Log.d("QnAListFragment","서버로 부터 수신됨 : "+result);
+            if(result != null){
+                JsonParser parser = new JsonParser();
+                JsonElement element = parser.parse(result);
+                JsonObject object = element.getAsJsonObject();
+                if(object.get("success").getAsBoolean() == true){
+                    JsonElement e = object.get("data");
+                    Answer answer = new Gson().fromJson(e,Answer.class);
+                    ((QnAListAdapter)mRecyclerView.getAdapter()).add(answer);
+                }else{
+                    Log.d("QnAListFragment","등록된 답변 가져오기 실패");
+                    return;
+                }
+            }
+        } catch(Exception e){
+            e.printStackTrace();
+        }
     }
 
     public void scroll(int position){

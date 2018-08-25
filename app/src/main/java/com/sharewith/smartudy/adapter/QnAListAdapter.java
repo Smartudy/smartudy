@@ -13,14 +13,22 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.google.gson.Gson;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
+import com.sharewith.smartudy.Interface.AsyncResponse;
 import com.sharewith.smartudy.dto.Answer;
 import com.sharewith.smartudy.dto.NotePadDto;
 import com.sharewith.smartudy.dto.Question_Selected;
 import com.sharewith.smartudy.smartudy.R;
 import com.sharewith.smartudy.dao.Write_DBhelper;
+import com.sharewith.smartudy.utils.Constant;
+import com.sharewith.smartudy.utils.HttpUtils;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.concurrent.ExecutionException;
 
 /**
  * Created by Simjae on 2018-07-16.
@@ -57,6 +65,13 @@ public class QnAListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
         mImagedatas.add(R.drawable.two);
         mImagedatas.add(R.drawable.three);
     }
+
+    public void add(Answer a){
+        answers.add(a);
+        notifyDataSetChanged();
+    }
+
+
 
     private void setRecycler(View view){
         mImageRecycler = view.findViewById(R.id.qna_image_recycler_view);
@@ -109,7 +124,7 @@ public class QnAListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
                     //qholder.mUserInfo.setText(question.getQuestioncount() + " | "+question.getPickrate());
                     break;
                 default:
-                    Answer answer = answers.get(position);
+                    Answer answer = answers.get(position-1);
                     Log.d("QuestionListAdapter",answer.toString());
                     Log.d("QuestionListAdapter",answer.toString());
                     changeImageDatas();

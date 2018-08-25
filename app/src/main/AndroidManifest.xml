@@ -38,9 +38,9 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.sharewith.smartudy.activity.HomeActivity" />
         </activity>
-        <activity android:name="com.sharewith.smartudy.activity.QnAActivity"
-            android:windowSoftInputMode="adjustResize"
-            >
+        <activity
+            android:name="com.sharewith.smartudy.activity.QnAActivity"
+            android:windowSoftInputMode="adjustResize">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.sharewith.smartudy.activity.QuestionListActivity" />
@@ -85,6 +85,7 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.sharewith.smartudy.activity.QnAActivity" />
         </activity>
+        <activity android:name="com.sharewith.smartudy.activity.QuestionWriteActivity"></activity>
     </application>
 
 </manifest>

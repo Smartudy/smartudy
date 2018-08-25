@@ -174,11 +174,11 @@ public class QuestionListActivity extends AppCompatActivity {
         actv.setThreshold(1);
     }
     public void setFloatingActionBtnClickListener(){
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+        FloatingActionButton fab = findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(QuestionListActivity.this,QnAActivity.class);
+                Intent intent = new Intent(QuestionListActivity.this,QuestionWriteActivity.class);
                 intent.putExtra("category",mCategory);
                 startActivity(intent);
             }
